@@ -1,3 +1,7 @@
+%        File: memoria.tex
+%     Created: sáb jun 28 01:00  2008 C
+% Last Change: sáb jun 28 01:00  2008 C
+%
 \documentclass[a4paper,spanish,12pt]{book}
 \title{BLAS: Base Layer for Application Services}
 \author{Eduardo Orive Vinuesa}
@@ -34,10 +38,10 @@ Tambi\'en muy com\'un ver que muchos prototipos sean descartados (total o parcia
 No obstante la escritura de un servicio de Red puede reducirse considerablemente si se implementan tan solo las caracteristicas particulares de su protocolo. Basicamente cualquier protocolo puede entenderse como un automata m\'as o menos complejo, siguiendo este modo de dise\~{o} puede simplificarse de manera considerable el trabajo del programador.
 Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios TCP que consumen mucho tiempo y que normalmente su implementaci\'on resulta bastante repetitiva:
 \begin{enumerate}
-\item Entrada controlada de datos.
-\item Registro (o registros) de actividad y error.
-\item Lectura de los archivos de configuraci\'on.
-\item Parseado de los parametros de arraque.
+	\item Entrada controlada de datos.
+	\item Registro (o registros) de actividad y error.
+	\item Lectura de los archivos de configuraci\'on.
+	\item Parseado de los parametros de arraque.
 \end{enumerate}
 
 \chapter{Motivación}
@@ -46,9 +50,9 @@ Esta plataforma se ha pensado para los colectivos que por diversos motivos se ve
 \subsection{Docencia}
 Existen numerosos proyectos academicos que requieren la implementaci\'on de:
 \begin{enumerate}
-\item Protocolos nuevos,
-\item Protocolos ya existentes.
-\item Modificaciones sobre protocolos antiguos. 
+	\item Protocolos nuevos,
+	\item Protocolos ya existentes.
+	\item Modificaciones sobre protocolos antiguos. 
 \end{enumerate}
 
 \subsection{Microdispositivos}
@@ -64,9 +68,9 @@ La capacidad de programar servicios simulados agilmente puede ser un complemento
 \subsection{Elecci\'on del Lenguaje} 
 Se ha elegido Python como lenguaje de programaci\'on para esta plataforma por las siguientes razones:
 \begin{enumerate}
-\item Velocidad de aprendizaje: cualquier persona que conozca un lenguaje orientado a objetos puede aprenderlo en muy poco tiempo.
-\item Reflexividad: Las clases en pytohn tienen conocimiento de sus propios metodos y atributos.
-\item Interpretado: Al ejecutarse bajo un interprete no har\'an falta compilar distintos ejecutables seg\'un la plataforma.
+	\item Velocidad de aprendizaje: cualquier persona que conozca un lenguaje orientado a objetos puede aprenderlo en muy poco tiempo.
+	\item Reflexividad: Las clases en pytohn tienen conocimiento de sus propios metodos y atributos.
+	\item Interpretado: Al ejecutarse bajo un interprete no har\'an falta compilar distintos ejecutables seg\'un la plataforma.
 \end{enumerate}
 
 Con el empleo de Python se puede conseguir con pocas lineas la implementaci\'on de un protocolo completo. Al tratarse de un lenguaje en que la identaci\'on es obligatoria y la sintaxis muy clara normalmente su codigo fuente esta bien estructurado y resulta facil de leer incluso para quienes apenas conozcan Python.
@@ -85,10 +89,27 @@ El modelo Cliente-Servidor es tan básico de entender como antiguo, se pueden co
 
 Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados y sobre todo la diversificación de equipos mucho mas baratos y potentes han modificado el panorama de manera importante: Además de diversificarse los tipos de servicios era posible que varios de ellos coexisitieran en el mismo equipo.
 
+
+\begin{figure}
+	  \centering
+	      \includegraphics{img/NivelesOSI.mp}
+              \caption{niveles OSI}
+  \label{fig:ejemplo}
+\end{figure}
+
 [niveles OSI]
 
 Limitando la comunicación al nivel de aplicación todos los protocolos existentes pueden resumirse como una secuencia de emisión y recepción de datos en una serie de etapas y formatos establecidos por el protocolo. 
 De esta manera se puede entender al servicio como un autómata sensible al contexto para cada conexión que recibe. Orientando el diseño del servicio como una secuencia de pasos y que estos sean lo más simple y claro posible se ahorrará mucho tiempo y complejidad en la producción del codigo. 
 
+Además de la programación del propio protocolo se deben implementar ciertas funciones como son:
+\begin{enumerate}
+	\item La lectura de parámetros desde linea de comandos
+	\item La lectura de parámetros desde el archivo de configuracion
+	\item El registro de actividad en el(los archivo(s) pertinentes
+	\item Distintos modos de entrada de datos
+\end{enumerate}
+
 
 \end{document}
+
