@@ -44,6 +44,21 @@ Existen multitud de funcionalidades ligadas a los programas que ofrecen servicio
 	\item Parseado de los parametros de arraque.
 \end{enumerate}
 
+\section{Historia de los servicios informáticos}
+Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba limitada a una unica unidad por cada entidad. Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente limitado. Por estas mismas limitaciones y para maximizar la disponibilidad se ideo un sistema limitado de terminales remotas, los teletipos, cuya funcion era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
+
+Con el tiempo la versatilidad de los sistemas fue ampliandose, los ordenadores dejaron de emplearse como meras ejecutoras de algoritmos y empezaron a ofrecer distintos tipos de servicios:
+\begin{enumerate}
+	\item Boletines de noticias
+	\item Transferencias de ficheros
+	\item Correo electronico
+\end{enumerate}
+Es precisamente en esta \'epoca cuando empiezan implantarse sistemas de comunicacion por conmutacion convencionales y los servicios empiezan a emplear estos nuevos medios de enlace. La oferta de servicios deja de estar limitada a las grandes entidades y empiezan a surgir ``BBSes'' (Bulletin Board System) albergadas en ordenadores privados. Durante más de 25 años han sido un medio de comunicación y entretenimiento, en opinión de muchos sigue siendo los mejores ambientes comunitarios. 
+
+La capacidad monousuario de los sistemas de la epoca presento la necesidad de empezar a dejar de utilizar enlaces de lineas conmutadas para añadir un nuevo nivel de paquetes conmutados para eliminar esta limitación.
+
+
+
 \chapter{Motivación}
 Esta plataforma se ha pensado para los colectivos que por diversos motivos se ven ante la necesidad de programar un servicio de red en poco tiempo. A continuaci\'on se presentan varios de los perfiles de proyectos que se han planteado:
 \section{Tipos de proyectos}
@@ -85,14 +100,24 @@ Elaborado por el W3C y la IETF el HTTP es seguramente uno de los servicios de re
 Es un protocolo desarrollado por el IETF MMUSIC Working Group en la busqueda de un estandar para iniciar, finalizar o modificar sesiones interactivas de usuario, que se emplearan para contactar con dichos usuarios. Normalmente se utiliza en conjunción con otros servicios, principalmente multimedia (video, voz, mensajeria instantanea). Se ha convertido en el protocolo de señalización para voz por IP más utilizado junto al H.232.
 
 \chapter{Análisis}
-El modelo Cliente-Servidor es tan básico de entender como antiguo, se pueden considerar que los primeros sistemas de este tipo eran los teletipos utilizados en las universidades para emitir programas a los equipos que alli habian instalados y recibir posteriormente sus resultados. A diferencia de hoy aquellos sistemas funcionaban directamente sobre enlaces dedicados y cada uno de estos teletipos disponia de una conexión permanente.
+El modelo Cliente-Servidor es tan básico como antiguo, se pueden considerar que los primeros sistemas de este tipo eran los teletipos utilizados en las universidades para emitir programas a los equipos que alli habian instalados y recibir posteriormente sus resultados. A diferencia de hoy aquellos sistemas funcionaban directamente sobre enlaces dedicados y cada uno de estos teletipos disponia de una conexión permanente.
 
 Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados y sobre todo la diversificación de equipos mucho mas baratos y potentes han modificado el panorama de manera importante: Además de diversificarse los tipos de servicios era posible que varios de ellos coexisitieran en el mismo equipo.
+
+En el contexto de los sistemas informáticos un protocolo es un conjunto de reglas predefinidas, cuyo proposito es estandarizar actividades y procesos. Siguiendo un mismo protocolo se garantiza que se mantendrá la compatibilidad entre los sistemas involucrados, independientemente del medio sobre el que est\'en en contacto, posiblemente otros protocolos.
+
+Precisamente es la naturaleza de un protocolo, como un conjunto ordenado de etapas en las que se organiza el flujo de informacion entre los sistemas, la que permite abstraer al programa servidor como un automata sensible al contexto. Cada etapa como equivale al estado del automata y pueden realizarse un conjunto determinado de acciones:
+\begin{enumerate}
+	\item Recibir datos desde la conexión
+	\item Emitir datos a la conexión
+	\item Tratar, almacenar o recuperar datos
+	\item Avanzar, saltar o retroceder a otra etapa
+\end{enumerate}
 
 
 \begin{figure}
 	  \centering
-	      \includegraphics{img/NivelesOSI.mp}
+	  %%\includegraphics{img/NivelesOSI.mp}
               \caption{niveles OSI}
   \label{fig:ejemplo}
 \end{figure}
