@@ -106,13 +106,45 @@ Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados 
 
 En el contexto de los sistemas informáticos un protocolo es un conjunto de reglas predefinidas, cuyo proposito es estandarizar actividades y procesos. Siguiendo un mismo protocolo se garantiza que se mantendrá la compatibilidad entre los sistemas involucrados, independientemente del medio sobre el que est\'en en contacto, posiblemente otros protocolos.
 
-Precisamente es la naturaleza de un protocolo, como un conjunto ordenado de etapas en las que se organiza el flujo de informacion entre los sistemas, la que permite abstraer al programa servidor como un automata sensible al contexto. Cada etapa como equivale al estado del automata y pueden realizarse un conjunto determinado de acciones:
+
+La forma cl\'asica de programar un servicio consiste en un blucle de escucha que inicia subprocesos para cada conexi\'on entrante y que finaliza cuando esta acaba o se produce un error. Se presentan dos entidades en este caso, la del servicio que incluiria las rutinas para iniciar la escucha y el acceso a los datos y la del manipulador, que atiende la conexion siguiendo las pautas del protocolo.
+\section{Servicio}
+Al arrancar un servicio antes de iniciar el bucle de escucha deben realizarse una serie de procedimientos:
+\begin{enumerate}
+	\item La lectura de parámetros desde linea de comandos
+	\item La lectura de parámetros desde el archivo de configuracion
+	\item El registro de actividad en el(los archivo(s) pertinentes
+	\item Preparar el acceso a los datos necesarios, ficheros o bases de datos
+\end{enumerate}
+
+Existen parametros que son comunes practicamente a cualquier servicio por ejemplo:
+\begin{enumerate}
+	\item Fichero de configuraci\'on.
+	\item N\'umero de puerto para la escucha
+	\item N\'umero m\'aximo de conexiones simultaneas
+	\item Ficheros de registro, eventos, errores, etc
+	\item Nivel de locuacidad (verbosity) en los registros.
+\end{enumerate}
+O parametros particulares para segun que tipos de servicio:
+\begin{enumerate}
+	\item Acceso al medio de datos
+	\item Parametros de configuraci\'on concretos
+\end{enumerate}
+Debe tenerse en cuenta que los parametros en el fichero de configuracion tienen menor prevalencia que los indicados por linea de parametros.
+
+\section{Manipulador}
+Precisamente es la naturaleza de un protocolo, como un conjunto ordenado de etapas en las que se organiza el flujo de informacion entre los sistemas, la que permite abstraer al programa servidor como un automata sensible al contexto. Cada etapa del manipulador equivale al estado del automata y pueden realizarse un conjunto determinado de acciones:
 \begin{enumerate}
 	\item Recibir datos desde la conexión
 	\item Emitir datos a la conexión
 	\item Tratar, almacenar o recuperar datos
 	\item Avanzar, saltar o retroceder a otra etapa
 \end{enumerate}
+
+La recepción de los datos puede además controlarse mediante expresiones regulares según las especificaciones del protocolo, detectando rapidamente errores en la entrada. Debe facilitarse además la adopción de distintos tipos de intercambio de datos, controlados, formato en bruto o encriptados para evitar reimplementaciones de esta clase de rutinas.
+
+En el diseño del manipulador debe tenerse en cuenta que normalmente existe un orden convencional en las etapas, previsiblemente estas deberia contener un numero limitado de procedimientos, para reducir la complejidad.
+
 
 
 \begin{figure}
@@ -127,13 +159,7 @@ Precisamente es la naturaleza de un protocolo, como un conjunto ordenado de etap
 Limitando la comunicación al nivel de aplicación todos los protocolos existentes pueden resumirse como una secuencia de emisión y recepción de datos en una serie de etapas y formatos establecidos por el protocolo. 
 De esta manera se puede entender al servicio como un autómata sensible al contexto para cada conexión que recibe. Orientando el diseño del servicio como una secuencia de pasos y que estos sean lo más simple y claro posible se ahorrará mucho tiempo y complejidad en la producción del codigo. 
 
-Además de la programación del propio protocolo se deben implementar ciertas funciones como son:
-\begin{enumerate}
-	\item La lectura de parámetros desde linea de comandos
-	\item La lectura de parámetros desde el archivo de configuracion
-	\item El registro de actividad en el(los archivo(s) pertinentes
-	\item Distintos modos de entrada de datos
-\end{enumerate}
+
 
 
 \end{document}
