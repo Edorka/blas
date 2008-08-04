@@ -117,6 +117,7 @@ Al arrancar un servicio antes de iniciar el bucle de escucha deben realizarse un
 	\item Preparar el acceso a los datos necesarios, ficheros o bases de datos
 \end{enumerate}
 
+\subsubsection{parámetros}
 Existen parametros que son comunes practicamente a cualquier servicio por ejemplo:
 \begin{enumerate}
 	\item Fichero de configuraci\'on.
@@ -130,7 +131,39 @@ O parametros particulares para segun que tipos de servicio:
 	\item Acceso al medio de datos
 	\item Parametros de configuraci\'on concretos
 \end{enumerate}
-Debe tenerse en cuenta que los parametros en el fichero de configuracion tienen menor prevalencia que los indicados por linea de parametros.
+Debe tenerse en cuenta que los parametros en el fichero de configuracion tienen menor prevalencia que los indicados por linea de comandos, salvo el que especifique precisamente que fichero de configuracion debe leerse.
+
+\subsubsection{Ficheros de configuración}
+Debe acordarse una estructura común a todos los ficheros de configuración que se parsearán desde la plataforma pero permitiendo a la vez mantener la genericidad suficiente como para no perder la flexibilidad que haga este sistema util a cualquier implementacion de servicios y que a su vez permita que los usuarios puedan entender el fichero de forma clara y manipularlo facilmente.
+
+Se espefican con ese fin las siguiente sintaxis:
+
+
+\[<nombre parametro>=<valor>\{,<valor-N>\}\]
+
+
+Para los valores que deben utilizar los parametros se pueden utilizar comodines para ampliar la versatilidad:
+\begin{enumerate}
+	\item \%H - Hostname
+	\item \%i - Ip de la conexion entrante
+	\item \%p - Puerto de origen de la conexion
+	\item \%d - fecha actual
+	\item \%t - hora actual
+\end{enumerate}
+
+\subsubsection{Locuacidad}
+Para que puedan establecerse mensajes de depuración a distintos niveles debe adoptarse un sistema de categorias de mensajes, en cada etapa o proceso del servicio y del manipulador se emiten mensajes que incorporan el nivel de locuacidad para el que son generados, será la clase encargada de mostrar mensajes la que los muestre segun si el nivel de estos es menor o no que el indicado.
+Se proponen los siguientes niveles
+\begin{enumerate}
+	\item 0 - Básico: mensajes de operaciones minimo, inicio del sistema, errores en los procedimientos.
+	\item 1 - Moderado: mensajes comunes, entrada en servicio de un manipulador y puntos clave del desarrollo de la atención.
+	\item 2 - Productivo: indica la entrada en la mayoria de las etapas de un servicio. Se amplian los detalles de los mensajes de error
+	\item 3 - Expresivo: indica la entrada a cada etapa del servicio, se detalla el contexto de cada mensaje de error.
+	\item 4 - Locuaz: detalla el contexto de cada etapa.
+\end{enumerate}
+
+\subsubsection{Registro}
+Con la intencion de simplificar la tarea de gestionar la salida de mensajes, bien a la salida de la consola o a ficheros de registro deben implementarse clases destinadas a tal fin, que vuelquen o no los mensajes al medio según la locuacidad que se ha fijado y que en caso de que el medio predeterminado falle (por falta de espacio o cambio de permisos) sea capaz de cambiar a otro (indicado en la configuracion o a los medios salida por pantalla dedicados a tal fin).
 
 \section{Manipulador}
 Precisamente es la naturaleza de un protocolo, como un conjunto ordenado de etapas en las que se organiza el flujo de informacion entre los sistemas, la que permite abstraer al programa servidor como un automata sensible al contexto. Cada etapa del manipulador equivale al estado del automata y pueden realizarse un conjunto determinado de acciones:
