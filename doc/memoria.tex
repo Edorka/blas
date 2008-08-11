@@ -24,29 +24,16 @@
 \tableofcontents
 
 \maketitle
-
 %cuerpo del documento
 
 
-\chapter*{Introducción}
+\chapter{Introducción}
 Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y una mayoria de estas est\'an conectadas a Internet o incluso la propia Internet forma parte de estas. 
 
-Es en este entorno donde se desarrollan las arquitecturas de la mayor\'ia de los sistemas. Distribuidas y en una gran proporci\'on siguiendo el modelo Cliente-Servidor casi todas las nuevas aplicaciones o sistemas basan gran parte de su funcionalidad en la conectividad mediante redes. 
 
-Sin embargo realizar aunque sea un prototipo de un servicio de red resulta caro en tiempo y no se obtienen resultados tangibles hasta que se han implementado una buena parte del codigo.
-Tambi\'en muy com\'un ver que muchos prototipos sean descartados (total o parcialmente) y deban re-escribirse ya que, aunque su rendimiento sea aceptable, la seguridad que ofrecen no lo es, con lo que el proceso de crear el servicio duplica su coste cuando el sistema llega a la etapa de producci\'on.
-
-No obstante la escritura de un servicio de Red puede reducirse considerablemente si se implementan tan solo las caracteristicas particulares de su protocolo. Basicamente cualquier protocolo puede entenderse como un automata m\'as o menos complejo, siguiendo este modo de dise\~{o} puede simplificarse de manera considerable el trabajo del programador.
-Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios TCP que consumen mucho tiempo y que normalmente su implementaci\'on resulta bastante repetitiva:
-\begin{enumerate}
-	\item Entrada controlada de datos.
-	\item Registro (o registros) de actividad y error.
-	\item Lectura de los archivos de configuraci\'on.
-	\item Parseado de los parametros de arraque.
-\end{enumerate}
 
 \section{Historia de los servicios informáticos}
-Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba limitada a una unica unidad por cada entidad. Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente limitado. Por estas mismas limitaciones y para maximizar la disponibilidad se ideo un sistema limitado de terminales remotas, los teletipos, cuya funcion era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
+Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba normalmente limitada a una unidad por cada entidad (instituciones educativas e instalaciones militares). Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente restringido. Por estas mismas limitaciones y para maximizar la disponibilidad se ideó un sistema limitado de terminales remotas, los teletipos, cuya funcion era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
 
 Con el tiempo la versatilidad de los sistemas fue ampliandose, los ordenadores dejaron de emplearse como meras ejecutoras de algoritmos y empezaron a ofrecer distintos tipos de servicios:
 \begin{enumerate}
@@ -58,11 +45,19 @@ Es precisamente en esta \'epoca cuando empiezan implantarse sistemas de comunica
 
 La capacidad monousuario de los sistemas de la epoca presento la necesidad de empezar a dejar de utilizar enlaces de lineas conmutadas para añadir un nuevo nivel de paquetes conmutados para eliminar esta limitación.
 
+\section{Motivación}
 
+Es en este entorno donde se desarrollan las arquitecturas de la mayor\'ia de los sistemas. Distribuidas y en una gran proporci\'on siguiendo el modelo Cliente-Servidor casi todas las nuevas aplicaciones o sistemas basan gran parte de su funcionalidad en la conectividad mediante redes. 
 
-\chapter{Motivación}
-Esta plataforma se ha pensado para los colectivos que por diversos motivos se ven ante la necesidad de programar un servicio de red en poco tiempo. A continuaci\'on se presentan varios de los perfiles de proyectos que se han planteado:
-\section{Tipos de proyectos}
+Sin embargo realizar aunque sea un prototipo operativo de un servicio de red requiere de una importante inversion en tiempo y no se obtienen resultados tangibles hasta que se ha implementado una buena parte del código.
+Tambi\'en muy com\'un ver que muchos prototipos sean descartados (total o parcialmente) y deban re-implementarse ya que, aunque su rendimiento sea aceptable, la seguridad que ofrecen no lo es, con lo que el proceso de crear el servicio duplica su coste cuando el sistema llega a la etapa de producci\'on.
+
+No obstante la escritura de un servicio de Red puede reducirse considerablemente si se implementan tan solo las caracteristicas particulares de su protocolo. Basicamente cualquier protocolo puede entenderse como un automata m\'as o menos complejo, siguiendo este modo de dise\~{o} puede simplificarse de manera considerable el trabajo del programador.
+
+La intención principal de esta plataforma es evitar la reimplementación innecesaria de funcionalidades que son comunes a todo tipo de servicio de red interactivo, además de proponer una metodología concreta en la implementación.
+
+Aunque hoy día se pueden encontrar cientos de implementaciones de protocolos sobre multitud de tecnologías diferentes existe todavía la necesidad de realizar implementaciones de servicios de protocolos antiguos o nuevos.
+
 \subsection{Docencia}
 Existen numerosos proyectos academicos que requieren la implementaci\'on de:
 \begin{enumerate}
@@ -71,8 +66,10 @@ Existen numerosos proyectos academicos que requieren la implementaci\'on de:
 	\item Modificaciones sobre protocolos antiguos. 
 \end{enumerate}
 
+y que pueden ver facilitada su realización utilizando esta plataforma.
+
 \subsection{Microdispositivos}
-La mayor\'ia de los dispositivos dotados de un sistema operativo m\'inimo disponen de una modesta pila TCP/IP ya que practicamente todos estos dispositivos se dise\~{n}an incluyendo algún tipo de hardware de interconexi\'on. Sin embargo por razones de coste economico o rendimiento energetico siguen afectados por una leve capacidad de memoria y/o potencia de c\'alculo que hacen que la opcion de conectarlos a un servicio convencional (HTTP y REST por ejemplo) resulte muy engorrosa (y caro) en su programaci\'on, e incluso a veces impracticable.
+La mayor\'ia de los dispositivos dotados de un sistema operativo m\'inimo disponen de una modesta pila TCP/IP ya que practicamente todos estos dispositivos se dise\~{n}an incluyendo algún tipo de hardware de interconexi\'on. Sin embargo por razones de coste economico o rendimiento energetico se ven afectados por una leve capacidad de memoria y/o potencia de c\'alculo que hacen que la opcion de conectarlos a un servicio convencional (HTTP y REST por ejemplo) resulte muy engorrosa (y caro) en su programaci\'on, e incluso a veces impracticable.
 
 Es por este motivo que se suelen dise\~{n}ar protocolos normalmente muy escuetos, especificamente adaptados a la funcionalidad del dispositivo y a sus limitaciones de proceso.
 
@@ -81,7 +78,23 @@ En un entorno en que los ataques mediante gusanos son casi rutinarios se emplea 
 
 La capacidad de programar servicios simulados agilmente puede ser un complemento perfecto a otras herramientas de estudio de la seguridad como son las 'Honey-Nets', dotando a las m\'aquinas virtuales de un comportamiento mucho m\'as flexible.
 
-\subsection{Elecci\'on del Lenguaje} 
+
+\chapter{Objetivos}
+
+Esta plataforma se ha ideado para facilitar el diseño y la implementación a los colectivos que por diversos motivos se ven ante la necesidad de programar un servicio de red en poco tiempo. 
+
+Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios TCP que consumen mucho tiempo y que normalmente su implementaci\'on resulta bastante repetitiva:
+\begin{enumerate}
+	\item Entrada controlada de datos.
+	\item Registro (o registros) de actividad y error.
+	\item Lectura de los archivos de configuraci\'on.
+	\item Parseado de los parametros de arraque.
+\end{enumerate}
+
+
+\chapter{Estado del arte}
+
+\section{Elecci\'on del Lenguaje} 
 Se ha elegido Python como lenguaje de programaci\'on para esta plataforma por las siguientes razones:
 \begin{enumerate}
 	\item Velocidad de aprendizaje: cualquier persona que conozca un lenguaje orientado a objetos puede aprenderlo en muy poco tiempo.
@@ -91,7 +104,48 @@ Se ha elegido Python como lenguaje de programaci\'on para esta plataforma por la
 
 Con el empleo de Python se puede conseguir con pocas lineas la implementaci\'on de un protocolo completo. Al tratarse de un lenguaje en que la identaci\'on es obligatoria y la sintaxis muy clara normalmente su codigo fuente esta bien estructurado y resulta facil de leer incluso para quienes apenas conozcan Python.
 
-\chapter{Protocolos}
+\section{Python: historia y características}
+
+Python fue creado como sucesor del lenguaje ABC por Guido van Rossum en 1990 cuando trabajaba en el Stichting Mathematisch Centrum (CWI). En 1995 Guido continuó su trabajo en Python en el CNRI donde creó muchas versiones del lenguaje. En mayo del 2000 Guido y el equipo de desarrollo de Python se trasladan a BeOpen.com y se forma el BeOpen PythonLabs. En octubre de este mismo año, PythonLabs se va a Digital Creations (actualmente Zope Corporation). En 2001, se crea la Python Software Foundation (PSF), una organización sin ánimo de lucro creada específicamente para proteger la libertad de Python como lenguaje de código abierto.
+
+El nombre del lenguaje proviene de la afición de su creador original, Guido van Rossum, por los geniales humoristas británicos Monty Python.
+
+Python ha sido usado para crear programas tan famosos como el gestor de listas de correo Mailman o los gestores de contenido Zope y Plone.
+
+Python se puede encontrarse en varias encarnaciones. En el sitio web de la Python Software Foundation, Python esta implementado en C. Pero existen otras: Basada en Java una implementacion denominada Jython puede utilizarse para trabajar con codigo Java nativamente. Iron Python, una version en C\# existe para hacer uso de las plataformas Mono y .Net y que los programadores de estas puedan beneficiarse de su potencia y flexibilidad. En cada una de estas encarnaciones Python se ha escrito en un lenguaje y funciona nativamente en este aunque puede tambien intectuar perfectamente con otros lenguajes a trav\'es de sus correspondientes modulos.
+
+Con propositos de investigacion y desarrollo existe tambi\'en una implementacion de Python sobre Python. El proyecto PyPy fue iniciado en 2003 con la intencion de permitir a los programadores en Python modificar el comportamiento del interprete. Además se trata de un proyecto de codigo abierto, desarrollado por una comunidad para libre distribución y modificacion, PyPy está patrocinado por la Unión Europea como un STReP (Specified Targeted Research Project), parte del plan de apoyo FP6.
+
+\subsection{Evolución}
+
+\subsubsection{Primera publicación}
+
+En 1991 van Rossun puclido el codigo (con la versión 0.9.0) en alt.sources. Ya en este primer estado de desarrollo habia clases con herencias, manejo de expeciones, funciones y los tipos de datos basicos de listas, diccionarios, cadenas y demás. Tambi\'en en esta publicación inicial habian un modulo de sistema que fue tomado prestado de modula3; van Rossum define este modulo como ``una de las principales unidades de programación de Python''. El modelo de gestión de excepciones de python tambi\'en imita al de Modula3 salvo que incluye la clausula ``else''. En 1994 arranca comp.lang.python, la primera lista de discussion de python, marcando un hito en el crecimiento de la base de usuarios de Python.
+
+\subsubsection{Version 1.0}
+
+Python llego a la version 1.0 en Enero de 1994. Las principales nuevas funcionalidades incluidas en esta publicación fueron las utilidades de programación funcional lambda, map, filter y reduce. Van Rossum expreso que ``Python a conseguido lambda, reduce, filter y map por cortesia (en mi opinión) de algun hacker de Lisp que las echabada de menos y envio parches operativos''.
+
+La ultima version publicada cuando van Rossun estaba en el CWI fue Python 1.2. En 1995 van Rossum continuó su trabajo en la Corporacion para Iniciativas de Desarrollo Nacional (CNRI) en Reston (Virginia) desde la que publicó varias versiones.
+
+Por la version 1.4, Python habia conseguido varias nuevas funciones. Es de destacar que entre estas son los parametros por palabra clave de Modula3 (Que son tambien similares a los parametros por palabra clave de Lisp) y el soporte integrado para números complejos. Tambin incluye una forma basica de ocultamiento de datos por manipulacion de nombre, aunque podia ser facilmente obviado.
+
+Durante la estancia de var Rossum en el CNRI, lanzo la iniciativa Programacion de Ordenadores para Todos (CP4E), que pretendia hacer la programacion mas accesible a mas gente, con un conocimiento basico en lenguajes de programacion, de forma similar a los conocimientos basicos de literatura inglesa y matematicas que se exigen a cualquier empleado. Python sirvio con un papel central en esto: devido a su enfoque en una sintaxis clara, ya podia considerarse adecuado, y los objetivos del CP4E ya apuntaba parecidos con su predecesor ABC. El proyecto fue fundado por DARPA. En 2007 el proyecto parece inactivo y aunque Python pretende ser de facil aprendizaje y no demasiado arcano en su sintaxis y semantica, llegar a ser comprensible para los no programadores no es una intencion activa.
+
+\subsubsection{Version 2.0}
+
+Python 2.0 introdujo la comprensión de listas, una funcion prestada de los lenguajes de programacion funcionales Lips y Haskell. La sintaxis de python en su construccion es muy parecida a la de Haskell, dejando a un lado la preferencia de Haskell por los caracteres de puntuacion y la preferencia de Python por las palabras clave alfabeticas. Python 2.0 tambien introdujo un sistema de recoleccion de basura capaz de tratar referencias ciclicas.
+
+Python 2.1 era bastante parecido a Python 1.6.1, al igual que Python 2.0. La licencia cambio su nombre a Python Software Foundation License. Todo el codigo, documentacion y especificaciones añadidas, desde la alpha de Python 2.1, es propiedad de la Python Software Foundation, una organizacion sin animo de lucro formada en 2001, modelada siguiendo el ejemplo de la Apache Software Foundation. La publicación incluyó un cambio en la especificacion del lenguaje para soportar intervalos (scopes) anidados, al igual que otros lenguajes con intervalos estáticos. Esta función estaría desactivada por defecto y no fue necesaria hasta Python 2.2.
+
+Una de las principales innovaciones en Python 2.2 fue la unificacion de los tipos de Python (tipos escritos en C) y clases (tipos escritos en Python) en una unica jerarquía. Esta unificacion hizo al modelo de objetos de python un modelo orientado pura y consistentemente a objetos. Tambi\'en se añadieron generadores inspiradores por el lenguajes Icon.
+
+\subsubsection{Version 2.6}
+
+En el momento de desarrollar esta librería, python 2.5 y python 3.0 conviven en muchos proyectos, sin embargo y aunque se pueda ejecutar sobre 3.0, el poco tiempo que lleva la versión 3.0 en funcionamiento hace poco recomendable su utilización en sistemas que requieran de una cierta estabilidad.
+
+
+\section{Protocolos}
 
 \begin{wrapfigure}{l}{0.35\textwidth}
 	%{figure}[h]
@@ -122,7 +176,7 @@ Es dificil generalizar sobre protocolos ya que estos varian ampliamente en propo
 Los protocolos elegidos para demostrar la idoneidad de la plataforma son los siguientes
 
 
-\section{Telnet}
+\subsection{Telnet}
 Se trata de un cl\'asico obligado entre cualquier conjunto de servicios de red (o su sustituto Secure SHell). La función de este servicio consisten en proveer de autentificacion y acceso al control de las terminales de un sistema.
 
 TELNET (TELecommunication NETwork) es un protocolo de red utilizado en conexiones de internet o en redes de area local (LAN). Fue desarrollado en 1969 y especificado en el RFC 15 y despues estandarizado en el IETF STD 8, uno de los primeros estandares de internet.
@@ -135,7 +189,7 @@ Muy a menudo un usuario hará telnet a un sistema tipo Unix o a un simple dispos
 
 En algunos sistemas el cliente se puede utilizar para realizar sesiones TCP en bruto. Comunmente se cree que una sesion telnet que no incluye un IAC (el caracter 255) tiene la misma utilidad. Esta no es el caso ya que debido a NVT (Terminales Virtuales de Red) con reglas especiales como el empleo constante de los caracteres 0 o 13.
 
-\section{HTTP: HiperText Transfer Protocol}
+\subsection{HTTP: HiperText Transfer Protocol}
 Elaborado por el W3C y la IETF el HTTP es seguramente uno de los servicios de red más extendido en internet y en redes internas. Define las normas de comunicación entre los participantes del servicio (clientes, servidores y opcionalmente proxies). Servirá como ejemplo para abordar la programacion de un protocolo m\'as avanzado y permita su uso desde los diversos tipos de navegadores.
 
 El Hypertext Transfer Protocol (HTTP) es un protocolo de comunicaciones para transferencia de informacion a trav\'es de Internet. Su utilización par recuperar documentos de texto vinculados (hipertexto) a llevado al establecimiento de la World Wide Web.
@@ -151,7 +205,7 @@ La razón por la que HTTP se basa en TCP y no en UDP es debida a la cantidad de 
 Los recursos a los que se puede acceder mediante HTTP se identifican mediante Identificadores Unificados de Recursos (URIs) y en concreto Localizadores Unificador de Recursos (URLs).
 
 
-\section{SIP: Session Initiation Protocol} 
+\subsection{SIP: Session Initiation Protocol} 
 
 Es un protocolo desarrollado por el IETF MMUSIC Working Group en la busqueda de un estandar para iniciar, finalizar o modificar sesiones interactivas de usuario, que se emplearan para contactar con dichos usuarios. Normalmente se utiliza en conjunción con otros servicios, principalmente multimedia (video, voz, mensajeria instantanea). Se ha convertido en el protocolo de señalización para voz por IP más utilizado junto al H.232.
 
@@ -163,17 +217,24 @@ SIP puede situarse sobre los proctolos TCP, UDP o SCTP. Fue originariamente dise
 
 Cabe destacar que SIP funciona en modo texto, lo que hace más facil analizar su funcionamiento.
 
-
-\chapter{Análisis}
+\chapter{Análisis y Diseño}
 El modelo Cliente-Servidor es tan básico como antiguo, se pueden considerar que los primeros sistemas de este tipo eran los teletipos utilizados en las universidades para emitir programas a los equipos que alli habian instalados y recibir posteriormente sus resultados. A diferencia de hoy aquellos sistemas funcionaban directamente sobre enlaces dedicados y cada uno de estos teletipos disponia de una conexión permanente.
 
 Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados y sobre todo la diversificación de equipos mucho mas baratos y potentes han modificado el panorama de manera importante: Además de diversificarse los tipos de servicios era posible que varios de ellos coexisitieran en el mismo equipo.
 
+\begin{wrapfigure}{l}{0.50\textwidth}
+	%{figure}[h]
+	\includegraphics[width=0.45\textwidth]{img/FlujoServicio.eps}
+              \caption{niveles OSI}
+  \label{fig:nivelesOSI}
+\end{wrapfigure}
+
 En el contexto de los sistemas informáticos un protocolo es un conjunto de reglas predefinidas, cuyo proposito es estandarizar actividades y procesos. Siguiendo un mismo protocolo se garantiza que se mantendrá la compatibilidad entre los sistemas involucrados, independientemente del medio sobre el que est\'en en contacto, posiblemente otros protocolos.
 
-
 La forma cl\'asica de programar un servicio consiste en un blucle de escucha que inicia subprocesos para cada conexi\'on entrante y que finaliza cuando esta acaba o se produce un error. Se presentan dos entidades en este caso, la del servicio que incluiria las rutinas para iniciar la escucha y el acceso a los datos y la del manipulador, que atiende la conexion siguiendo las pautas del protocolo.
+
 \section{Servicio}
+
 Al arrancar un servicio antes de iniciar el bucle de escucha deben realizarse una serie de procedimientos:
 \begin{enumerate}
 	\item La lectura de parámetros desde linea de comandos
@@ -182,7 +243,7 @@ Al arrancar un servicio antes de iniciar el bucle de escucha deben realizarse un
 	\item Preparar el acceso a los datos necesarios, ficheros o bases de datos
 \end{enumerate}
 
-\subsubsection{parámetros}
+\subsubsection{Parámetros}
 Existen parametros que son comunes practicamente a cualquier servicio por ejemplo:
 \begin{enumerate}
 	\item Fichero de configuraci\'on.
@@ -230,6 +291,14 @@ Se proponen los siguientes niveles
 \subsubsection{Registro}
 Con la intencion de simplificar la tarea de gestionar la salida de mensajes, bien a la salida de la consola o a ficheros de registro deben implementarse clases destinadas a tal fin, que vuelquen o no los mensajes al medio según la locuacidad que se ha fijado y que en caso de que el medio predeterminado falle (por falta de espacio o cambio de permisos) sea capaz de cambiar a otro (indicado en la configuracion o a los medios salida por pantalla dedicados a tal fin).
 
+
+\begin{figure}[h]
+	\includegraphics[width=0.95\textwidth]{img/DiagramaClasesAnalisis.eps}
+              \caption{Diagrama de Clases de Análisis}
+     \label{fig:DiagramaClasesAnalisis}
+\end{figure}
+
+
 \section{Manipulador}
 Precisamente es la naturaleza de un protocolo, como un conjunto ordenado de etapas en las que se organiza el flujo de informacion entre los sistemas, la que permite abstraer al programa servidor como un automata sensible al contexto. Cada etapa del manipulador equivale al estado del automata y pueden realizarse un conjunto determinado de acciones:
 \begin{enumerate}
@@ -243,7 +312,49 @@ La recepción de los datos puede además controlarse mediante expresiones regula
 
 En el diseño del manipulador debe tenerse en cuenta que normalmente existe un orden convencional en las etapas, previsiblemente estas deberia contener un numero limitado de procedimientos, para reducir la complejidad.
 
+\section{Flujos de los protocolos}
+A continuación se va a espeficicar el flujo de los protocolos con los que se va a probar la plataforma.
+
+\subsection{Telnet}
+\begin{figure}[h]
+	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoTelnet.eps}
+              \caption{Flujo de desarrollo del protocolo Telnet}
+  \label{fig:DiagramaFlujoTelnet}
+\end{figure}
+
+El protocolo Telnet tiene un flujo básico de desarrollo muy simple:
+\begin{enumerate}
+	\item Se establece la conexión con el cliente
+	\item Se presenta el dialogo de peticion de contraseña y se espera a que se introduzcan los datos.
+	\item Se checkea la contraseña contra la base de datos correspondiente
+	\item Se solicita el comando a ejecutar en el sistema
+	\item Se ejecuta el comando pertinente y se muestra su salida. y se vuelve al paso 4.
+\end{enumerate}
+Existe un pequeño conjunto de pasos alternativos:
+\begin{enumerate}
+	\item (4.Alternativo) El usuario debe repetir la autentificación
+	\item (5.Alternativo) Se ha solicitado finalizar la sesión con lo que procedemos a la desconexión.
+\end{enumerate}
+\subsection{HyperText Transfer Protocol}
+\begin{figure}[h]
+	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoHTTP.eps}
+              \caption{Flujo de desarrollo del protocolo HTTP}
+  \label{fig:DiagramaFlujoHTTP}
+\end{figure}
+El protocolo HTTP/1.1 tiene un flujo basico bastante más amplio, ya que despues de recibir la orden las rutinas que atenderán el comando difieren drasticamente, en consecuencia deberán implementarse nuevos estados para cada tipo de comando.
+\begin{enumerate}
+	\item Se establece la conexión con el cliente
+	\item Se muestra la información del servidor
+	\item Se reciben las cabeceras y el comando
+	\item En el estado de atencion se recibe el resto de la información (si procede)
+	\item Se responde informando del estado.
+\end{enumerate}
+Aunque la conexión pueda perderse inesperadamente en cualquier momento, es en el momento de esperar el comando cuando se produciría una desconexión correcta.
+\subsection{Session Initializatión Protocol}
+FLUJO DE OPERACION DEL SIP
 
 
+
+\chapter{Previsiones y proyectos futuros}
 \end{document}
 
