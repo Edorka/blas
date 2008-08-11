@@ -138,8 +138,6 @@ class Server:
 		else:
 			self.usage()
 
-
-
 	def usage(self):
 		msg = ""
 		for m in dir(self):
@@ -267,7 +265,7 @@ class Handler(Thread):
 			self.current = self.secuence.pop(0)
 		self.log_step()
 
-	def back_step(self,nam):
+	def back_step(self,name):
 		self.secuence = [self.current] + self.secuence
 		self.current = name
 		self.log_step()
