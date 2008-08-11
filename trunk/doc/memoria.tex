@@ -144,6 +144,9 @@ Una de las principales innovaciones en Python 2.2 fue la unificacion de los tipo
 
 En el momento de desarrollar esta librería, python 2.5 y python 3.0 conviven en muchos proyectos, sin embargo y aunque se pueda ejecutar sobre 3.0, el poco tiempo que lleva la versión 3.0 en funcionamiento hace poco recomendable su utilización en sistemas que requieran de una cierta estabilidad.
 
+\subsubsection{Disponibilidad}
+
+En muchos sistemas operativos Python es un componente estandar, se incluye en la mayoria de las distribuciones de Linux, NetBSD, OpenBSD y con Mac OS X. Slackware, Red Hat Linux y Fedora utilizan el instalador Anaconda, escrito en Python. Gentoo Linux utiliza Python en su sistema de administración de paquetes Portage, y su herramienta por defecto Emerge. Pardus lo utiliza para administración y durante el arranque del sistema.
 
 \section{Protocolos}
 
@@ -350,9 +353,12 @@ El protocolo HTTP/1.1 tiene un flujo basico bastante más amplio, ya que despues
 	\item Se responde informando del estado.
 \end{enumerate}
 Aunque la conexión pueda perderse inesperadamente en cualquier momento, es en el momento de esperar el comando cuando se produciría una desconexión correcta.
-\subsection{Session Initializatión Protocol}
-FLUJO DE OPERACION DEL SIP
-
+\subsection{Session Initialization Protocol}
+\begin{figure}[h]
+	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoSIP.eps}
+              \caption{Flujo de desarrollo del protocolo SIP}
+  \label{fig:DiagramaFlujoSIP}
+\end{figure}
 
 
 \chapter{Previsiones y proyectos futuros}
