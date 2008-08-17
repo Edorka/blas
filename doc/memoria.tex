@@ -221,6 +221,7 @@ SIP puede situarse sobre los proctolos TCP, UDP o SCTP. Fue originariamente dise
 Cabe destacar que SIP funciona en modo texto, lo que hace más facil analizar su funcionamiento.
 
 \chapter{Análisis y Diseño}
+\section{Análisis}
 El modelo Cliente-Servidor es tan básico como antiguo, se pueden considerar que los primeros sistemas de este tipo eran los teletipos utilizados en las universidades para emitir programas a los equipos que alli habian instalados y recibir posteriormente sus resultados. A diferencia de hoy aquellos sistemas funcionaban directamente sobre enlaces dedicados y cada uno de estos teletipos disponia de una conexión permanente.
 
 Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados y sobre todo la diversificación de equipos mucho mas baratos y potentes han modificado el panorama de manera importante: Además de diversificarse los tipos de servicios era posible que varios de ellos coexisitieran en el mismo equipo.
@@ -236,7 +237,7 @@ En el contexto de los sistemas informáticos un protocolo es un conjunto de regl
 
 La forma cl\'asica de programar un servicio consiste en un blucle de escucha que inicia subprocesos para cada conexi\'on entrante y que finaliza cuando esta acaba o se produce un error. Se presentan dos entidades en este caso, la del servicio que incluiria las rutinas para iniciar la escucha y el acceso a los datos y la del manipulador, que atiende la conexion siguiendo las pautas del protocolo.
 
-\section{Servicio}
+\subsection{Servicio}
 
 Al arrancar un servicio antes de iniciar el bucle de escucha deben realizarse una serie de procedimientos:
 \begin{enumerate}
@@ -302,7 +303,7 @@ Con la intencion de simplificar la tarea de gestionar la salida de mensajes, bie
 \end{figure}
 
 
-\section{Manipulador}
+\subsection{Manipulador}
 Precisamente es la naturaleza de un protocolo, como un conjunto ordenado de etapas en las que se organiza el flujo de informacion entre los sistemas, la que permite abstraer al programa servidor como un automata sensible al contexto. Cada etapa del manipulador equivale al estado del automata y pueden realizarse un conjunto determinado de acciones:
 \begin{enumerate}
 	\item Recibir datos desde la conexión
@@ -315,10 +316,10 @@ La recepción de los datos puede además controlarse mediante expresiones regula
 
 En el diseño del manipulador debe tenerse en cuenta que normalmente existe un orden convencional en las etapas, previsiblemente estas deberia contener un numero limitado de procedimientos, para reducir la complejidad.
 
-\section{Flujos de los protocolos}
+\subsection{Flujos de los protocolos}
 A continuación se va a espeficicar el flujo de los protocolos con los que se va a probar la plataforma.
 
-\subsection{Telnet}
+\subsubsection{Telnet}
 \begin{figure}[h]
 	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoTelnet.eps}
               \caption{Flujo de desarrollo del protocolo Telnet}
@@ -338,7 +339,7 @@ Existe un pequeño conjunto de pasos alternativos:
 	\item (4.Alternativo) El usuario debe repetir la autentificación
 	\item (5.Alternativo) Se ha solicitado finalizar la sesión con lo que procedemos a la desconexión.
 \end{enumerate}
-\subsection{HyperText Transfer Protocol}
+\subsubsection{HyperText Transfer Protocol}
 \begin{figure}[h]
 	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoHTTP.eps}
               \caption{Flujo de desarrollo del protocolo HTTP}
@@ -353,13 +354,27 @@ El protocolo HTTP/1.1 tiene un flujo basico bastante más amplio, ya que despues
 	\item Se responde informando del estado.
 \end{enumerate}
 Aunque la conexión pueda perderse inesperadamente en cualquier momento, es en el momento de esperar el comando cuando se produciría una desconexión correcta.
-\subsection{Session Initialization Protocol}
+\subsubsection{Session Initialization Protocol}
+El protocolo SIP es responsable de varias tareas, aunque puede operar sobre UDP la implementación sobre BLAS solo funcionará sobre TCP. Estas tareas son:
+
+\begin{enumerate}
+	\item{Registro(REGISTER): El usuario se da de alta en el sistema y figura en el directorio de usuario.}
+	\item{Invitación(INVITE): Dirigido a un usuario se le autoriza a acceder a un medio compartido. Debe aceptarse con ACK o denegarse con CANCEL.}
+	\item{Opciones(OPTIONS): Solicita al servidor el listado de las funcionalidades.}
+	\item{Cierre(BYE): Avisa de que va a procederse con la desconexión.}
+\end{enumerate}
 \begin{figure}[h]
 	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoSIP.eps}
               \caption{Flujo de desarrollo del protocolo SIP}
   \label{fig:DiagramaFlujoSIP}
-\end{figure}
 
+\end{figure}
+\section{Diseño}
+%\begin{figure}[h]
+%	\includegraphics[width=0.95\textwidth]{img/DiagramaClasesDisennoTelnet.eps}
+%              \caption{Diagrama de Clases de Diseño para el servicio Telnet}
+%	      \label{fig:DiagramaClasesDiseñoTelnet}
+%\end{figure}
 
 \chapter{Previsiones y proyectos futuros}
 \end{document}
