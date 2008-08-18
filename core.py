@@ -58,6 +58,12 @@ class Log:
 		else:
 			print s
 
+class Error(Exception):
+	def __init__(self,msg):
+		self.msg = msg
+	def __str__(self):
+		return "Error: "+self.msg
+
 class Out(Log):
 	None	
 
@@ -230,7 +236,7 @@ class Handler(Thread):
 				resultado = re.match(pattern,input)
 				if resultado == None:
 					# ERROR : linea incorrecta
-					send = Error(2,pattern+input)
+					send = Error("fallo en la recepcion de :"+pattern+"\nse recibio:"+input)
 					break;
 				else: 
 					# tenemos cadena
@@ -239,12 +245,16 @@ class Handler(Thread):
 		if send == None : send = Error(1)
 		return send
 
-	def receive(self,pattern="(?P<input>(.*))"):
-		s = self.socket
-		data = s.recv(1000)
-		m = re.match(pattern,data)
-		if m: return m.groupdict()
-		else: return None
+	def receive_line(self,pattern):
+		return self.receive(pattern+"(?\r)")
+
+	#def receive(self,pattern="(?P<input>(.*))"):
+	#	s = self.socket
+	#	data = s.recv(2000)
+	#	print "data:",data
+	#	m = re.match(pattern,data)
+	#	if m: return m.groupdict()
+	#	else: return None
 
 	def log_step(self,state=None):
 		if not state: state = self.current
