@@ -1,6 +1,6 @@
 import sys
 from core import Server
-from core import Handler
+from core import TCPHandler
 from core import Log
 import core
 
@@ -16,7 +16,7 @@ class TelnetServer(Server):
 		Server.__init__(self,args)
 		
 
-class TelnetHandler(Handler):
+class TelnetHandler(TCPHandler):
  	def __init__(self,socket,parent=None,verbosity=1,logs={}):
 		Handler.__init__(self,socket)
 		self.log = logs

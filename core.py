@@ -9,6 +9,9 @@ letters = r"[a-z,A-Z]"
 numbers = r"[0-9]"
 decimal_point = r"\."
 
+TCP = 0
+UDP = 1
+
 def join_or(*arg):
 	s = ""
 	for a in arg:
@@ -62,7 +65,7 @@ class Error(Exception):
 	def __init__(self,msg):
 		self.msg = msg
 	def __str__(self):
-		return "Error: "+self.msg
+		return "Error: "+str(self.msg)
 
 class Out(Log):
 	None	
@@ -90,6 +93,7 @@ class Server:
 		#print "based on GAS"
 		self.log = {}
 		self.config = {}
+		self.family = TCP
 		if args:
 			parsed = parse_args(args)
 			self.args = self.load_args(parsed)
@@ -166,13 +170,22 @@ class Server:
 		if self.ip: r += " for incoming connections from "+self.ip
 		r += "\n"
 		self.report(r,3)
-		s = socket.socket();
-		s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-		s.bind((self.ip,self.port))
-		s.listen( limit )
+		#if not self.family: self.family = TCP
+		if self.family is TCP:
+			s = socket.socket();
+			s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+			s.bind((self.ip,self.port))
+			s.listen( limit )
+		else:
+			s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM);
+			s.bind((self.ip,self.port))
 		while 1 :
-			(c, address) = s.accept()
-			h = handler(c,address,self)
+			if self.family is TCP: 
+				(c, address) = s.accept()
+				h = handler(c,address,self)
+			else:
+				data,addr = s.recvfrom(1500)
+				h = handler(data,addr,self)
 			h.log = self.log
 			h.start()
 
@@ -192,11 +205,7 @@ class Handler(Thread):
 		else:
 			print "ERROR:"+msg		
 
-	def __init__(self,socket):
-		self.socket = socket
-		self.socket.settimeout(60)
-		incoming = socket.getpeername()
-		self.id = str(incoming[0])+":"+str(incoming[1])
+	def __init__(self):
 		self.done = []
 		Thread.__init__(self)
 
@@ -205,7 +214,47 @@ class Handler(Thread):
 		while self.secuence:
 			exec("self.step_"+self.current+"()")
 			if self.current == 'end': break
+
+	def receive_line(self,pattern):
+		return self.receive(pattern+"(?\r)")
+
+	def log_step(self,state=None):
+		if not state: state = self.current
+		s = eval("self.step_"+state)
+		if s.__doc__:
+			self.report("current state:"+s.__doc__,12)
+		else:
+			self.report("current state:"+state,12)
+
+	def next_step(self,state=None):
+		if state:
+			position = self.secuence.index(state)
+			self.current = state
+			self.done += self.secuence[:position]
+			self.secuence = self.secuence[position+1:]
+		else:
+			self.done += [self.current]
+			self.current = self.secuence.pop(0)
+		self.log_step()
+
+	def back_step(self,name):
+		self.secuence = [self.current] + self.secuence
+		self.current = name
+		self.log_step()
+
+	def step_end(self):
+		self.report("end of process.")
 		self.socket.close()
+	
+
+class TCPHandler(Handler):
+
+	def __init__(self,socket):
+		self.socket = socket
+		self.socket.settimeout(60)
+		incoming = socket.getpeername()
+		self.id = str(incoming[0])+":"+str(incoming[1])
+		Handler.__init__(self)
 
 	def send(self,data):
 		s = self.socket
@@ -245,42 +294,45 @@ class Handler(Thread):
 		if send == None : send = Error(1)
 		return send
 
-	def receive_line(self,pattern):
-		return self.receive(pattern+"(?\r)")
 
-	#def receive(self,pattern="(?P<input>(.*))"):
-	#	s = self.socket
-	#	data = s.recv(2000)
-	#	print "data:",data
-	#	m = re.match(pattern,data)
-	#	if m: return m.groupdict()
-	#	else: return None
+class UDPHandler(Handler):
 
-	def log_step(self,state=None):
-		if not state: state = self.current
-		s = eval("self.step_"+state)
-		if s.__doc__:
-			self.report("current state:"+s.__doc__,12)
-		else:
-			self.report("current state:"+state,12)
+	def __init__(self,data,origin):
+		self.data = data
+		self.incoming = origin
+		self.id = str(origin[0])+":"+str(origin[1])
+		Handler.__init__(self)
 
-	def next_step(self,state=None):
-		if state:
-			position = self.secuence.index(state)
-			self.current = state
-			self.done += self.secuence[:position]
-			self.secuence = self.secuence[position+1:]
-		else:
-			self.done += [self.current]
-			self.current = self.secuence.pop(0)
-		self.log_step()
+	def send(self,data):
+		print "enviando udp"
+		#self.log("ORIGIN:"+self.incoming)
+		#if not data: return None
+		try: 
+			s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+			s.sendto(data,self.incoming) #+platform.protocol.EOL)
+		except socket.error, msg:
+			self.error(10,msg+"sending:"+data+".")
 
-	def back_step(self,name):
-		self.secuence = [self.current] + self.secuence
-		self.current = name
-		self.log_step()
+	def receive(self,pattern=".*"):
+		c = ""; input = ""; send = None
+		resultado = {}
+		while c is not None:
+			c = self.data[0] ; self.data= self.data[1:]
+			if c:
+				input += c
+			if input == "" and c =="\r":  continue
+			if c == '\n': 
+				resultado = re.match(pattern,input)
+				if resultado == None:
+					# ERROR : linea incorrecta
+					send = Error("fallo en la recepcion de :"+pattern+"\nse recibio:"+input)
+					break;
+				else: 
+					# tenemos cadena
+					send = resultado.groupdict()
+					break;
+		if send == None : send = Error("fallo en recepcion, retorno nulo")
+		return send
 
 	def step_end(self):
 		self.report("end of process.")
-	
-
