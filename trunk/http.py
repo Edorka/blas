@@ -1,6 +1,6 @@
 import sys
 from core import Server
-from core import Handler
+from core import TCPHandler
 from core import Log
 import core
 
@@ -20,7 +20,7 @@ class HTTPServer(Server):
 		Server.__init__(self,args)
 		
 
-class HTTPHandler(Handler):
+class HTTPHandler(TCPHandler):
  	def __init__(self,socket,parent=None,verbosity=1,logs={}):
 		Handler.__init__(self,socket)
 		self.log = logs
