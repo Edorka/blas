@@ -69,7 +69,7 @@ Existen numerosos proyectos academicos que requieren la implementaci\'on de:
 y que pueden ver facilitada su realización utilizando esta plataforma.
 
 \subsection{Microdispositivos}
-La mayor\'ia de los dispositivos dotados de un sistema operativo m\'inimo disponen de una modesta pila TCP/IP ya que practicamente todos estos dispositivos se dise\~{n}an incluyendo algún tipo de hardware de interconexi\'on. Sin embargo por razones de coste economico o rendimiento energetico se ven afectados por una leve capacidad de memoria y/o potencia de c\'alculo que hacen que la opcion de conectarlos a un servicio convencional (HTTP y REST por ejemplo) resulte muy engorrosa (y caro) en su programaci\'on, e incluso a veces impracticable.
+La mayor\'ia de los dispositivos dotados de un sistema operativo m\'inimo disponen de una modesta pila IP ya que, practicamente todos estos dispositivos, se dise\~{n}an incluyendo algún tipo de hardware de interconexi\'on mediante enlaces de radio o cableado . Sin embargo por razones de coste economico y rendimiento energetico se ven afectados por una leve capacidad de memoria y/o potencia de c\'alculo que hacen que la opcion de conectarlos a un servicio convencional (HTTP y REST por ejemplo) resulte muy engorrosa (y caro) en su programaci\'on, e incluso a veces impracticable.
 
 Es por este motivo que se suelen dise\~{n}ar protocolos normalmente muy escuetos, especificamente adaptados a la funcionalidad del dispositivo y a sus limitaciones de proceso.
 
@@ -83,7 +83,7 @@ La capacidad de programar servicios simulados agilmente puede ser un complemento
 
 Esta plataforma se ha ideado para facilitar el diseño y la implementación a los colectivos que por diversos motivos se ven ante la necesidad de programar un servicio de red en poco tiempo. 
 
-Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios TCP que consumen mucho tiempo y que normalmente su implementaci\'on resulta bastante repetitiva:
+Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios aTCP que consumen mucho tiempo y que normalmente su implementaci\'on resulta bastante repetitiva:
 \begin{enumerate}
 	\item Entrada controlada de datos.
 	\item Registro (o registros) de actividad y error.
@@ -94,17 +94,18 @@ Existen multitud de funcionalidades ligadas a los programas que ofrecen servicio
 
 \chapter{Estado del arte}
 
-\section{Elecci\'on del Lenguaje} 
+\section{Lenguaje: Python}
+\subsection{Elecci\'on del Lenguaje} 
 Se ha elegido Python como lenguaje de programaci\'on para esta plataforma por las siguientes razones:
 \begin{enumerate}
 	\item Velocidad de aprendizaje: cualquier persona que conozca un lenguaje orientado a objetos puede aprenderlo en muy poco tiempo.
-	\item Reflexividad: Las clases en pytohn tienen conocimiento de sus propios metodos y atributos.
+	\item Reflexividad e introspección: Las clases en pytohn tienen conocimiento de sus propios metodos y atributos.
 	\item Interpretado: Al ejecutarse bajo un interprete no har\'an falta compilar distintos ejecutables seg\'un la plataforma.
 \end{enumerate}
 
 Con el empleo de Python se puede conseguir con pocas lineas la implementaci\'on de un protocolo completo. Al tratarse de un lenguaje en que la identaci\'on es obligatoria y la sintaxis muy clara normalmente su codigo fuente esta bien estructurado y resulta facil de leer incluso para quienes apenas conozcan Python.
 
-\section{Python: historia y características}
+\subsection{Python: historia y características}
 
 Python fue creado como sucesor del lenguaje ABC por Guido van Rossum en 1990 cuando trabajaba en el Stichting Mathematisch Centrum (CWI). En 1995 Guido continuó su trabajo en Python en el CNRI donde creó muchas versiones del lenguaje. En mayo del 2000 Guido y el equipo de desarrollo de Python se trasladan a BeOpen.com y se forma el BeOpen PythonLabs. En octubre de este mismo año, PythonLabs se va a Digital Creations (actualmente Zope Corporation). En 2001, se crea la Python Software Foundation (PSF), una organización sin ánimo de lucro creada específicamente para proteger la libertad de Python como lenguaje de código abierto.
 
@@ -148,22 +149,16 @@ En el momento de desarrollar esta librería, python 2.5 y python 3.0 conviven en
 
 En muchos sistemas operativos Python es un componente estandar, se incluye en la mayoria de las distribuciones de Linux, NetBSD, OpenBSD y con Mac OS X. Slackware, Red Hat Linux y Fedora utilizan el instalador Anaconda, escrito en Python. Gentoo Linux utiliza Python en su sistema de administración de paquetes Portage, y su herramienta por defecto Emerge. Pardus lo utiliza para administración y durante el arranque del sistema.
 
-\section{Protocolos}
+\section{Protocolos de red: IP}
+Es dificil generalizar sobre protocolos ya que estos varian ampliamente en proposito y en complejidad. La mayoria de los protocolos de red poseen alguna de las siguiente propiedades:
 
-\begin{wrapfigure}{l}{0.35\textwidth}
+\begin{wrapfigure}{r}{0.35\textwidth}
 	%{figure}[h]
-	\includegraphics[width=0.25\textwidth]{img/NivelesOSI.eps}
-              \caption{niveles OSI}
-  \label{fig:nivelesOSI}
+	\includegraphics[width=0.25\textwidth]{img/NivelesOSIRed.eps}	
+              \caption{niveles OSI: protocolo de red}
+  \label{fig:nivelesOSIRed}
 \end{wrapfigure}
 
-En este proyecto se van a implementar una serie de protocolos para demostrar la versatilidad de la plataforma y sobre todo la comodidad y la limpieza de codigo que aportan. Se pretende conseguir una plataforma que facilite la implementación de servicios para protocolos a nivel de Aplicacion.
-
-Limitando la comunicación al nivel de aplicación todos los protocolos existentes pueden resumirse como una secuencia de emisión y recepción de datos en una serie de etapas y formatos establecidos por el protocolo. 
-
-De esta manera se puede entender al servicio como un autómata sensible al contexto para cada conexión que recibe. Orientando el diseño del servicio como una secuencia de pasos y que estos sean lo más simple y claro posible se ahorrará mucho tiempo y complejidad en la producción del codigo. 
-
-Es dificil generalizar sobre protocolos ya que estos varian ampliamente en proposito y en complejidad. La mayoria de los protocolos de red poseen alguna de las siguiente propiedades:
 
 \begin{enumerate}
 \item Detección de la capa subyacente de enlace de red, o la existencia de otro punto de entrada o nodo.
@@ -175,6 +170,159 @@ Es dificil generalizar sobre protocolos ya que estos varian ampliamente en propo
 \item Como detectar una perdida inesperada de la conexion y como comportarse ante esta.
 \item Finalizar la sesión o conexión.
 \end{enumerate}
+
+En concreto el protocolo de Internet (IP) se utiliza en los extremos de la comunicación para mantener un flujo de datos a traves de una red de paquetes coonmutados.
+
+Precismente debido a la naturaleza de estas redes los datos son divididos en cantidades coherentes a las limitaciones del medio (por ejemplo 1500 bytes para redes ethernet), estos fragmentos de información se les denominan paquetes o datagramas. Además el protocolo no requiere que las rutas que deben seguir estos paquetes sean establecidas de antemano, es el propio protocolo el que encontrará la ruta idonea.
+
+Con el protocolo IP se provee un sistema para la transmision de datagramas no fiable (best effort), este metodo de transmisión no garantiza resultados pero intentará utilizar la ruta más efectica. Debe aclararse que IP no posee mecanismos para garantizar que la transmisión ha llegado a destino, aunque si dispone de mecanismos para la detección de errores en los datos que contenga el paquete. Debido a la naturaleza dinámica de las rutas y a la hetereogeneidad de los dispositivos es probable que los datagramas en que ha sido dividido el flujo de datos lleguen fuera de orden e incluso que llegue repetido, es tarea de los protocolos de transporte detectar estos sucesos.
+
+A lo largo de la ruta es posible que la longitud maxima de transmision (MTU) vaya cambiando (por ejemplo de 1500bytes de ethernet a 576 de una conexion punto a punto). Es tarea del protocolo IP volver a fragmentar estos datagramas en otros más pequeños y recomponerlos cuando sea necesario, debe tenerse en cuenta que estos fragmentos pueden utilizar vias diferentes en según que tramos de la ruta.
+
+Para manejar estos incidentes el protocolo acompaña a las tramas de datos en los datagramas de una cabeceras, estas llevan incluidas las direcciones IP del origen y destino de la comunicacion, estas son requeridas por los dispositivos que retransmitirán los datos a trav\'es de las rutas para seleccionar el camino adecuado.
+
+Actualmente el protocolo mas utilizado en Internet es el IP version 4 (IPv4 en adelante). Sin embargo ya se ha propuesto un sucesor, IPv6, llamado a eliminar las limitaciones que afectan a IPv4 desde su diseño. Una de estas nuevas caracterisiticas es el empleo de direcciones de 128bits, que permitiria otorgar una dirección univoca a mas de 670 mil millones de dispositivos. 
+
+Cabe señalar las las versiones 0 a la 3 del protocolo IP no llegaron a emplearse  y que la version 5 se utilizó para un prototipo experimental. Además IPv4 dispone de diferentes implementaciones que buscan mejorar su eficiencia o limitar el efecto de sus deficiencias.
+
+\section{Protocolos de transporte}
+
+Basandonse en el nivel de Red (lo que proporciona una ruta de comunicación y un medio libre de errores inesperado en los datos recibidos) existe un nuevo nivel OSI. Los protocolos de este nivel tienen la responsabilidad de controlar la entrega en destino de los datos y en la medida de lo posible conseguirlo con una cantidad mínima de redundancia de datos.
+
+\begin{wrapfigure}{l}{0.35\textwidth}
+	\includegraphics[width=0.25\textwidth]{img/NivelesOSITransporte.eps}	
+              \caption{niveles OSI: protocolos de transporte}
+  \label{fig:nivelesOSITransporte}
+\end{wrapfigure}
+
+Basandonos en esta jerarquía y situandonos sobre el protocolo de transporte los extremos de comunicación pueden dar las siguientes caracterisiticas por garantizadas :
+\begin{enumerate}
+	\item{Garantizar una transferencia libre de datos entre los interlocutores}
+	\item{Mantener una ruta de comunicacion entre puntos que no est\'en directamente conexionados}
+	\item{Control de flujo y gestión del buffer}
+	\item{Multiplexión de las vias de comunicación}
+	\item{Recuperación y redirección}
+\end{enumerate}
+\subsection{Protocolo TCP}
+El Transfer Control Protocol es el encargado de proporcionar un medio de comunicación orientado a conexión. Permite controlar que los mensajes llegan de un extremo a otro en el orden correspondiente. Además detecta y según el caso corrige fallos en la conexión, ya sean errores en los mensajes recibidos, perdidas de tramas enteras o errores en parte de estas.
+
+Las aplicaciónes sobre TCP envian y reciben flujos de datos de forma transparente (salvo error) a la aplicación que las utiliza, es el propio protocolo quien fragmenta la tramisión según los requisitos del medio y organiza que la recomposición de los datos sea coherente sea cual sea el orden de llegada.
+
+Las cabeceras del protocolo TCP son bastante complejas
+
+Los programas que utilizan una conexion TCP para transmitir datos lo hacen de manera transparente, envian el flujo de bytes y es el protocolo el que la divide en paquetes según la configuración de la capa de red, adjunta ademas su propia cabecera, que será indispensable para conseguir una recepción coherente de los datos, ya que incluye entre otros campos el número de secuencia. Durante la operación una pila TCP va recibiendo los paquetes desde la capa IP, los ordena y organiza segun el número de secuencia. Para detectar la falta de paquetes y repetir la transferencia existe un mecanismo de asentimiento de la trasmisión: en la cabecera, un campo NACK indica al emisor de la información hasta que número de secuencia se han recibido todos los paquetes y se ha recompuesto los datos. El mecasnismo de caducidad (timeout) se activará si en un cierto tiempo el emisor no ha recibido confirmación por parte del receptor.
+\begin{figure}[h]
+	\begin{center}
+	\includegraphics[width=0.90\textwidth]{img/CabeceraTCP.eps}	
+\end{center}
+\caption{TCP: Diagrama de cabecera}
+  \label{fig:CabeceraTCP}
+\end{figure}
+
+A continuación se desglosan los campos contenidos en las cabeceras:
+\begin{enumerate}
+	\item{Puertos de origen y destino: identifica a que puerto de los extremos debe dirigirse el paquete}
+	\item{Número de secuencia: Sirve para garantizar la coherencia y completud del flujo de datos que se esta enviando. Dependiendo de si el flag SYN esta o no activado puede indicarnos si ese número de secuencia será el inicial para esa transferencia de datos o si esta desactivado marcará el numero de secuencia del primer byte de datos.}
+	\item{NACK: si el paquete es de tipo ACK entonces el receptor esta esperando que el siguiente paquete recibido sea el correspondiente al siguiente numero de secuencia.}
+	\item{Longitud de cabecera: Especifica el tamaño de la cabecera en divisores de 32bits. A este campo tambien se le denomina dataoffset por ser eldesplazamiento necesario para acceder a la trama de datos.}
+	\item{Reservado: estos bits deberán dejarse a 0, están reservados para aplicaciones futuras del protocolo.}
+	\item{Flags: estos 8 bits de control se utilizan para regular el funcionamiento del protocolo:
+		\begin{enumerate}
+			\item{CWR: Congestion Window Reduced, avisa al receptor de que se esta produciendo congestion en la red y debe negociarse una reducción de la ventana del buffer.}
+			\item{ECN-Echo: Se avisa al destino que puede emitir notificaciones ECN, este flag se usa durante la etapa de saludo.}
+			\item{URG: Urgente, avisa de que el paquete debe ser tratado con prioridad en la pila}
+			\item{PSH: Push, hace que los datos almacenados en el buffer sean traspasado a la aplicación}
+			\item{ACK: Acknowlegde, hace que el número de acuse de recibo sea considerado por el receptor.}
+			\item{RST: Reset, reinicializa la conexión}
+			\item{SYN: Synchronize, obliga a que los numeros de secuencia est\'en sincronizados.}
+			\item{FIN: Comunica el final del flujo de datos.}
+		\end{enumerate}
+	}
+	\item{Ventana: es la capacidad de la ventana de recepcion, indica en bytes la cantidad de datos que el receptor esta esperando.}
+	\item{Checksun: suma de comprobación que abarca tanto cabecera como datos.}
+	\item{Urgente: Si esta el flag URG activado indica el offset respecto del número de secuencia del ultimo byte que debe considerarse urgente}
+	\item{Opciones: Campo de información ajena al contenido de los datos, debe ser multimo de 32bits}
+	\item{Datos: trama con el segmento de datos que se espera en el destino.}
+\end{enumerate}
+
+\subsubsection{Funcionamiento}
+El protocolo TCP basa su funcionamiento en una serie de procedimientos consecutivos:
+\begin{enumerate}
+	\item{Saludo o establecimiento de la conexión: Consistente en la negociación de 3 pasos en la que tambi\'en se establecen los parametros clave de esta.}
+	\item{Transferencia de los datos: en la que se van emitiendo asentimientos para confirmar la llegada de grupos de tramas}
+	\item{Desconexión: para la que se procede a una negociación de 4 pasos}
+\end{enumerate}
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+	\includegraphics[width=0.35\textwidth]{img/TCPSaludo.eps}	
+              \caption{Protocolo TCP: secuencia de saludo}
+  \label{fig:TCPSaludo}
+\end{wrapfigure}
+
+Habitualmente para iniciar una conexión TCP un dispositivo cliente se comunica con un dispositivo servidor, que se encuentra escuchando en un puerto TCP concreto a traves de la pila IP. Antes de que tanto el cliente como el servidor dispongan de un socke se realiza una negociación de 3 pasos. El cliente emite un paquete SYN al puerto especifico del servidor, ahí el sistema operativo enviará la información al software que haya realizado el bind() a ese puerto. Si no existe ningún software escuchando se emitirá un paquete RST al cliente para que conozca el fallo de la operación. Si se ha alcanzado un puerto abierto el sistema responderá con un paquete SYN+ACK y para dar por establecida la conexión el cliente responderá a su vez con un paquete ACK. Es en este proceso cuando se elige al azar un número de secuencia que permitirá proceder correctamente en las operaciones de transferencia de datos.
+
+
+Una vez establecida la conexión cliente y servidor dispondrán de un mecanismo de intercambio de datos muy similar al que se dispone cuando se abre un dispositivo de tipo caracter, el nivel de aplicación emitirá y recibirá datos de forma transparente y serán las capas de Trasnporte y Control las encargadas de que lleguen y se ordenen correctamente en destino.
+
+
+El proceso de envio de datos requiere que se hayan determinado dos parametros clave obligatorios en el establecimiento:
+\begin{enumerate}
+	\item{Número de secuencia: que corresponderá al primer byte de la trama contenida en el paquete y que se espera en el otro extremoi. Cabe destacar que el numero de secuencia volver a 0 cuando haya sobrepasado el máximo}
+	\item{Tamaño de ventana: es la cantidad de datos que pueden enviarse desde el emisor sin haber recibido confirmación de receptor.}
+\end{enumerate}
+
+Durante la transferencia el emisor envía un número de paquetes, este número depende del número de asentimiento (que es el número de secuencia reconocido por el receptor), el número de secuencia de los paquetes que esta enviando y la capacidad de la ventana de transferencia.
+
+Normalmente el cliente ira recibiendo con un cierto orden los paquetes y modificando su propio número de secuencia. Periodicamente se informará al emisor con un paquete ACK del número de secuencia confirmado, mientras tanto, este reenviará el conjunto de paquetes que correspondan a la ventana actual. Tambi\'en se emitirán ACKs cuando el paquete que se ha recibido complete a un conjunto.
+
+En ciertas implementaciones de TCP puede encontrarse una nueva función, el asentimiento selectivo, que permite avisar al emisor de que paquetes son necesarios para completar el conjunto actual indicando cuales se han recibido.
+
+Uno de los motivos más comunes de la perdida de paquetes es la saturación del canal, se emiten más información de la que este puede enviar, con lo que los paquetes empiezan a ser descartados. Por este motivo TCP ha implementado sistemas para la detección de la saturación del canal, que regulan de una forma efectiva el tamaño de la ventana y el ritmo de emision de los paquetes.
+
+\begin{wrapfigure}{l}{0.45\textwidth}
+	\includegraphics[width=0.35\textwidth]{img/TCPDespedida.eps}	
+              \caption{Protocolo TCP: secuencia de desconexión}
+  \label{fig:TCPDespedida}
+\end{wrapfigure}
+
+
+Durante la finalización de una conexión uno de los extremos emite un paqute FIN, la respuesta consiste en dos paquetes, un ACK y posteriormente un FIN, cuando el emisor de la despedida emita un ACK la conexión se dará por concluida.
+
+\subsubsection{Evolución}
+
+\subsection{Protocolo UDP}
+
+De entre los protocolos de transporte sobre IP, el User Datagram Protocol (UDP) es el mas básico de todos.
+
+Orientado al simple envio de mensajes UDP ofrece un metodo de operacion muy sencillo para el acceso al protocolo de red. Sin embargo UDP no garantiza la recepcion del mensaje, con lo que el origen de los datos no tiene forma de saber mediante el propio protocolo en que estado se encuentra la transacción de datos, ni incluso si estos han salido a la red. Lo que si garantiza UDP es el multiplexado, la verificacion de errores y una minima proporcion del tamaño de la cabecera respecto de la trama util. 
+
+Sin embargo si se desea obtener algun mecanismo para el control de la entrega de mensajes debe implementarse a nivel de aplicación.
+\begin{figure}[h]
+	\begin{center}
+	\includegraphics[width=0.55\textwidth]{img/CabeceraUDP.eps}	
+\end{center}
+\caption{UDP: Diagrama de cabecera}
+  \label{fig:CabeceraUDP}
+\end{figure}
+
+En su cabecera UDP solo necesita de 2 campos obligatorios y otros 2 opcionales (con letras grises en el diagrama). Cada uno de estos datos ocupan 16 bits, con lo que las cabeceras tienen un tamaño fijo de 64bits u 8bytes, lo que lo hace muy ligero respesto de otros protocolos de transporte. Los campos para indicar el numero de puerto sirven para identificar la aplicación que estará a la escucha, ya que suelen reservar un número de puerto pactado previamente, el puerto origen suele utilizarse para indicar donde deben enviarse las respuestas, pero es opcional ya que muchas veces los protocolos basados en UDP no esperán retorno por parte del destino. Para dejar indicado que no hay puerto de retorno debe dejarse a 0 este campo. El otro campo opcional, el checksum es una suma de verificacion sobre los datos de cabecera (incluyendo las direcciones y el protocolo en la cabecera IP, longitud y los datos. Este campo no suele ser deshabilitado. El campo de longitud recoge precisamente la longitud del propio segmento de datos incluido en el paquete.
+
+Este protocolo es ampliamente utilizado en el streaming de multimedia y en los entornos de juegos en red, donde se busca alcanzar la mayor velocidad de transferencia y de que se garantice la solidez de los datos.
+
+\section{Protocolos de aplicación}
+
+\begin{wrapfigure}{l}{0.35\textwidth}
+	%{figure}[h]
+	\includegraphics[width=0.25\textwidth]{img/NivelesOSIAplicacion.eps}	
+              \caption{niveles OSI: protocolos de aplicación}
+  \label{fig:nivelesOSIAplicacion}
+\end{wrapfigure}
+
+En este proyecto se van a implementar una serie de protocolos para demostrar la versatilidad de la plataforma y sobre todo la comodidad y la limpieza de codigo que aportan. Se pretende conseguir una plataforma que facilite la implementación de servicios para protocolos a nivel de Aplicacion.
+
+Limitando la comunicación al nivel de aplicación todos los protocolos existentes pueden resumirse como una secuencia de emisión y recepción de datos en una serie de etapas y formatos establecidos por el protocolo. 
+
+De esta manera se puede entender al servicio como un autómata sensible al contexto para cada conexión que recibe. Orientando el diseño del servicio como una secuencia de pasos y que estos sean lo más simple y claro posible se ahorrará mucho tiempo y complejidad en la producción del codigo. 
 
 Los protocolos elegidos para demostrar la idoneidad de la plataforma son los siguientes
 
@@ -199,7 +347,7 @@ El Hypertext Transfer Protocol (HTTP) es un protocolo de comunicaciones para tra
 
 El desarrollo del HTTP fue coodinado por el Consorcio World Wide Web (W3C) y la Internet Engineering Task Force (IETF), culminando en la publicacion de una serie de RFCs, siendo el más desatacable el RFC 2616 que en Junio de 1999 definio el HTTP versión 1.1, que es la que más ampliamente se utiliza en la actualidad.
 
-HTTP es un estandar petición/respuesta entre un cliente y un servidor. El cliente será el usuario final mientra que el servidor es el sitio web (web site). El cliente, realizando una peticion HTTP mediante un navegador web, araña web u otras herramientas, se le denomina user agent. El servidor correspondiente, que almacena o crea recursos como ficheros HTML e imagenes, es denominado servidor de origen. Entre el user agent y el servidor origen pueden aparecer varios intermediarios, como son los proxys, pasarelas y tuneles. El GTTP no esta limitado a su utilización sobre TCP/IP y sus capas, más aun es la aplicación mas extendida en Internet. Ciertamente HTTP puede implementarte sobre sobre otros protocolos en Interneto en otras redes. HTTP solo asume que se encuentra sobre un protoclo de transporte confiable, con lo que HTTP puede utilizarse sobre cualquier protocolo que lo garantice.
+HTTP es un estandar petición/respuesta entre un cliente y un servidor. El cliente será el usuario final mientra que el servidor es el sitio web (web site). El cliente, realizando una peticion HTTP mediante un navegador web, araña web u otras herramientas, se le denomina user agent. El servidor correspondiente, que almacena o crea recursos como ficheros HTML e imagenes, es denominado servidor de origen. Entre el user agent y el servidor origen pueden aparecer varios intermediarios, como son los proxys, pasarelas y tuneles. El HTTP no esta limitado a su utilización sobre TCP/IP y sus capas, más aun es la aplicación mas extendida en Internet. Ciertamente HTTP puede implementarte sobre sobre otros protocolos en Interneto en otras redes. HTTP solo asume que se encuentra sobre un protoclo de transporte confiable, con lo que HTTP puede utilizarse sobre cualquier protocolo que lo garantice.
 
 Normalmente es el cliente HTTP el que inicia la peticion. Se establece una conexion TCP a un puerto particular en un servidor (el puerto 80 por defecto). el servidor HTTP escuchando en ese puerto esperara a que el cliente emita el mensaje de petición. Una vez recibida la petición el servidor reponde con una linea de estado, como por ejemplo ``HTTP/1.1 200 OK'',  un mensaje propio, el cuerpo de lo que probablemente sea el fichero solicitado, mensajes de error si procede y otras informaciones.
 
@@ -316,6 +464,12 @@ La recepción de los datos puede además controlarse mediante expresiones regula
 
 En el diseño del manipulador debe tenerse en cuenta que normalmente existe un orden convencional en las etapas, previsiblemente estas deberia contener un numero limitado de procedimientos, para reducir la complejidad.
 
+Durante la implementación de los protocolos ha aparecido la necesidad de trabajar sobre UDP. Para permitir esta funcionalidad y mantener un diseño eficiente se ha optado por dividir el manipulador en tres nuevas clases que permitieran trabajar tanto sobre el protocolo TCP como UDP y en concordancia a sus características:
+\begin{enumerate}
+	\item{Handler: la clase Handler primitiva se centra en la gestion de estados, el transito entre estos, y su inicializacion.}
+	\item{TCPHandler: esta clase que hereda de Handler contiene una version especial de las rutinas de emision y recepcion de datos, se inicializa pasando el hash del socket.}
+	\item{UDPHandler: Cada vez que un datagrama llega al servidor se instancia al manipulador, integrando la direccion de origen del datagrama y los datos que portaba, esta clase tendra sus propias rutinas de emisión y recepción. Debe tenerse en cuenta que en este tipo de manipulador se hace necesario algun sistema que permita recuperar desde el servidor en que estado se encontraba al finalizar la última transmision.}
+\end{enumerate}
 \subsection{Flujos de los protocolos}
 A continuación se va a espeficicar el flujo de los protocolos con los que se va a probar la plataforma.
 
@@ -355,7 +509,14 @@ El protocolo HTTP/1.1 tiene un flujo basico bastante más amplio, ya que despues
 \end{enumerate}
 Aunque la conexión pueda perderse inesperadamente en cualquier momento, es en el momento de esperar el comando cuando se produciría una desconexión correcta.
 \subsubsection{Session Initialization Protocol}
-El protocolo SIP es responsable de varias tareas, aunque puede operar sobre UDP la implementación sobre BLAS solo funcionará sobre TCP. Estas tareas son:
+El protocolo SIP es responsable de varias tareas, aunque puede operar sobre UDP la implementación sobre BLAS solo funcionará sobre UDP. Estas tareas son:
+Es precisamente en este punto por la necesidad de trabajar sobre UDP cuando se ha tomado la decisión de dividir el manipulador en tres nuevas clases que permitieran trabajar tanto sobre el protocolo TCP como UDP y en concordancia a sus características.
+\begin{figure}[h]
+	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoSIP.eps}
+              \caption{Flujo de desarrollo del protocolo SIP}
+  \label{fig:DiagramaFlujoSIP}
+
+\end{figure}
 
 \begin{enumerate}
 	\item{Registro(REGISTER): El usuario se da de alta en el sistema y figura en el directorio de usuario.}
@@ -363,19 +524,46 @@ El protocolo SIP es responsable de varias tareas, aunque puede operar sobre UDP 
 	\item{Opciones(OPTIONS): Solicita al servidor el listado de las funcionalidades.}
 	\item{Cierre(BYE): Avisa de que va a procederse con la desconexión.}
 \end{enumerate}
-\begin{figure}[h]
-	\includegraphics[width=0.95\textwidth]{img/DiagramaFlujoSIP.eps}
-              \caption{Flujo de desarrollo del protocolo SIP}
-  \label{fig:DiagramaFlujoSIP}
 
+\begin{figure}[h]
+	\includegraphics[width=1.00\textwidth]{img/DiagramaClasesDisenno.eps}
+	\caption{Diagrama de Clases de para un servicio generico} 
+	      \label{fig:DiagramaClasesDiseño}
 \end{figure}
-\section{Diseño}
-%\begin{figure}[h]
-%	\includegraphics[width=0.95\textwidth]{img/DiagramaClasesDisennoTelnet.eps}
-%              \caption{Diagrama de Clases de Diseño para el servicio Telnet}
-%	      \label{fig:DiagramaClasesDiseñoTelnet}
-%\end{figure}
 
 \chapter{Previsiones y proyectos futuros}
+\section{Mejoras}
+En futuras implementaciones de BLAS se preveen una serie de mejoras planteadas para aumentar la funcionalidad de la plataforma o solventar sus carencias
+
+\subsection{Cifrado}
+Actualmente casi todos los servicios de red se comunican empleando canales seguros. Probablemente imitar cualquier servicio de forma completa requeriría aportar el soporte de distintos metodos criptograficos. Algunos de los algoritmos mas comunes que se pueden localizar en internet son:
+\begin{enumerate}
+	\item{DES y 3DES: Publicados en 1976 y 1978 respectivamente son los algoritmos más veteranos y aun presentes en muchos sistemas aunque hayan perdido robusted con el paso del tiempo.}
+	\item{IDEA: Publicado en 1991 para sustituir a DES}
+	\item{Blowfish: Publicado en 1993}
+	\item{RC5: Publicado por RSA en 1994}
+\end{enumerate}
+Para facilitar su uso por parte del programador y así mantener uno de los principales valores de la plataforma deben diseñarse metodos para que una vez negociada una contraseña común el flujo de datos pueda mantenerse de forma identica al uso que se realizara sobre send() y receive(). Ya que python permite la sobrecarga de metodos desde la propia clase durante la ejecución implementar una rutina que reemplace los metodos de entrada y salida no revestirá dificultad.
+
+\subsection{Sistemas de registro opcionales}
+Además del volcado de la información de registros de operación y errores al sistema de ficheros o a la salida estandar, existen otras posibilidades que pueden extender la funcionalidad de la plataforma:
+\begin{enumerate}
+	\item{Terminal TCP: Consistente en un servicio que tras conectarse mediante telnet permita revisar los eventos en el sistema.}
+	\item{Volcado UDP: se enviarán a una ip y puerto predeterminados la información en texto claro de los eventos del sistema.}
+\end{enumerate}
+\subsection{Establecimiento como servicio del sistema}
+Ya que python es multiplataforma según BLAS madure deberían acompañarsele procedimientos faciles para que los servicios producidos puedan implantarse en el sistema junto a otros.
+\section{Rendimiento y pruebas}
+Para profundizar en las capacidades de la plataforma para implementar servicios en cierto nivel de producción deberían realizarse una serie de estudios
+\subsection{Benchmarking}
+Comparando con el rendimiento de otros servicios implementados sobre lenguajes mas ligeros como C debería ofrecer una idea de que necesidad de recursos tiene la plataforma en funcion de la cantidad de clientes y el tipo de exigencia de estos. Conociendo estos requisitos podrán conocerse las posibilidades reales de que el prototipo pueda entrar en algún nivel de producción.
+
+Sería interesante realizar distintos intentos según el nivel de optimización con que se configure la compilación a bytecode del producto.
+
+
+\subsection{Seguridad}
+Para obtener datos fiables sobre la confiabilidad del servicio producido, sobretodo si está expuesto a accesos de terceros, deben realizarse pruebas con intención de desestabilizar el programa o incluso acceder a recursos restringidos a traves de el.
+
+
 \end{document}
 
