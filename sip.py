@@ -5,6 +5,7 @@ from core import Log
 import core
 
 import time 
+import md5
 
 VERSION = "0.1"
 OPTION = {}
@@ -44,7 +45,7 @@ class SIPHandler(UDPHandler):
 	def step_headers(self):
 		"""receiving param"""
 		param_pattern = "(?P<name>(([a-zA-Z0-9\W])*)): "
-		param_pattern += "(?P<value>((\S)*))"
+		param_pattern += "(?P<value>((\S| )*))"
 		param_pattern += "(\r)?"
 		pattern = "((\r\n)|"+param_pattern+")"
 		param = self.receive(pattern)
@@ -75,16 +76,33 @@ class SIPHandler(UDPHandler):
 
 	def step_run_register(self):
 		"""efectuando el registo del usuario"""
-		msg = "SIP/2.0 200 OK\n"
-		msg +="Allow: INVITE, ACK, CANCEL, OPTIONS, BYE\n"
+		#print self.request
+		params = self.request["params"]
+		if self.digest():
+			msg = "SIP/2.0 200 OK\n"
+		else:
+			self.report("fallo en la autentificacion, solicitando.")
+			msg = "SIP/2.0 401 Unathorized\n"
+			nonce = md5.new(time.ctime()).digest().encode('hex')
+			params["nonce"] = nonce
+			msg += 'WWW-Authenticate: Digest realm="192.168.1.100", nonce="'+nonce+'", qop="auth"\n'
+		print params
+		#print self.digest()
+		params["To"]= params["From"]
+		for field in ['CSeq','Via','From','Call-ID','To','Contact','Server','Content-Length']:
+			if params.has_key(field):
+				if field == 'Via':
+					msg+=field+": "+params[field]+"="+str(self.incoming[1])+"\n"
+				else: msg+=field+": "+params[field]+"\n"
+		msg += "Server: PythonSIP prototype\n"		
 		msg +="\n"
+		print msg
 		self.send(msg) 
 		self.next_step("end")
 
 	def step_run_subscribe(self):
 		"""efectuando la subscripcion del usuario"""
 		msg = "SIP/2.0 200 OK\n"
-		msg +="Via: SIP/2.0/TCP subB.example.com;branch=q4i9ufr4ui3;"
 		msg +="received=192.168.1.11\n"
 		msg +="\n"
 		self.send(msg) 
@@ -94,26 +112,18 @@ class SIPHandler(UDPHandler):
 		"""realizando invitacion"""
 		#self.send("SIP(2.0 603 Decline\n\n")
 		self.next_step("end")
-				
-	def step_run_get(self):
-		filename = ROOT +  self.request["file"]
-		if filename[-1] == "/":
-			filename = filename + "index.html"
-		try:
-			file = open(filename)	
-		except Exception, e:
-			self.send("HTTP/1.0 400 Not Found\n")
-			self.next_step("end")
-		else:
-			self.file = file
-			self.send("HTTP/1.0 200 OK\n")
-			self.send("Date: "+time.ctime()+"\n")
-			self.send("Content-Type: text/html\n")
-			self.send("Content-Length: "+str(self.size(file))+"\n")
-			self.send("\n")
-			for data in file.read():
-				self.socket.send(data)
-			self.next_step("end")
+
+	def digest(self):
+		params = self.request["params"]
+		if not params.has_key("Authorization"): return False
+		auth = params["Authorization"]
+		if not auth.startswith("Digest"): return False
+		auth=auth.replace("Digest ","")
+		data = {}
+		for line in auth.split(","):
+			reg = line.split("=")
+			data[reg[0]] = reg[1]
+		return str(data)
 
 	def step_end(self):
 		"""ends session"""

@@ -303,13 +303,16 @@ class UDPHandler(Handler):
 		self.id = str(origin[0])+":"+str(origin[1])
 		Handler.__init__(self)
 
-	def send(self,data):
-		print "enviando udp"
+	def send(self,data,ip=None,port=None):
+		destiny = (self.incoming[0],self.incoming[1])
+		if ip: destiny[0] = ip
+		if port: destiny[1] = port
+		#print "enviando udp:"+str(destiny[0])+":"+str(destiny[1])
 		#self.log("ORIGIN:"+self.incoming)
 		#if not data: return None
 		try: 
 			s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-			s.sendto(data,self.incoming) #+platform.protocol.EOL)
+			s.sendto(data,destiny) #+platform.protocol.EOL)
 		except socket.error, msg:
 			self.error(10,msg+"sending:"+data+".")
 
