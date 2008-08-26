@@ -19,6 +19,8 @@
 \onehalfspacing
 \usepackage{fancyheadings}
 \usepackage{wrapfig}
+\usepackage{verbatim}
+
 
 \begin{document}
 \tableofcontents
@@ -29,6 +31,11 @@
 \chapter{Introducción}
 Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y una mayoria de estas est\'an conectadas a Internet o incluso la propia Internet forma parte de estas.
 
+\begin{figure}[h] %{r}{0.35\textwidth}
+	\includegraphics[width=0.65\textwidth]{img/SistemasDistribuidos.eps}	
+	\caption{Ejemplo de un Sistema Distibuido}
+	\label{fig:SistemasDistribuidos}
+\end{figure}
 \section{Historia de los servicios informáticos}
 Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba normalmente limitada a una unidad por cada entidad (instituciones educativas e instalaciones militares). Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente restringido. Por estas mismas limitaciones y para maximizar la disponibilidad se ideó un sistema limitado de terminales remotas, los teletipos, cuya funcion era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
 
@@ -637,6 +644,100 @@ El arranque del sistema se realiza de la siguiente manera:
 	\item En mainloop() discriminando el tipo de manipulador(TCP o UDP) abrirá el tipo de socket pertinente e iniciará un bucle while. Dentro de estelas conexiones se irán atendiendo por parte de los manipuladores. Para que los manipuladores puedan hacer su trabajo deben primero inicializarse y luego emitir la orden de arranque.
 	\item Al inicializar el hilo del manipulador se le aporta bien el socket de conexión para los tipo TCP y el buffer y la dirección de origen para los UDP. El m\'etodo start() que se hereda de la clase Thread iniciará la ejecución del hilo que se desarrollará a lo largo de los estados que se deban seguir para atender la petición.
 	\item la mayor parte del codigo del manipulador serán m\'etodos cuyo nombre empiece port ``step\_'' seguido del identificador del paso en si mismo, en cada paso debe indicarse si se pasa al siguiente, al anterior o se salta a otro, de otra manera se repetirá el mismo paso.
+\end{enumerate}
+\subsection{Servicio SIP}
+\subsubsection{Bifurcación y flujo de estados} 
+Una vez que el servidor ha recibido la trama con la petición e instanciado el hilo de atención correspondiente se inicia el siguiente proceso:
+\begin{description}
+	\item[Request] En este paso se recibe la primera linea de la petición, se informa en el registro del origen de la transmisión y se almacena el comando en los datos del hilo. Se pasa a la etapa Run.
+	\item[Headers] Este paso irá recolectando y parseando las cabeceras de las peticiones, no se pasará al siguiente paso Run hasta que se encuentre con una cabecera en blanco.
+	\item[Run] La funcion de este estado es elegir a cual se pasará según el comando que se ha recibido.
+	\begin{description}
+		\item[Run\_Register] Este paso acaba procesando cualquier comando Register, si no hay autentificación la solicita generando antes un codigo ``nonce'' de desafio para que el cliente responda, a continuación emite un ``401 Unauthorized'' con la información del desafio. En caso de que el cliente haya aportado autentificación se llama al metodo ``digest'' para realizar el contraste del campo ``response'' y la respuesta producida por el propio servidor. A continuación se procederá al estado ``End''.
+		\item[Run\_Subscribe] En este estado se guarda información de usuario en el registro para aviso de eventos. A continuación se pasa al estado ``End''.
+	\end{description}
+	\item[End] Esta parte del proceso guardará la información obtenida de los pasos anteriores y emitirá el suceso del fin de la petición al registro de eventos.
+\end{description}
+\subsubsection{Autentificación}
+El procedimiento de autentificación en SIP se realiza a trav\'es de un mecanismo heredado de HTTP Digest. para que se produzca la autentificación se desarrolla la siguiente secuencia:
+\begin{enumerate}
+	\item El cliente pide registrarse en el servicio. No prove\'e m\'etodo de contraste alguno.
+		\scriptsize
+		\begin{verbatim}
+		REGISTER sip:192.168.1.100 SIP/2.0
+		Tue Aug 26 21:09:38 2008:192.168.1.11:5072:current state:receiving param
+		CSeq: 127 REGISTER
+		Via: SIP/2.0/UDP 192.168.1.11:5072;branch=z9hG4bK2686af38-1072-dd11-9855-0016e6dfa1a5;rport
+		User-Agent: Ekiga/2.0.12
+		From: <sip:edorka@192.168.1.100>;tag=4279af38-1072-dd11-9855-0016e6dfa1a5
+		Call-ID: 205faf38-1072-dd11-9855-0016e6dfa1a5@Newton
+		To: <sip:edorka@192.168.1.100>
+		Contact: <sip:edorka@192.168.1.11:5072;transport=udp>
+		Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,NOTIFY,REFER,MESSAGE
+		Expires: 3600
+		Content-Length: 0
+		Max-Forwards: 70
+		\end{verbatim}
+		\normalsize
+	\item El servidor contesta con un error ``401 Unauthorized`` y provee en las cabeceras del desafio de autentificación.
+		\scriptsize
+		\begin{verbatim}
+		SIP/2.0 401 Unathorized
+		WWW-Authenticate: Digest realm=``192.168.1.100'', nonce=``ff8c..'', qop=``auth''
+		CSeq: 102 REGISTER
+		Via: SIP/2.0/UDP 192.168.1.11:5069;branch=z9hG4bKc2448342-...;rport=5069
+		From: <sip:edorka@192.168.1.100>;tag=5c418342-f671-dd11-9855-0016e6dfa1a5
+		Call-ID: 00a1a017-e771-dd11-9855-0016e6dfa1a5@Newton
+		To: <sip:edorka@192.168.1.100>;tag=5c418342-f671-dd11-9855-0016e6dfa1a5
+		Contact: <sip:edorka@192.168.1.11:5069;transport=udp>
+		Content-Length: 0
+		Server: PythonSIP prototype
+		\end{verbatim}
+		\normalsize
+	\item El cliente reintenta el registro en el servidor incluyendo en la cabecera un campo ''Authorization'' con los datos que ha empleado para calcular el campo ``response''.
+		\scriptsize
+		\begin{verbatim}
+		REGISTER sip:192.168.1.100 SIP/2.0
+		CSeq: 129 REGISTER
+		Via: SIP/2.0/UDP 192.168.1.11:5072;
+			branch=z9hG4bK2870b438-1072-dd11-9855-0016e6dfa1a5;rport
+		User-Agent: Ekiga/2.0.12
+		Authorization: Digest username=``edorka'', realm=``192.168.1.100'', 
+			nonce=``ff8cf8e764fca9134c1cd5499bc4684b'', uri=``sip:192.168.1.100'', 
+			algorithm=md5, response=``365cf4061c002b09c75408a4907ac911'', 
+			cnonce=``3261b438-1072-dd11-9855-0016e6dfa1a5'', 
+			nc=``00000001'', qop=``auth''
+		From: <sip:edorka@192.168.1.100>;tag=4279af38-1072-dd11-9855-0016e6dfa1a5
+		Call-ID: 205faf38-1072-dd11-9855-0016e6dfa1a5@Newton
+		To: <sip:edorka@192.168.1.100>
+		Contact: <sip:edorka@192.168.1.11:5072;transport=udp>
+		Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,NOTIFY,REFER,MESSAGE
+		Expires: 3600
+		Content-Length: 0
+		Max-Forwards: 70
+		\end{verbatim}
+		\normalsize
+	\item Si el servidor da por buena la respuesta al desafio despu\'es de calcularlo por su cuenta emitirá una respuesta ``200 OK'' en referencia a la última petición.
+		\scriptsize
+		\begin{verbatim}
+		SIP/2.0 200 OK
+		CSeq: 107 REGISTER
+		Via: SIP/2.0/UDP 192.168.1.11:5069;
+			branch=z9hG4bK460a1e59-0572-dd11-9855-0016e6dfa1a5;rport=5069
+		From: <sip:edorka@192.168.1.100>;tag=da541c59-0572-dd11-9855-0016e6dfa1a5
+		Call-ID: 00a1a017-e771-dd11-9855-0016e6dfa1a5@Newton
+		To: <sip:edorka@192.168.1.100>;tag=da541c59-0572-dd11-9855-0016e6dfa1a5
+		Contact: <sip:edorka@192.168.1.11:5069;transport=udp>
+		Content-Length: 0
+		Server: PythonSIP prototype
+		\end{verbatim}
+		\normalsize
+\end{enumerate}
+Para calcular el response correcto se ha implementado un m\'etodo digest() al que se pueden pasar como argumentos el metodo que lo ha llamado y la contraseña que se debe comprobar, el proceso de ``digestión'' es el siguiente
+\begin{enumerate}
+	\item \begin{math} S1 = MD5(<username>:<realm>:<password>) \end{math}
+	\item \begin{math} S2 = MD5(<metodo>:<URI>:) \end{math}
+	\item \begin{math} RESP = MD5(S1:<nonce>:<nc>:<cnonce>:<qop>:S2) \end{math}
 \end{enumerate}
 \chapter{Previsiones y proyectos futuros}
 \section{Mejoras}
