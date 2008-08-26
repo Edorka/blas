@@ -80,6 +80,7 @@ class SIPHandler(UDPHandler):
 		params = self.request["params"]
 		if self.digest():
 			msg = "SIP/2.0 200 OK\n"
+			print params["Authorize"],self.digest()
 		else:
 			self.report("fallo en la autentificacion, solicitando.")
 			msg = "SIP/2.0 401 Unathorized\n"
@@ -114,6 +115,19 @@ class SIPHandler(UDPHandler):
 		self.next_step("end")
 
 	def digest(self):
+		"""$md5 = Digest::MD5->new;
+		$md5->add($username);
+		$md5->add($password);
+		$md5->add($nonce);
+		$md5->add("9832acbd"); # cnonce
+		# nc = number of number of requests (including the current request) that the
+		# client has sent with the nonce value in this request"
+		$nc = "00000001"; 
+		$md5->add($nc);
+		$md5->add("auth"); #qop
+		$md5->add("sip:$realm"); #uri
+		$digest = $md5->hexdigest;
+		"""
 		params = self.request["params"]
 		if not params.has_key("Authorization"): return False
 		auth = params["Authorization"]
@@ -122,8 +136,13 @@ class SIPHandler(UDPHandler):
 		data = {}
 		for line in auth.split(","):
 			reg = line.split("=")
-			data[reg[0]] = reg[1]
-		return str(data)
+			data[reg[0]] = reg[1].strip('"')
+		sum = md5.new() #time.ctime()).digest().encode('hex')
+		sum.update(data["user"]); sum.update("prueba")
+		sum.update(params["nonce"]);sum.update(params["cnonce"])
+		sum.update(params["nc"]);sum.update(params["qop"])
+		sum.update(params["uri"])
+		return sum.digest().encode('hex')
 
 	def step_end(self):
 		"""ends session"""
