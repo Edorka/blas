@@ -78,9 +78,9 @@ class SIPHandler(UDPHandler):
 		"""efectuando el registo del usuario"""
 		#print self.request
 		params = self.request["params"]
-		if self.digest():
+		if self.digest("REGISTER") == True:
 			msg = "SIP/2.0 200 OK\n"
-			print params["Authorize"],self.digest()
+			print params["Authorization"]
 		else:
 			self.report("fallo en la autentificacion, solicitando.")
 			msg = "SIP/2.0 401 Unathorized\n"
@@ -90,16 +90,22 @@ class SIPHandler(UDPHandler):
 		print params
 		#print self.digest()
 		params["To"]= params["From"]
-		for field in ['CSeq','Via','From','Call-ID','To','Contact','Server','Content-Length']:
+		fields = ['CSeq','Via','From','Call-ID','To','Contact','Server','Content-Length']
+		msg += self.compose_headers(params,fields)
+		print msg
+		self.send(msg) 
+		self.next_step("end")
+
+	def compose_headers(self,params={},fields=[]):
+		msg = ""
+		for field in fields:
 			if params.has_key(field):
 				if field == 'Via':
 					msg+=field+": "+params[field]+"="+str(self.incoming[1])+"\n"
 				else: msg+=field+": "+params[field]+"\n"
 		msg += "Server: PythonSIP prototype\n"		
 		msg +="\n"
-		print msg
-		self.send(msg) 
-		self.next_step("end")
+		return msg
 
 	def step_run_subscribe(self):
 		"""efectuando la subscripcion del usuario"""
@@ -114,20 +120,8 @@ class SIPHandler(UDPHandler):
 		#self.send("SIP(2.0 603 Decline\n\n")
 		self.next_step("end")
 
-	def digest(self):
-		"""$md5 = Digest::MD5->new;
-		$md5->add($username);
-		$md5->add($password);
-		$md5->add($nonce);
-		$md5->add("9832acbd"); # cnonce
-		# nc = number of number of requests (including the current request) that the
-		# client has sent with the nonce value in this request"
-		$nc = "00000001"; 
-		$md5->add($nc);
-		$md5->add("auth"); #qop
-		$md5->add("sip:$realm"); #uri
-		$digest = $md5->hexdigest;
-		"""
+	def digest(self,method=""):
+		"""RFC1321 - The MD5 Message-Digest Algorithm"""
 		params = self.request["params"]
 		if not params.has_key("Authorization"): return False
 		auth = params["Authorization"]
@@ -135,14 +129,22 @@ class SIPHandler(UDPHandler):
 		auth=auth.replace("Digest ","")
 		data = {}
 		for line in auth.split(","):
+			#print line
 			reg = line.split("=")
+			reg[0] = reg[0].strip(" ")
 			data[reg[0]] = reg[1].strip('"')
+		a1 =  data["username"]+":"+data["realm"]+":prueba"
+		a2 =  method+":"+data["uri"]
+		s1 = md5.new() ; s1.update(a1)
+		s2 = md5.new() ; s2.update(a2)
+		a = s1.digest().encode('hex')
+		a += ":"+data["nonce"]+":"+data["nc"]+":"+data["cnonce"]+":"+data["qop"]
+		a += ":"+s2.digest().encode('hex')
+		#print "A:",a
 		sum = md5.new() #time.ctime()).digest().encode('hex')
-		sum.update(data["user"]); sum.update("prueba")
-		sum.update(params["nonce"]);sum.update(params["cnonce"])
-		sum.update(params["nc"]);sum.update(params["qop"])
-		sum.update(params["uri"])
-		return sum.digest().encode('hex')
+		sum.update(a)
+		#print "DIGEST:",data["response"],"==",sum.digest().encode('hex')
+		return data["response"]==sum.digest().encode('hex')
 
 	def step_end(self):
 		"""ends session"""
