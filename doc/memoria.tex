@@ -26,11 +26,8 @@
 \maketitle
 %cuerpo del documento
 
-
 \chapter{Introducción}
-Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y una mayoria de estas est\'an conectadas a Internet o incluso la propia Internet forma parte de estas. 
-
-
+Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y una mayoria de estas est\'an conectadas a Internet o incluso la propia Internet forma parte de estas.
 
 \section{Historia de los servicios informáticos}
 Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba normalmente limitada a una unidad por cada entidad (instituciones educativas e instalaciones militares). Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente restringido. Por estas mismas limitaciones y para maximizar la disponibilidad se ideó un sistema limitado de terminales remotas, los teletipos, cuya funcion era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
@@ -56,7 +53,23 @@ No obstante la escritura de un servicio de Red puede reducirse considerablemente
 
 La intención principal de esta plataforma es evitar la reimplementación innecesaria de funcionalidades que son comunes a todo tipo de servicio de red interactivo, además de proponer una metodología concreta en la implementación.
 
-Aunque hoy día se pueden encontrar cientos de implementaciones de protocolos sobre multitud de tecnologías diferentes existe todavía la necesidad de realizar implementaciones de servicios de protocolos antiguos o nuevos.
+\chapter{Objetivos}
+
+Esta plataforma se ha ideado para facilitar el diseño y la implementación a los colectivos que por diversos motivos se ven ante la necesidad de programar un servicio de red en poco tiempo. 
+
+Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios TCP y UDP, que inevitablemente consumen mucho tiempo y que normalmente los programadores se encuentran realizando funciones de implementación muy similares de un proyecto a otro pero sin permitir una reutilización eficiente del código.
+
+Básicamente estas tareas se reducen a:
+\begin{enumerate}
+	\item Entrada controlada de datos.
+	\item Registro (o registros) de actividad y error.
+	\item Lectura de los archivos de configuraci\'on.
+	\item Parseado de los parametros de arraque.
+\end{enumerate}
+
+El objetivo principal de esta librería es facilitar las tareas de diseño e implementación de este tipo de software. Acelerando la aparición de prototipos que permitan iniciar lo antes posible la depuración tanto del servicio como de los clientes.
+
+Es posible que existan dudas sobre si actualmente existe la necesidad de la realizacion de este tipo de software. Hoy día se pueden encontrar cientos de implementaciones de protocolos sobre multitud de tecnologías diferentes existe todavía la necesidad de realizar implementaciones de servicios de protocolos antiguos o nuevos.
 
 \subsection{Docencia}
 Existen numerosos proyectos academicos que requieren la implementaci\'on de:
@@ -78,18 +91,6 @@ En un entorno en que los ataques mediante gusanos son casi rutinarios se emplea 
 
 La capacidad de programar servicios simulados agilmente puede ser un complemento perfecto a otras herramientas de estudio de la seguridad como son las 'Honey-Nets', dotando a las m\'aquinas virtuales de un comportamiento mucho m\'as flexible.
 
-
-\chapter{Objetivos}
-
-Esta plataforma se ha ideado para facilitar el diseño y la implementación a los colectivos que por diversos motivos se ven ante la necesidad de programar un servicio de red en poco tiempo. 
-
-Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios aTCP que consumen mucho tiempo y que normalmente su implementaci\'on resulta bastante repetitiva:
-\begin{enumerate}
-	\item Entrada controlada de datos.
-	\item Registro (o registros) de actividad y error.
-	\item Lectura de los archivos de configuraci\'on.
-	\item Parseado de los parametros de arraque.
-\end{enumerate}
 
 
 \chapter{Estado del arte}
@@ -148,6 +149,20 @@ En el momento de desarrollar esta librería, python 2.5 y python 3.0 conviven en
 \subsubsection{Disponibilidad}
 
 En muchos sistemas operativos Python es un componente estandar, se incluye en la mayoria de las distribuciones de Linux, NetBSD, OpenBSD y con Mac OS X. Slackware, Red Hat Linux y Fedora utilizan el instalador Anaconda, escrito en Python. Gentoo Linux utiliza Python en su sistema de administración de paquetes Portage, y su herramienta por defecto Emerge. Pardus lo utiliza para administración y durante el arranque del sistema.
+
+\subsubsection{Editores}
+
+Python puede programarse con cualquier tipo de editor y siempre permitirá una lectura clara y una estructura adecuada del código. Sin embargo son muchos los editores y entornos integrados de trabajo que incluyen funciones de ayuda en la programacion:
+\begin{enumerate}
+	\item{Resaltado del código: Cualquier editor con unas funcionalidades de programación minima incluirá resaltado de sintaxis.}
+	\item{Prediccion de escritura: Prácticamente cualquier editor incluirá indentación automatica y probablemente predicción de palabras clave.}
+	\item{Gestión de proyectos: Disponible sobre todo en IDEs y raramente en editores.}
+	\item{Shell integrada: Disponible en algunos de los editores y la mayoría de los IDEs.}
+\end{enumerate}
+
+Para conseguir una lista actualizada de editores compatibles con python en todas las plataformas puede conseguirse en esta URL: 
+http://wiki.python.org/moin/PythonEditors
+
 
 \section{Protocolos de red: IP}
 Es dificil generalizar sobre protocolos ya que estos varian ampliamente en proposito y en complejidad. La mayoria de los protocolos de red poseen alguna de las siguiente propiedades:
@@ -383,7 +398,7 @@ Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados 
 
 En el contexto de los sistemas informáticos un protocolo es un conjunto de reglas predefinidas, cuyo proposito es estandarizar actividades y procesos. Siguiendo un mismo protocolo se garantiza que se mantendrá la compatibilidad entre los sistemas involucrados, independientemente del medio sobre el que est\'en en contacto, posiblemente otros protocolos.
 
-La forma cl\'asica de programar un servicio consiste en un blucle de escucha que inicia subprocesos para cada conexi\'on entrante y que finaliza cuando esta acaba o se produce un error. Se presentan dos entidades en este caso, la del servicio que incluiria las rutinas para iniciar la escucha y el acceso a los datos y la del manipulador, que atiende la conexion siguiendo las pautas del protocolo.
+La forma cl\'asica de programar un servicio consiste en un bucle de escucha que inicia subprocesos para cada conexi\'on entrante y que finaliza cuando esta acaba o se produce un error. Se presentan dos entidades en este caso, la del servicio que incluiria las rutinas para iniciar la escucha y el acceso a los datos y la del manipulador, que atiende la conexion siguiendo las pautas del protocolo.
 
 \subsection{Servicio}
 
@@ -525,12 +540,104 @@ Es precisamente en este punto por la necesidad de trabajar sobre UDP cuando se h
 	\item{Cierre(BYE): Avisa de que va a procederse con la desconexión.}
 \end{enumerate}
 
+
+\subsection{Acceso a datos}
+Muchos servicios tienen la necesidad de leer y escribir en medios de datos centralizados, por eso es importante diseñar según se debe hacer un esfuerzo en desarrollar un modelo de acceso a datos que permita una lectura lo más transparente posible, facilitando la lectura del codigo. 
+
+Normalmente existen unos tipos limitados de medios de datos:
+\begin{enumerate}
+	\item{Registos unificados volátiles: Son medios de datos que se borrarán cuando se desactive el servicio, deben permitir el acceso concurrente por parte de los hilos. Este tipo de medios sería muy adecuado para sistemas de chat etc.}
+	\item{Accesos a bases de datos: Python tiene soporte para acceder a muchos tipos de bases de datos: Mysql, Postgresql, ODBC, etc. Sin embargo diseñar un acceso a datos mediante objetos que eviten la manipulacion de peticiones SQL en el codigo de la atención del servicio será básico para la comprensión del codigo y su depuración}
+	\item{Acceso remoto a datos: En ocasiones los datos que se necesitan estarán en sistemas remotos, accediendo a ellos mediante conexiones IP/TCP y normalmente sobre estos metodos HTTP, SOAP o REST. Al igual que en otros medios de acceso es importante que el metodo de acceso se abstraiga del codigo de atención del servicio}
+\end{enumerate}
+En definitiva y aunque para cada tipo de servicio el modelo de acceso a datos varía considerablemente se pueden establecer las siguientes lineas para el analisis y la orientación que tomará el sistema:
+\begin{enumerate}
+	\item{Claridad: Debe evitarse la molesta aparición de lineas SQL, peticiones HTTP, XML y similares en el codigo.}
+	\item{Orientación a objetos: Un buen modelo de acceso a datos reducirá sensiblemente el tiempo que se requiera para depuración y posteriores.}
+	\item{Manejo de errores: Es importante integrar el manejo de excepciones en las rutinas de adquisición de datos ya que no estarán exentas de fallos.}
+	\item{Oportunidad de acceso: Deben elegirse adecuadamente en que momentos se accederá a los datos, para no producir latencias en puntos del proceso sensibles al tiempo de respuesto.}
+\end{enumerate}
+
+\section{Diseño}
+
+\subsection{Librería principal}
+Existe una parte común a toda la plataforma que contiene las clases abstractas:
+
 \begin{figure}[h]
-	\includegraphics[width=1.00\textwidth]{img/DiagramaClasesDisenno.eps}
-	\caption{Diagrama de Clases de para un servicio generico} 
-	      \label{fig:DiagramaClasesDiseño}
+	\includegraphics[width=0.80\textwidth]{img/DiagramaClasesDisennoCore.eps}
+	\caption{Diagrama de Clases de la librería principal} 
+	      \label{fig:DiagramaClasesDiseñoCore}
 \end{figure}
 
+En estas clases se incorporarán todas las funcionalidades que puedan emplearse desde cualquier implementación de un servicio. Para simplificar el procedimiento de herencia de componentes se incluiran todas en el archivo core.py, que acompañaría al archivo que contenga el código del servicio en si mismo en cada despliegue que se haga a posteriori del sistema.
+\subsubsection{Server}
+Esta clase incluye las rutinas necesarias para la inicializacion y configuración del servicio:
+\begin{enumerate}
+	\item Carga y parseado de los parámetros de linea de comando.
+	\item Carga e interpresatcion de los archivos de configuración.
+	\item Reserva del socket al que se conectarán los clientes del servicio.
+	\item Bucle principal de inicializacion y despacho de los hilos.	
+	\item Inicialización de los registros de eventos y errores del sistema.
+	\item Recopilación de las cadenas de documentación relacionadas con cada parametro del sistema.
+	\item Inicialización de los medios de acceso a datos comunes (si procede). 
+\end{enumerate}
+\subsubsection{Error}
+Esta clase que hereda de la clase de sistema Exception se utiliza como tipo de datos por defecto en caso de que alguno de los procesos o rutinas del sistema no pueda realizar su función, en estos casos devolverá un objeto de clase Error.
+
+Además Error contiene 2 datos importantes para la infraestructura:
+\begin{enumerate}
+	\item msg:string contiene una cadena explicando el suceso que originó el error.
+	\item level:integer se utiliza para saber si la gravedad del suceso obliga a su aparición en los registros.
+\end{enumerate}
+Los metodos son una sobrecarga de los metodos basicos de la clase Exception:
+\begin{enumerate}
+	\item \_\_init\_\_ Que inicializa el objeto proveyendo de la información con el mensaje de error y el nivel de importancia.
+	\item \_\_str\_\_ Devolverá la cadena con la explicación del error y el nivel de importancia cuando se necesite imprimirlo en el registro.
+\end{enumerate}
+\subsubsection{Log}
+En esta versión del registro solo se volcarán los eventos y errores a salida estandar o a ficheros. Para reducir el acoplamiento en las llamadas en los objetos de registro integran los siguientes datos durante su tiempo de vida:
+\begin{enumerate}
+	\item file:File salvo que su valor sea None será el descriptor de fichero donde se volcará la información.
+	\item level: Int indicará el nivel de importacia que debe igualarse o superarse para que el evento se vuelque en el registro.
+\end{enumerate}
+Los m\'etodos propios de los objetos tipo Log son:
+\begin{enumerate}
+	\item \_\_init\_\_() m\'etodo de inicialización del registro, indicando el nombre del fichero de volcado y el nivel mínimo de importancia. Si la apertura del fichero falla se pasarán a volcar los datos a la salida estandar.
+	\item put() con este m\'etodo se vuelcan eventos al registro, además del mensaje debe acompañarse del nivel de importancia del evento. Para simplificar su invocación normalmente se utiliza un puntero desde self.log[``report''].put() a self.report() con lo que las llamadas son mucho más cortas.
+\end{enumerate}
+\subsubsection{Handler: UDP y TCP}
+Seguramente las clases más importantes que se incorporan en un servicio:
+\begin{enumerate}
+	\item Handler: Es la clase principal, hereda de la clase hilo (Thread) y sus principales funcionalidades son:
+		\begin{enumerate}
+			\item Cnotrolar el avance, retroceso y transito entre estados del manipulador en ejecución.
+			\item Sobrecargar las clases minimas de la clase Thread para un funcionamiento coherente.
+		\end{enumerate}
+	\item TCPHandler: Versión del manipulador que contiene los atributos y m\'etodos concretos para tratar con el socket que les corresponda, en este caso basta con guardar el puntero al Socket, ya que es lo unico que necesitan las rutinas send() y receive() para enviar y recibir datos con el cliente.
+	\item UDPHandler: Versión del manipulador destinada a atender las peticiones UDP. En el caso de protocolo UDP es más complicado ya que no existe un Socket como tal, en su lugar se guardar la ip y puerto de donde procedía la comucación y ademas el buffer de los datos recibidos. Con lo que los procedmientos de envio y recepción de datos tienen las siguientes particularidades:
+		\begin{enumerate}
+			\item send(): debe crear un nuevo socket UDP con los datos de conexión que posee, estos pueden facilitarse desde los parámetros o utilizar los que figuran como origen de los datos. No existe confirmación sobre si los datos han llegado por lo que la aplicación debe buscar su forma de confirmar la transmisión.
+			\item receive(): Todos los datos que puedan llegar al hilo de atención llegan de una sola vez desde el momento en que se inicia, se van consumiendo según especifique el patrón que se pasa como parámetro. Si el buffer de datos está vacio se devolvera un Error.
+		\end{enumerate}
+\end{enumerate}
+\subsection{Servicio de ejemplo}
+A continuación se presenta un ejemplo de como se realiza la implementación de un servicio heredando de las clases de BLAS.
+
+\begin{figure}[h]
+	\includegraphics[width=0.80\textwidth]{img/DiagramaClasesDisennoParticular.eps}
+	\caption{Diagrama de Clases de un servicio de ejemplo} 
+	      \label{fig:DiagramaClasesDiseñoParticular}
+\end{figure}
+El arranque del sistema se realiza de la siguiente manera:
+\begin{enumerate}
+	\item Se carga el fichero con el interprete de python, presumiblemente el fichero se llamaría particular.py.
+	\item Una vez finalizadas las importaciones de los modulos se cargan las definiciones de clases y sus m\'etodos.
+	\item Cuando se llega a la zona de ejecución se instancia un objeto ParticularServer con los argumentos recibidos por linea de comandos, despu\'es se invoca al m\'etodo mainloop indicandole la clase de manipulador que debe instanciar.
+	\item Durante la inicializacion de un objeto ParticularServer se instancian a su vez los objetos de registro, a su vez se llama a la inicializacion de Server, que será común a todos los servidores, aqui se parsearán las opciones de la linea de comandos, cuyas directrices estarán distribuidas en el codigo de ParticularServer y Server en m\'etodos que inician su nombre con ``config\_'' seguido del nombre del parámetro, en su campo de documentación se incluye el prefijo que debe utilizarse en la linea de comandos para modificar estos parámetros.
+	\item En mainloop() discriminando el tipo de manipulador(TCP o UDP) abrirá el tipo de socket pertinente e iniciará un bucle while. Dentro de estelas conexiones se irán atendiendo por parte de los manipuladores. Para que los manipuladores puedan hacer su trabajo deben primero inicializarse y luego emitir la orden de arranque.
+	\item Al inicializar el hilo del manipulador se le aporta bien el socket de conexión para los tipo TCP y el buffer y la dirección de origen para los UDP. El m\'etodo start() que se hereda de la clase Thread iniciará la ejecución del hilo que se desarrollará a lo largo de los estados que se deban seguir para atender la petición.
+	\item la mayor parte del codigo del manipulador serán m\'etodos cuyo nombre empiece port ``step\_'' seguido del identificador del paso en si mismo, en cada paso debe indicarse si se pasa al siguiente, al anterior o se salta a otro, de otra manera se repetirá el mismo paso.
+\end{enumerate}
 \chapter{Previsiones y proyectos futuros}
 \section{Mejoras}
 En futuras implementaciones de BLAS se preveen una serie de mejoras planteadas para aumentar la funcionalidad de la plataforma o solventar sus carencias
@@ -547,12 +654,30 @@ Para facilitar su uso por parte del programador y así mantener uno de los princ
 
 \subsection{Sistemas de registro opcionales}
 Además del volcado de la información de registros de operación y errores al sistema de ficheros o a la salida estandar, existen otras posibilidades que pueden extender la funcionalidad de la plataforma:
+\begin{figure}[h] %{h}{0.65\textwidth}
+	%{figure}[h]
+	\includegraphics[width=0.65\textwidth]{img/DiagramaClasesDisennoNewLogs.eps}	
+              \caption{Diagrama de diseño nuevos registros}
+  \label{fig:DiagramaClasesDisennoNewLog}
+\end{figure}
+
 \begin{enumerate}
 	\item{Terminal TCP: Consistente en un servicio que tras conectarse mediante telnet permita revisar los eventos en el sistema.}
 	\item{Volcado UDP: se enviarán a una ip y puerto predeterminados la información en texto claro de los eventos del sistema.}
 \end{enumerate}
+
+De esta manera se debería extender la clase Log, creando nuevas subclases que heredarian de Log, sobrecargando los metodos para actuar de forma transparente al programador.
+
+
 \subsection{Establecimiento como servicio del sistema}
 Ya que python es multiplataforma según BLAS madure deberían acompañarsele procedimientos faciles para que los servicios producidos puedan implantarse en el sistema junto a otros.
+
+Es importante implementar una rutina que permita un empaquetado facil del codigo y el software asociado (el imterprete Python con el juego de librerias necesario) para un despliegue del sistema lo mas agil y rápido posible.
+
+\subsection{Construcción de expresiones regulares}
+La construcción de expresiones regulares que acepten cadenas de acuerdo a un patron consumen tiempo y en ocasiones son el origen de fallos dificiles de diagnosticar. Por este motivo implementar un sistema para construir expresiones regulares de forma rapida y clara debería ser una de las prioridades a la hora de extender el proyecto.
+
+El resultado ideal sería conseguir que no aparezcan expresiones regulares que entorpezcan la lectura del codigo de atención del servicio.
 \section{Rendimiento y pruebas}
 Para profundizar en las capacidades de la plataforma para implementar servicios en cierto nivel de producción deberían realizarse una serie de estudios
 \subsection{Benchmarking}
