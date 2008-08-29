@@ -24,13 +24,13 @@ class SIPHandler(UDPHandler):
 		UDPHandler.__init__(self,data,origin)
 		self.log = logs
 		self.parent = parent
-		self.secuence  = ['request','headers','run',"run_register","run_subscribe",'end']
+		self.secuence  = ['request','headers','run',"run_register","run_invite","run_subscribe",'end']
 		self.report("connected")
 
 	def step_request(self):
 		"""receiving command"""
 		self.report("connected:"+str(self.incoming))
-		pattern = "(?P<command>(REGISTER|SUBSCRIBE)) "
+		pattern = "(?P<command>(REGISTER|SUBSCRIBE|INVITE)) "
 		pattern +="(?P<user>(\S*)) "
 		pattern +="(?P<protocol>((\S)*))"
 		pattern +="(\r\n)?"
@@ -62,17 +62,14 @@ class SIPHandler(UDPHandler):
 			self.next_step("run_register")
 		elif self.request["command"] == "SUBSCRIBE": #,"subscribe"]:
 			self.next_step("run_subscribe")
-		#elif self.request["command"] == "INVITE": #SUBSCRIBE": #,"subscribe"]:
-		#	self.next_step("run_invite")
+		elif self.request["command"] == "INVITE": #SUBSCRIBE": #,"subscribe"]:
+			self.next_step("run_invite")
 		else:
 			self.next_step("end")
 
-	def size(self,file):
-		oldpos = file.tell()
-		file.seek(0,2)
-		l = file.tell()
-		file.seek(oldpos)
-		return l
+	def step_run_invite(self):
+		"""realizando invitacion"""
+		print self.request
 
 	def step_run_register(self):
 		"""efectuando el registo del usuario"""

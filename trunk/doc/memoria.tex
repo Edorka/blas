@@ -20,13 +20,13 @@
 \usepackage{fancyheadings}
 \usepackage{wrapfig}
 \usepackage{verbatim}
-
+\usepackage{hyperref}
 
 \begin{document}
-\tableofcontents
 
 \maketitle
 %cuerpo del documento
+\tableofcontents
 
 \chapter{Introducción}
 Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y una mayoria de estas est\'an conectadas a Internet o incluso la propia Internet forma parte de estas.
@@ -38,6 +38,8 @@ Con el objetivo de mejorar el proceso de diseño e implementación se aconseja o
 El desarrollo de servicios con este sistema provee de una estructura y permite acelerar el proceso de obtención de un prototipo estable.
 
 La elección de Python como lenguaje permite una gran flexibilidad en la programación y sobretodo claridad en el código resultante. Mantener la claridad en el código es una de las premisas a la hora de orientar la programación del servicio.
+
+Se ha elegido la licencia GPL para proteger el proyecto para garantizar su disponibilidad futura en especial a la comunidad de estudiantes y a aquellos interesados en el software libre.
 
 \begin{figure}[h] %{r}{0.35\textwidth}
 	\includegraphics[width=0.65\textwidth]{img/SistemasDistribuidos.eps}	
@@ -57,6 +59,12 @@ Es precisamente en esta \'epoca cuando empiezan implantarse sistemas de comunica
 
 La capacidad monousuario de los sistemas de la epoca presento la necesidad de empezar a dejar de utilizar enlaces de lineas conmutadas para añadir un nuevo nivel de paquetes conmutados para eliminar esta limitación.
 
+Con el tiempo y con el inexorable cumplimiento de la ley de moore, los sistemas fueron ampliando geometricamente su capacidad, tambien lo hacia su disponibilidad en el mercado haciendose cada vez asequibles para el público en general, acompañado por una reducción drástica del volumen y consumo energ\'etico.  
+
+La popularización de internet llevó a que practicamente cualquier ordenador dom\'estico estuviera dotado de algún dispositivo de comunicación metropolitana y una pila IP, permitiendo así acceder a los servicios ofrecidos en internet a trav\'es del respetivo ISP. 
+
+En poco tiempo dispositivos portatiles imitaban la tendencia junto a otros microdispositos. Es muy común ver que aparatos convencionales, desde electrodomesticos a vehiculos lleven incorporados sistemas de comunicación que automáticamente son capaces de desempeñar tareas como emitir a la central la posición del vehículo y todo tipo de medidas cuatificables sobre su estado. 
+
 \section{Motivación}
 
 En los último años cursando Ingeniería Informática y en proyectos profesionales se ha presentado en numerosas ocasiones la necesidad de escribir servicios orientados a internet. La necesidad de encontrar un sistema estruturado y rapido de elaboración de prototipos es lo que ha inspirado la creación de esta plataforma.
@@ -72,7 +80,7 @@ La intención principal de esta plataforma es evitar la reimplementación innece
 \section{Disponibilidad del proyecto}
 Este proyecto se ha traspasado desde una de sus mas primitivas versiones al repositorio que google dispone para desarrolladores. La elección de \url{http://code.google.com/} como repositorio se ha debido sobre todo al electo de herramientas y servicios que Google está dedicando a los desarrolladores de software y sobre todo a los proyectos de programación colaborativos.
 
-Todo el código y la documentación referente a este proyecto podrá encontrarse en \url{http://code.google.com/p/blas/}.
+Todo el código y la documentación referente a este proyecto podrá encontrarse en \url{http://code.google.com/p/blas/}. La participación de terceros quedará abierta en cuanto se evalue el proyecto, en mi opinión ese será el verdadero comienzo de la plataforma, cuando se pruebe su uso y las aportaciones de otros desarrolladores amplien sus funcionalidades.
 \section{licencias}
 Este proyecto dispone de 2 licencias: una para el propio software que garantice a futuros la disponibilidad de este para toda la comunidad de software libre, otra para este documento, de tal forma que su contenido pueda aprovecharse en otros esfuerzos de documentación colaborativa como \url{http://es.wikipedia.org}.
 
@@ -403,7 +411,7 @@ El Session Initiation Protocol es un protocolo de señalización, ampliamente ut
 
 Este protocolo puede utilizarse para crear, modificar y finalizar sesiones unicast o multicast consistentes en uno o varios flujos de medios. La modificacion puede suponer cambiar direcciones o puertos, invitar a otros participantes, añadir o retirar flujos de medios, etc.
 
-SIP puede situarse sobre los proctolos TCP, UDP o SCTP. Fue originariamente diseñador por Henning Schulzrinne (Universidad de Columbia) y Mark Handley (UCL) en 1996. La ultima version de la especificacion es el RFC 3261 del IETF SIP Working Group.
+SIP puede situarse sobre los proctolos TCP, UDP o SCTP. Fue originariamente diseñador por Henning Schulzrinne (Universidad de Columbia) y Mark Handley (UCL) en 1996. La ultima version de la especificacion es el \cite{RFCSIP} RFC 3261 del IETF SIP Working Group.
 
 Cabe destacar que SIP funciona en modo texto, lo que hace más facil analizar su funcionamiento.
 
@@ -701,6 +709,11 @@ Una vez que el servidor ha recibido la trama con la petición e instanciado el h
 	\begin{description}
 		\item[Run\_Register] Este paso acaba procesando cualquier comando Register, si no hay autentificación la solicita generando antes un codigo ``nonce'' de desafio para que el cliente responda, a continuación emite un ``401 Unauthorized'' con la información del desafio. En caso de que el cliente haya aportado autentificación se llama al metodo ``digest'' para realizar el contraste del campo ``response'' y la respuesta producida por el propio servidor. A continuación se procederá al estado ``End''.
 		\item[Run\_Subscribe] En este estado se guarda información de usuario en el registro para aviso de eventos. A continuación se pasa al estado ``End''.
+		\item[Run\_Invite] En este estado si tanto el usuario origen como destino estan validados se pasa al estado ``Invite\_Request'', en caso contrario se pasará a ``End''.
+		\begin{description}
+			\item[Invite\_Request] En este estado se enviará una petición al destinatario para que acepte la solicitud, se pasará al estado ``End'' despues de marcar la invitacion como pendiente.
+		\end{description}
+		\item[Run\_Ack] Se revisa en el registro de invitaciones pendientes si existe registro con esa referencia, de ser así se enviarán una confirmación al emisor de la misma y se pasará al estado ``End''.
 	\end{description}
 	\item[End] Esta parte del proceso guardará la información obtenida de los pasos anteriores y emitirá el suceso del fin de la petición al registro de eventos.
 \end{description}
@@ -1680,8 +1693,8 @@ role in the expansion and protection of software freedom.  This
 purpose is empty without public commentary.  In order to make the most
 well-informed changes possible to the GPL, we seek commentary from a
 wide selection of the public.  Comments and suggestions are encouraged
-at \url{GPLv3.fsf.org} as well as in person at any of our
-International Conferences, see Appendix \ref{schedule}.
+at \url{http://GPLv3.fsf.org} as well as in person at any of our
+International Conferences, see Appendix schedule.
 
 After someone has made a comment, either directly to
 \url{GPLv3.fsf.org} or in a discussion at an International
@@ -1776,5 +1789,14 @@ Press interested in covering this process should follow the contact
 information available at the website or write to
 \url{press@GPLv3.fsf.org}.
 
+\begin{thebibliography}{99}
+\bibitem{LibroCommandLine} Neal Stephenson: In the Beginning was the Command Line
+	Editorial Harper Perennial, 1999.
+\bibitem{Python} Python Software Foundation Web-Site: \url{http://www.python.org}
+\bibitem{RFCTCP} Especificación del Protocolo de Control de Transmisión (TCP): \url{http://www.rfc-es.org/rfc/rfc0793-es.txt}
+\bibitem{RFCUDP} Especificación del Protocolo de Datagramas de Usuario (UDP): \url{http://www.rfc-es.org/rfc/rfc0768-es.txt}
+\bibitem{RFCTELNET} Especificación del Protocolo Telnet: \url{http://www.rfc-es.org/rfc/rfc0854-es.txt}
+\bibitem{RFCHTTP} Especificación del Protocolo de Transferencia de HiperTexto (HTTP): \url{http://www.ietf.org/rfc/rfc2616.txt}
+\bibitem{RFCSIP} Especificación del Protocolo de Inicialización del Servicio (SIP): \url{http://www.rfc-editor.org/rfc/rfc3261.txt}
+\end{thebibliography}
 \end{document}
-
