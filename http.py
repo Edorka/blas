@@ -44,7 +44,6 @@ class HTTPHandler(TCPHandler):
 		param_pattern = "(?P<name>(([a-zA-Z0-9\W])*)): "
 		param_pattern += "(?P<value>((\S)*))"
 		param_pattern += "(\r)?"
-
 		pattern = "((\r\n)|"+param_pattern+")"
 		param = self.receive(pattern)
 		if type(param) is not dict:
