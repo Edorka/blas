@@ -21,29 +21,50 @@
 \usepackage{wrapfig}
 \usepackage{verbatim}
 \usepackage{hyperref}
+\usepackage{appendix}
+\onehalfspacing
 
 \begin{document}
 
-\maketitle
+%\maketitle
+\include{portada}
+\cleardoublepage
+\include{copyright}
+\pagenumbering{Roman}
 %cuerpo del documento
-\tableofcontents
-
-\chapter{Introducción}
-Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y una mayoria de estas est\'an conectadas a Internet o incluso la propia Internet forma parte de estas.
-\section{Resumen}
+\chapter*{Resumen}
 BLAS es una plataforma pensada para orientar los esfuerzos dedicados a programar un servicio de internet, originalmente pensado para protocolos de tipo de texto sobre TCP/IP se ha extendido su funcionalidad a UDP/IP y en un futuro se proveera un soporte más fiable para protocolos binarios.
 
 Con el objetivo de mejorar el proceso de diseño e implementación se aconseja organizar el proceso de atención de las peticiones en una serie discreta de estados lo más simples posible, estos estados se materializan en m\'etodos con nombres concretos que van dirigiendo la ejecución de uno a otro. Este modo de trabajo estructura y facilita de forma considerable el trabajo sobre protocolos con un formato concreto.
 
 El desarrollo de servicios con este sistema provee de una estructura y permite acelerar el proceso de obtención de un prototipo estable.
 
-La elección de Python como lenguaje permite una gran flexibilidad en la programación y sobretodo claridad en el código resultante. Mantener la claridad en el código es una de las premisas a la hora de orientar la programación del servicio.
+La elección de Python como lenguaje permite una gran flexibilidad en la programación y sobretodo claridad en el código resultante. Precismante mantener la claridad en la implementación es una de las principales premisas a la hora de orientar la programación del servicio.
 
-Se ha elegido la licencia GPL para proteger el proyecto para garantizar su disponibilidad futura en especial a la comunidad de estudiantes y a aquellos interesados en el software libre.
+Se ha optado por la licencia GPL para proteger el proyecto y garantizar su disponibilidad futura, en especial a la comunidad de estudiantes y facilitar la participación a aquellos interesados en la platafoma y en el software libre.
 
+\cleardoublepage
+
+
+\pagestyle{plain}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+\pagestyle{fancyplain}
+
+
+\chapter{Introducción}
+Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y una mayoria de estas est\'an conectadas a Internet e incluso la propia Internet forma parte de estas.
 \begin{figure}[h] %{r}{0.35\textwidth}
+	\begin{center}
 	\includegraphics[width=0.65\textwidth]{img/SistemasDistribuidos.eps}	
-	\caption{Ejemplo de un Sistema Distibuido}
+	\end{center}
+	\caption{Ejemplo de un Sistema Distribuido}
 	\label{fig:SistemasDistribuidos}
 \end{figure}
 \section{Historia de los servicios informáticos}
@@ -81,7 +102,7 @@ La intención principal de esta plataforma es evitar la reimplementación innece
 Este proyecto se ha traspasado desde una de sus mas primitivas versiones al repositorio que google dispone para desarrolladores. La elección de \url{http://code.google.com/} como repositorio se ha debido sobre todo al electo de herramientas y servicios que Google está dedicando a los desarrolladores de software y sobre todo a los proyectos de programación colaborativos.
 
 Todo el código y la documentación referente a este proyecto podrá encontrarse en \url{http://code.google.com/p/blas/}. La participación de terceros quedará abierta en cuanto se evalue el proyecto, en mi opinión ese será el verdadero comienzo de la plataforma, cuando se pruebe su uso y las aportaciones de otros desarrolladores amplien sus funcionalidades.
-\section{licencias}
+\section{Licencias}
 Este proyecto dispone de 2 licencias: una para el propio software que garantice a futuros la disponibilidad de este para toda la comunidad de software libre, otra para este documento, de tal forma que su contenido pueda aprovecharse en otros esfuerzos de documentación colaborativa como \url{http://es.wikipedia.org}.
 
 Ambos documentos pueden encontrarse en la sección de anexos.
@@ -103,7 +124,7 @@ El objetivo principal de esta librería es facilitar las tareas de diseño e imp
 
 Es posible que existan dudas sobre si actualmente existe la necesidad de la realizacion de este tipo de software. Hoy día se pueden encontrar cientos de implementaciones de protocolos sobre multitud de tecnologías diferentes existe todavía la necesidad de realizar implementaciones de servicios de protocolos antiguos o nuevos.
 
-\subsection{Docencia}
+\section{Docencia}
 Existen numerosos proyectos academicos que requieren la implementaci\'on de:
 \begin{enumerate}
 	\item Protocolos nuevos,
@@ -113,12 +134,12 @@ Existen numerosos proyectos academicos que requieren la implementaci\'on de:
 
 y que pueden ver facilitada su realización utilizando esta plataforma.
 
-\subsection{Microdispositivos}
+\section{Microdispositivos}
 La mayor\'ia de los dispositivos dotados de un sistema operativo m\'inimo disponen de una modesta pila IP ya que, practicamente todos estos dispositivos, se dise\~{n}an incluyendo algún tipo de hardware de interconexi\'on mediante enlaces de radio o cableado . Sin embargo por razones de coste economico y rendimiento energetico se ven afectados por una leve capacidad de memoria y/o potencia de c\'alculo que hacen que la opcion de conectarlos a un servicio convencional (HTTP y REST por ejemplo) resulte muy engorrosa (y caro) en su programaci\'on, e incluso a veces impracticable.
 
 Es por este motivo que se suelen dise\~{n}ar protocolos normalmente muy escuetos, especificamente adaptados a la funcionalidad del dispositivo y a sus limitaciones de proceso.
 
-\subsection{Seguridad Inform\'atica}
+\section{Seguridad Inform\'atica}
 En un entorno en que los ataques mediante gusanos son casi rutinarios se emplea mucho tiempo y esfuerzo en crear servicios que se comporten como los originales que emplee el gusano para penetrar en el sistema y as\'i poder estudiar que acciones realiza una vez dentro.
 
 La capacidad de programar servicios simulados agilmente puede ser un complemento perfecto a otras herramientas de estudio de la seguridad como son las 'Honey-Nets', dotando a las m\'aquinas virtuales de un comportamiento mucho m\'as flexible.
@@ -202,7 +223,7 @@ Es dificil generalizar sobre protocolos ya que estos varian ampliamente en propo
 \begin{wrapfigure}{r}{0.35\textwidth}
 	%{figure}[h]
 	\includegraphics[width=0.25\textwidth]{img/NivelesOSIRed.eps}	
-              \caption{niveles OSI: protocolo de red}
+              \caption{Niveles OSI: protocolo de red}
   \label{fig:nivelesOSIRed}
 \end{wrapfigure}
 
@@ -238,7 +259,7 @@ Basandonse en el nivel de Red (lo que proporciona una ruta de comunicación y un
 
 \begin{wrapfigure}{l}{0.35\textwidth}
 	\includegraphics[width=0.25\textwidth]{img/NivelesOSITransporte.eps}	
-              \caption{niveles OSI: protocolos de transporte}
+              \caption{Niveles OSI: protocolos de transporte}
   \label{fig:nivelesOSITransporte}
 \end{wrapfigure}
 
@@ -361,7 +382,7 @@ Este protocolo es ampliamente utilizado en el streaming de multimedia y en los e
 \begin{wrapfigure}{l}{0.35\textwidth}
 	%{figure}[h]
 	\includegraphics[width=0.25\textwidth]{img/NivelesOSIAplicacion.eps}	
-              \caption{niveles OSI: protocolos de aplicación}
+              \caption{Niveles OSI: protocolos de aplicación}
   \label{fig:nivelesOSIAplicacion}
 \end{wrapfigure}
 
@@ -377,7 +398,7 @@ Los protocolos elegidos para demostrar la idoneidad de la plataforma son los sig
 \subsection{Telnet}
 Se trata de un cl\'asico obligado entre cualquier conjunto de servicios de red (o su sustituto Secure SHell). La función de este servicio consisten en proveer de autentificacion y acceso al control de las terminales de un sistema.
 
-TELNET (TELecommunication NETwork) es un protocolo de red utilizado en conexiones de internet o en redes de area local (LAN). Fue desarrollado en 1969 y especificado en el RFC 15 y despues estandarizado en el IETF STD 8, uno de los primeros estandares de internet.
+TELNET (TELecommunication NETwork) es un protocolo de red utilizado en conexiones de Internet o en redes de area local (LAN). Fue desarrollado en 1969 y especificado en el RFC 15 y despues estandarizado en el IETF STD 8, uno de los primeros estandares de internet.
 
 El termino telnet tambien se refiere al software que implementa a la parte cliente del protocolo. Los clientes TELNET estan disponibles en prácticamente cualquier plataforma. La mayoria de los equipos de red que dispongan de una pila TCP/IP tienen soporte  para algun tipo de servidor TELNET para permitir su configuracion remota (incluyendo a los basados en Windows NT). Debido a los problemas de privacidad con TELNET se ha reemplazado ampliamente por SSH (Secure SHell).
 
@@ -419,14 +440,14 @@ Cabe destacar que SIP funciona en modo texto, lo que hace más facil analizar su
 \section{Análisis}
 El modelo Cliente-Servidor es tan básico como antiguo, se pueden considerar que los primeros sistemas de este tipo eran los teletipos utilizados en las universidades para emitir programas a los equipos que alli habian instalados y recibir posteriormente sus resultados. A diferencia de hoy aquellos sistemas funcionaban directamente sobre enlaces dedicados y cada uno de estos teletipos disponia de una conexión permanente.
 
-Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados y sobre todo la diversificación de equipos mucho mas baratos y potentes han modificado el panorama de manera importante: Además de diversificarse los tipos de servicios era posible que varios de ellos coexisitieran en el mismo equipo.
-
 \begin{wrapfigure}{l}{0.50\textwidth}
 	%{figure}[h]
 	\includegraphics[width=0.45\textwidth]{img/FlujoServicio.eps}
-              \caption{niveles OSI}
+              \caption{Niveles OSI}
   \label{fig:nivelesOSI}
 \end{wrapfigure}
+
+Sin embargo la implantación de sistemas de red por capas, enlaces no dedicados y sobre todo la diversificación de equipos mucho mas baratos y potentes han modificado el panorama de manera importante: Además de diversificarse los tipos de servicios era posible que varios de ellos coexisitieran en el mismo equipo.
 
 En el contexto de los sistemas informáticos un protocolo es un conjunto de reglas predefinidas, cuyo proposito es estandarizar actividades y procesos. Siguiendo un mismo protocolo se garantiza que se mantendrá la compatibilidad entre los sistemas involucrados, independientemente del medio sobre el que est\'en en contacto, posiblemente otros protocolos.
 
@@ -593,7 +614,7 @@ En definitiva y aunque para cada tipo de servicio el modelo de acceso a datos va
 \section{Diseño}
 
 \subsection{Librería principal}
-Existe una parte común a toda la plataforma que contiene las clases abstractas:
+Existe una parte común a toda la plataforma que contiene las clases abstractas, puede verse su diagrama de clases de diseño en la figura \ref{fig:DiagramaClasesDiseñoCore}
 
 \begin{figure}[h]
 	\includegraphics[width=0.80\textwidth]{img/DiagramaClasesDisennoCore.eps}
@@ -617,32 +638,32 @@ Esta clase incluye las rutinas necesarias para la inicializacion y configuració
 Esta clase que hereda de la clase de sistema Exception se utiliza como tipo de datos por defecto en caso de que alguno de los procesos o rutinas del sistema no pueda realizar su función, en estos casos devolverá un objeto de clase Error.
 
 Además Error contiene 2 datos importantes para la infraestructura:
-\begin{enumerate}
-	\item msg:string contiene una cadena explicando el suceso que originó el error.
-	\item level:integer se utiliza para saber si la gravedad del suceso obliga a su aparición en los registros.
-\end{enumerate}
+\begin{description}
+	\item[msg]Cadena que contiene una cadena explicando el suceso que originó el error.
+	\item[level]Entero que se utiliza para saber si la gravedad del suceso obliga a su aparición en los registros.
+\end{description}
 Los metodos son una sobrecarga de los metodos basicos de la clase Exception:
-\begin{enumerate}
-	\item \_\_init\_\_ Que inicializa el objeto proveyendo de la información con el mensaje de error y el nivel de importancia.
-	\item \_\_str\_\_ Devolverá la cadena con la explicación del error y el nivel de importancia cuando se necesite imprimirlo en el registro.
-\end{enumerate}
+\begin{description}
+	\item[\_\_init\_\_]Que inicializa el objeto proveyendo de la información con el mensaje de error y el nivel de importancia.
+	\item[\_\_str\_\_]Devolverá la cadena con la explicación del error y el nivel de importancia cuando se necesite imprimirlo en el registro.
+\end{description}
 \subsubsection{Log}
 En esta versión del registro solo se volcarán los eventos y errores a salida estandar o a ficheros. Para reducir el acoplamiento en las llamadas en los objetos de registro integran los siguientes datos durante su tiempo de vida:
-\begin{enumerate}
-	\item file:File salvo que su valor sea None será el descriptor de fichero donde se volcará la información.
-	\item level: Int indicará el nivel de importacia que debe igualarse o superarse para que el evento se vuelque en el registro.
-\end{enumerate}
+\begin{description}
+	\item[file]File salvo que su valor sea None será el descriptor de fichero donde se volcará la información.
+	\item[level]Int indicará el nivel de importacia que debe igualarse o superarse para que el evento se vuelque en el registro.
+\end{description}
 Los m\'etodos propios de los objetos tipo Log son:
-\begin{enumerate}
-	\item \_\_init\_\_() m\'etodo de inicialización del registro, indicando el nombre del fichero de volcado y el nivel mínimo de importancia. Si la apertura del fichero falla se pasarán a volcar los datos a la salida estandar.
-	\item put() con este m\'etodo se vuelcan eventos al registro, además del mensaje debe acompañarse del nivel de importancia del evento. Para simplificar su invocación normalmente se utiliza un puntero desde self.log[``report''].put() a self.report() con lo que las llamadas son mucho más cortas.
-\end{enumerate}
+\begin{description}
+	\item[\_\_init\_\_()]M\'etodo de inicialización del registro, indicando el nombre del fichero de volcado y el nivel mínimo de importancia. Si la apertura del fichero falla se pasarán a volcar los datos a la salida estandar.
+	\item[put()]Con este m\'etodo se vuelcan eventos al registro, además del mensaje debe acompañarse del nivel de importancia del evento. Para simplificar su invocación normalmente se utiliza un puntero desde self.log[``report''].put() a self.report() con lo que las llamadas son mucho más cortas.
+\end{description}
 \subsubsection{Handler: UDP y TCP}
 Seguramente las clases más importantes que se incorporan en un servicio:
 \begin{enumerate}
 	\item Handler: Es la clase principal, hereda de la clase hilo (Thread) y sus principales funcionalidades son:
 		\begin{enumerate}
-			\item Cnotrolar el avance, retroceso y transito entre estados del manipulador en ejecución.
+			\item Controlar el avance, retroceso y transito entre estados del manipulador en ejecución.
 			\item Sobrecargar las clases minimas de la clase Thread para un funcionamiento coherente.
 		\end{enumerate}
 	\item TCPHandler: Versión del manipulador que contiene los atributos y m\'etodos concretos para tratar con el socket que les corresponda, en este caso basta con guardar el puntero al Socket, ya que es lo unico que necesitan las rutinas send() y receive() para enviar y recibir datos con el cliente.
@@ -653,7 +674,7 @@ Seguramente las clases más importantes que se incorporan en un servicio:
 		\end{enumerate}
 \end{enumerate}
 \subsection{Servicio de ejemplo}
-A continuación se presenta un ejemplo de como se realiza la implementación de un servicio heredando de las clases de BLAS.
+A continuación se presenta un ejemplo de como se realiza la implementación de un servicio heredando de las clases de BLAS. En la figura \ref{fig:DiagramaClasesDiseñoParticular} puede observarse como se relacionan las clases.
 
 \begin{figure}[h]
 	\includegraphics[width=0.80\textwidth]{img/DiagramaClasesDisennoParticular.eps}
@@ -670,11 +691,22 @@ El arranque del sistema se realiza de la siguiente manera:
 	\item Al inicializar el hilo del manipulador se le aporta bien el socket de conexión para los tipo TCP y el buffer y la dirección de origen para los UDP. El m\'etodo start() que se hereda de la clase Thread iniciará la ejecución del hilo que se desarrollará a lo largo de los estados que se deban seguir para atender la petición.
 	\item la mayor parte del codigo del manipulador serán m\'etodos cuyo nombre empiece port ``step\_'' seguido del identificador del paso en si mismo, en cada paso debe indicarse si se pasa al siguiente, al anterior o se salta a otro, de otra manera se repetirá el mismo paso.
 \end{enumerate}
+\subsection{Servicio Telnet}
+Para imitar un servicio de terminal interactiva con autentificación 
+			  \ref{fig:DiagramaClasesDisennoTelnet}
+\begin{figure}[h!]
+		\begin{center}
+				\includegraphics[angle=90,width=0.90\textwidth]{img/DiagramaClasesDisennoTelnet.eps}	
+			\end{center}
+			\caption{Diagrama de Clases de Diseño: Servicio Telnet}
+			  \label{fig:DiagramaClasesDisennoTelnet}
+\end{figure}
+
 \subsection{Servicio HTTP}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 		\begin{center}
-				\includegraphics[width=0.90\textwidth]{img/DiagramaClasesDisennoHTTP.eps}	
+				\includegraphics[angle=90,width=0.90\textwidth]{img/DiagramaClasesDisennoHTTP.eps}	
 			\end{center}
 			\caption{Diagrama de Clases de Diseño: Servicio HTTP}
 			  \label{fig:DiagramaClasesDisennoHTTP}
@@ -691,11 +723,11 @@ Una vez que el servidor ha recibido la trama con la petición e instanciado el h
 	\end{description}
 	\item[End] Esta parte del proceso guardará la información obtenida de los pasos anteriores y emitirá el suceso del fin de la petición al registro de eventos.
 \end{description}
-
+Puede encontrarse el diagrama de clases de diseño en \ref{fig:DiagramaClasesDisennoHTTP} 
 \subsection{Servicio SIP}
 \begin{figure}[h]
 		\begin{center}
-				\includegraphics[width=0.90\textwidth]{img/DiagramaClasesDisennoSIP.eps}	
+				\includegraphics[angle=90,width=0.90\textwidth]{img/DiagramaClasesDisennoSIP.eps}	
 			\end{center}
 			\caption{Diagrama de Clases de Diseño: Servicio SIP}
 			  \label{fig:DiagramaClasesDisennoSIP}
@@ -798,8 +830,41 @@ Para calcular el response correcto se ha implementado un m\'etodo digest() al qu
 	\item \begin{math} S2 = MD5(<metodo>:<URI>:) \end{math}
 	\item \begin{math} RESP = MD5(S1:<nonce>:<nc>:<cnonce>:<qop>:S2) \end{math}
 \end{enumerate}
-\chapter{Previsiones y proyectos futuros}
+\section{Manual de usuario}
+Para ejecutar cualquiera de los servicios debe situarse en la raiz del CD que acompaña a la memoria y ejecutar el interprete de python indicando el fichero del servicio, por ejemplo:
+\begin{verbatim}
+python telnet.py
+python http.py
+python sip.py
+\end{verbatim}.
+
+Debe tenerse en cuenta de que para pueda escribirse en el medio los registros de eventos y errores deben copiarse al disco duro los ficheros contenidos en el CD y ejecutar desde ahí. 
+
+El interprete incluido en el CD puede funcionar sin instalación, sin embargo se ha incluido una copia del instalador para windows de la ultima versión disponible de python.
+
+Al ser multiplataforma el interprete y con el, \'el entorno, sabiendo que las reglas y permisos de cada sistema serán diferentes y para evitar problemas en la ejecución se han modificado los puertos de escucha, con lo que telnet estará a la escucha en el puerto TCP 2300 y el servidor HTTP en el puerto TCP 8000. El protocolo SIP estará a la escucha en su puerto habitual, 5060 UDP.
+
+
+\chapter{Conclusiones, previsiones y proyectos futuros}
+\section{Conclusiones}
+A lo largo de la realización del proyecto se han presentado varias dificultades, que se detallan a continuacion:
+\begin{enumerate}
+	\item Problemas en la depuración de expresiones regulares, para corregir un fallo durante la entrada de datos aunque este se hubiera localizado en la expresión regular su corrección resultaba bastante engorrosa. El proceso para comprobarla consistia en abrir un interprete python a parte importar los modulos correspondientes e imitar el mismo procedimiento que realiza el programa, lo que supone escribir 10 lineas de código que irremediablemente se perderán, para evitar esto sería interesante escribir alguna clase de utilidad.
+	\item Problemas con los clientes, ya que muchos de estos no se acomodan correctamente a las especificaciones del protocolo, salvo en los casos en que se ha podido llegar a una solución elegante, realizando pequeñas variaciones, aceptar modificicaciones sobre los protocolos normalmente ha implicado producir bastante código extra para subsanarlo.
+	\item Las especificaciones RFC son en muchos casos dificiles de entender, para la implementación de los protoclos se ha hecho necesaria capturasde operaciones de dichos protocolos para comprender realmente lo que ocurre.
+	\item Aun a pesar de utilizar un importante número de trazas a lo largo del la programación del servicio muchos errores solo pueden localizarse analizando el trafico, por ello disponer de programas como wireshark \url{http://www.wireshark.org/} puede resultar de gran utilidad.
+\end{enumerate}
+Sin embargo en este proyecto si se han superado obstaculos en un tiempo menor de los esperado:
+\begin{enumerate}
+	\item El soporte para Datagram User Protocol se implementó en apenas 3 horas, las diferencias con la versión que manejaba sockets TCP eran menores de lo esperado y la facilidad de implementación en python redujo de manera importante el tiempo de implementación.
+	\item Los módulos que incorpora Python para casi cualquier necesidad imaginable reduce el tiempo de implementación, sin embargo debe tenerse en cuenta de que estos modulos deben estar presentes tambi\'en en los entornos donde vaya a ejecutarse el servicio.
+	\item Las estructuras de datos primitivas de python como listas y diccionarios han resultado muy utiles a la hora de almacenar la información de las cabeceras, al igual que las rutinas para tratamiento de cadenas.
+	\item 
+\end{enumerate}
+El diagrama de diseño de clases del servicio SIP esta en la figura \ref{fig:DiagramaClasesDisennoSIP}
+
 \section{Mejoras}
+
 En futuras implementaciones de BLAS se preveen una serie de mejoras planteadas para aumentar la funcionalidad de la plataforma o solventar sus carencias
 
 \subsection{Cifrado}
@@ -869,10 +934,7 @@ Para obtener datos fiables sobre la confiabilidad del servicio producido, sobret
  of this license document, but changing it is not allowed.
 \end{center}
 
-
-\begin{center}
-{\bf\large Preamble}
-\end{center}
+\section{Preamble}
 
 The purpose of this License is to make a manual, textbook, or other
 functional and useful document ``free'' in the sense of freedom: to
@@ -895,10 +957,7 @@ it can be used for any textual work, regardless of subject matter or
 whether it is published as a printed book.  We recommend this License
 principally for works whose purpose is instruction or reference.
 
-
-\begin{center}
-{\Large\bf 1. APPLICABILITY AND DEFINITIONS\par}
-\end{center}
+\section{Applicability and definitions}
 
 This License applies to any manual or other work, in any medium, that
 contains a notice placed by the copyright holder saying it can be
@@ -985,10 +1044,7 @@ License, but only as regards disclaiming warranties: any other
 implication that these Warranty Disclaimers may have is void and has
 no effect on the meaning of this License.
 
-
-\begin{center}
-{\Large\bf 2. VERBATIM COPYING\par}
-\end{center}
+\section{Verbatim copying}
 
 You may copy and distribute the Document in any medium, either
 commercially or noncommercially, provided that this License, the
@@ -1003,11 +1059,7 @@ number of copies you must also follow the conditions in section~3.
 You may also lend copies, under the same conditions stated above, and
 you may publicly display copies.
 
-
-\begin{center}
-{\Large\bf 3. COPYING IN QUANTITY\par}
-\end{center}
-
+\section{Copying in quantity}
 
 If you publish printed copies (or copies in media that commonly have
 printed covers) of the Document, numbering more than 100, and the
@@ -1044,10 +1096,7 @@ It is requested, but not required, that you contact the authors of the
 Document well before redistributing any large number of copies, to give
 them a chance to provide you with an updated version of the Document.
 
-
-\begin{center}
-{\Large\bf 4. MODIFICATIONS\par}
-\end{center}
+\section{Modifications}
 
 You may copy and distribute a Modified Version of the Document under
 the conditions of sections 2 and 3 above, provided that you release
@@ -1163,9 +1212,7 @@ give permission to use their names for publicity for or to assert or
 imply endorsement of any Modified Version.
 
 
-\begin{center}
-{\Large\bf 5. COMBINING DOCUMENTS\par}
-\end{center}
+	\section{Combining documents}
 
 
 You may combine the Document with other documents released under this
@@ -1190,9 +1237,7 @@ in the various original documents, forming one section Entitled
 and any sections Entitled ``Dedications''.  You must delete all sections
 Entitled ``Endorsements''.
 
-\begin{center}
-{\Large\bf 6. COLLECTIONS OF DOCUMENTS\par}
-\end{center}
+\section{Collections of documents}
 
 You may make a collection consisting of the Document and other documents
 released under this License, and replace the individual copies of this
@@ -1205,11 +1250,7 @@ it individually under this License, provided you insert a copy of this
 License into the extracted document, and follow this License in all
 other respects regarding verbatim copying of that document.
 
-
-\begin{center}
-{\Large\bf 7. AGGREGATION WITH INDEPENDENT WORKS\par}
-\end{center}
-
+\section{Aggregation with independent works}
 
 A compilation of the Document or its derivatives with other separate
 and independent documents or works, in or on a volume of a storage or
@@ -1228,11 +1269,7 @@ electronic equivalent of covers if the Document is in electronic form.
 Otherwise they must appear on printed covers that bracket the whole
 aggregate.
 
-
-\begin{center}
-{\Large\bf 8. TRANSLATION\par}
-\end{center}
-
+\section{Translation}
 
 Translation is considered a kind of modification, so you may
 distribute translations of the Document under the terms of section~4.
@@ -1253,9 +1290,7 @@ its Title (section~1) will typically require changing the actual
 title.
 
 
-\begin{center}
-{\Large\bf 9. TERMINATION\par}
-\end{center}
+\section{Termination}
 
 
 You may not copy, modify, sublicense, or distribute the Document except
@@ -1266,11 +1301,7 @@ parties who have received copies, or rights, from you under this
 License will not have their licenses terminated so long as such
 parties remain in full compliance.
 
-
-\begin{center}
-{\Large\bf 10. FUTURE REVISIONS OF THIS LICENSE\par}
-\end{center}
-
+\section{Future revisions of this license}
 
 The Free Software Foundation may publish new, revised versions
 of the GNU Free Documentation License from time to time.  Such new
@@ -1288,9 +1319,7 @@ number of this License, you may choose any version ever published (not
 as a draft) by the Free Software Foundation.
 
 
-\begin{center}
-{\Large\bf ADDENDUM: How to use this License for your documents\par}
-\end{center}
+\section{Addendum: How to use this License for your documents}
 
 To use this License in a document you have written, include a copy of
 the License in the document and put the following copyright and
@@ -1800,3 +1829,5 @@ information available at the website or write to
 \bibitem{RFCSIP} Especificación del Protocolo de Inicialización del Servicio (SIP): \url{http://www.rfc-editor.org/rfc/rfc3261.txt}
 \end{thebibliography}
 \end{document}
+
+
