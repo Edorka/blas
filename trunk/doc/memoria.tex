@@ -68,7 +68,7 @@ Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y u
 	\label{fig:SistemasDistribuidos}
 \end{figure}
 \section{Historia de los servicios informáticos}
-Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba normalmente limitada a una unidad por cada entidad (instituciones educativas e instalaciones militares). Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente restringido. Por estas mismas limitaciones y para maximizar la disponibilidad se ideó un sistema limitado de terminales remotas, los teletipos, cuya funcion era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
+Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba normalmente limitada a una unidad por cada entidad (instituciones educativas e instalaciones militares). Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente restringido. Por estas mismas limitaciones y para maximizar la disponibilidad se ideó un sistema limitado de terminales remotas, los teletipos, cuya función era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
 
 Con el tiempo la versatilidad de los sistemas fue ampliandose, los ordenadores dejaron de emplearse como meras ejecutoras de algoritmos y empezaron a ofrecer distintos tipos de servicios:
 \begin{enumerate}
@@ -153,7 +153,7 @@ La capacidad de programar servicios simulados agilmente puede ser un complemento
 Se ha elegido Python como lenguaje de programaci\'on para esta plataforma por las siguientes razones:
 \begin{enumerate}
 	\item Velocidad de aprendizaje: cualquier persona que conozca un lenguaje orientado a objetos puede aprenderlo en muy poco tiempo.
-	\item Reflexividad e introspección: Las clases en pytohn tienen conocimiento de sus propios metodos y atributos.
+	\item Reflexividad e introspección: Las clases en pytohn tienen conocimiento de sus propios m\'etodos y atributos.
 	\item Interpretado: Al ejecutarse bajo un interprete no har\'an falta compilar distintos ejecutables seg\'un la plataforma.
 \end{enumerate}
 
@@ -189,7 +189,7 @@ Durante la estancia de var Rossum en el CNRI, lanzo la iniciativa Programacion d
 
 \subsubsection{Version 2.0}
 
-Python 2.0 introdujo la comprensión de listas, una funcion prestada de los lenguajes de programacion funcionales Lips y Haskell. La sintaxis de python en su construccion es muy parecida a la de Haskell, dejando a un lado la preferencia de Haskell por los caracteres de puntuacion y la preferencia de Python por las palabras clave alfabeticas. Python 2.0 tambien introdujo un sistema de recoleccion de basura capaz de tratar referencias ciclicas.
+Python 2.0 introdujo la comprensión de listas, una función prestada de los lenguajes de programacion funcionales Lips y Haskell. La sintaxis de python en su construccion es muy parecida a la de Haskell, dejando a un lado la preferencia de Haskell por los caracteres de puntuacion y la preferencia de Python por las palabras clave alfabeticas. Python 2.0 tambien introdujo un sistema de recoleccion de basura capaz de tratar referencias ciclicas.
 
 Python 2.1 era bastante parecido a Python 1.6.1, al igual que Python 2.0. La licencia cambio su nombre a Python Software Foundation License. Todo el codigo, documentacion y especificaciones añadidas, desde la alpha de Python 2.1, es propiedad de la Python Software Foundation, una organizacion sin animo de lucro formada en 2001, modelada siguiendo el ejemplo de la Apache Software Foundation. La publicación incluyó un cambio en la especificacion del lenguaje para soportar intervalos (scopes) anidados, al igual que otros lenguajes con intervalos estáticos. Esta función estaría desactivada por defecto y no fue necesaria hasta Python 2.2.
 
@@ -243,7 +243,7 @@ En concreto el protocolo de Internet (IP) se utiliza en los extremos de la comun
 
 Precismente debido a la naturaleza de estas redes los datos son divididos en cantidades coherentes a las limitaciones del medio (por ejemplo 1500 bytes para redes ethernet), estos fragmentos de información se les denominan paquetes o datagramas. Además el protocolo no requiere que las rutas que deben seguir estos paquetes sean establecidas de antemano, es el propio protocolo el que encontrará la ruta idonea.
 
-Con el protocolo IP se provee un sistema para la transmision de datagramas no fiable (best effort), este metodo de transmisión no garantiza resultados pero intentará utilizar la ruta más efectica. Debe aclararse que IP no posee mecanismos para garantizar que la transmisión ha llegado a destino, aunque si dispone de mecanismos para la detección de errores en los datos que contenga el paquete. Debido a la naturaleza dinámica de las rutas y a la hetereogeneidad de los dispositivos es probable que los datagramas en que ha sido dividido el flujo de datos lleguen fuera de orden e incluso que llegue repetido, es tarea de los protocolos de transporte detectar estos sucesos.
+Con el protocolo IP se provee un sistema para la transmision de datagramas no fiable (best effort), este m\'etodo de transmisión no garantiza resultados pero intentará utilizar la ruta más efectica. Debe aclararse que IP no posee mecanismos para garantizar que la transmisión ha llegado a destino, aunque si dispone de mecanismos para la detección de errores en los datos que contenga el paquete. Debido a la naturaleza dinámica de las rutas y a la hetereogeneidad de los dispositivos es probable que los datagramas en que ha sido dividido el flujo de datos lleguen fuera de orden e incluso que llegue repetido, es tarea de los protocolos de transporte detectar estos sucesos.
 
 A lo largo de la ruta es posible que la longitud maxima de transmision (MTU) vaya cambiando (por ejemplo de 1500bytes de ethernet a 576 de una conexion punto a punto). Es tarea del protocolo IP volver a fragmentar estos datagramas en otros más pequeños y recomponerlos cuando sea necesario, debe tenerse en cuenta que estos fragmentos pueden utilizar vias diferentes en según que tramos de la ruta.
 
@@ -362,7 +362,7 @@ Durante la finalización de una conexión uno de los extremos emite un paqute FI
 
 De entre los protocolos de transporte sobre IP, el User Datagram Protocol (UDP) es el mas básico de todos.
 
-Orientado al simple envio de mensajes UDP ofrece un metodo de operacion muy sencillo para el acceso al protocolo de red. Sin embargo UDP no garantiza la recepcion del mensaje, con lo que el origen de los datos no tiene forma de saber mediante el propio protocolo en que estado se encuentra la transacción de datos, ni incluso si estos han salido a la red. Lo que si garantiza UDP es el multiplexado, la verificacion de errores y una minima proporcion del tamaño de la cabecera respecto de la trama util. 
+Orientado al simple envio de mensajes UDP ofrece un m\'etodo de operacion muy sencillo para el acceso al protocolo de red. Sin embargo UDP no garantiza la recepcion del mensaje, con lo que el origen de los datos no tiene forma de saber mediante el propio protocolo en que estado se encuentra la transacción de datos, ni incluso si estos han salido a la red. Lo que si garantiza UDP es el multiplexado, la verificacion de errores y una minima proporcion del tamaño de la cabecera respecto de la trama util. 
 
 Sin embargo si se desea obtener algun mecanismo para el control de la entrega de mensajes debe implementarse a nivel de aplicación.
 \begin{figure}[h]
@@ -379,7 +379,7 @@ Este protocolo es ampliamente utilizado en el streaming de multimedia y en los e
 
 \section{Protocolos de aplicación}
 
-\begin{wrapfigure}{l}{0.35\textwidth}
+\begin{wrapfigure}{l}{0.30\textwidth}
 	%{figure}[h]
 	\includegraphics[width=0.25\textwidth]{img/NivelesOSIAplicacion.eps}	
               \caption{Niveles OSI: protocolos de aplicación}
@@ -601,14 +601,15 @@ Normalmente existen unos tipos limitados de medios de datos:
 \begin{enumerate}
 	\item{Registos unificados volátiles: Son medios de datos que se borrarán cuando se desactive el servicio, deben permitir el acceso concurrente por parte de los hilos. Este tipo de medios sería muy adecuado para sistemas de chat etc.}
 	\item{Accesos a bases de datos: Python tiene soporte para acceder a muchos tipos de bases de datos: Mysql, Postgresql, ODBC, etc. Sin embargo diseñar un acceso a datos mediante objetos que eviten la manipulacion de peticiones SQL en el codigo de la atención del servicio será básico para la comprensión del codigo y su depuración}
-	\item{Acceso remoto a datos: En ocasiones los datos que se necesitan estarán en sistemas remotos, accediendo a ellos mediante conexiones IP/TCP y normalmente sobre estos metodos HTTP, SOAP o REST. Al igual que en otros medios de acceso es importante que el metodo de acceso se abstraiga del codigo de atención del servicio}
+	\item{Acceso remoto a datos: En ocasiones los datos que se necesitan estarán en sistemas remotos, accediendo a ellos mediante conexiones IP/TCP y normalmente sobre estos m\'etodos HTTP, SOAP o REST. Al igual que en otros medios de acceso es importante que el m\'etodo de acceso se abstraiga del codigo de atención del servicio}
 \end{enumerate}
 En definitiva y aunque para cada tipo de servicio el modelo de acceso a datos varía considerablemente se pueden establecer las siguientes lineas para el analisis y la orientación que tomará el sistema:
 \begin{enumerate}
 	\item{Claridad: Debe evitarse la molesta aparición de lineas SQL, peticiones HTTP, XML y similares en el codigo.}
 	\item{Orientación a objetos: Un buen modelo de acceso a datos reducirá sensiblemente el tiempo que se requiera para depuración y posteriores.}
 	\item{Manejo de errores: Es importante integrar el manejo de excepciones en las rutinas de adquisición de datos ya que no estarán exentas de fallos.}
-	\item{Oportunidad de acceso: Deben elegirse adecuadamente en que momentos se accederá a los datos, para no producir latencias en puntos del proceso sensibles al tiempo de respuesto.}
+	\item{Oportunidad de acceso: Deben elegirse adecuadamente en que momentos se accederá a los datos, para no producir latencias en puntos del proceso sensibles al tiempo de respuesto. Además si el dispositivo no dispone de control de acceso al medio debe implementarse algún m\'etodo que controle la concurrencia.}
+	
 \end{enumerate}
 
 \section{Diseño}
@@ -642,7 +643,7 @@ Además Error contiene 2 datos importantes para la infraestructura:
 	\item[msg]Cadena que contiene una cadena explicando el suceso que originó el error.
 	\item[level]Entero que se utiliza para saber si la gravedad del suceso obliga a su aparición en los registros.
 \end{description}
-Los metodos son una sobrecarga de los metodos basicos de la clase Exception:
+Los m\'etodos son una sobrecarga de los m\'etodos basicos de la clase Exception:
 \begin{description}
 	\item[\_\_init\_\_]Que inicializa el objeto proveyendo de la información con el mensaje de error y el nivel de importancia.
 	\item[\_\_str\_\_]Devolverá la cadena con la explicación del error y el nivel de importancia cuando se necesite imprimirlo en el registro.
@@ -717,7 +718,7 @@ Una vez que el servidor ha recibido la trama con la petición e instanciado el h
 \begin{description}
 	\item[Request] En este paso se recibe la primera linea de la petición, se informa en el registro del origen de la transmisión y se almacena el comando en los datos del hilo. Se pasa a la etapa Run.
 	\item[Headers] Este paso irá recolectando y parseando las cabeceras de las peticiones, no se pasará al siguiente paso Run hasta que se encuentre con una cabecera en blanco.
-	\item[Run] La funcion de este estado es elegir a cual se pasará según el comando que se ha recibido.
+	\item[Run] La función de este estado es elegir a cual se pasará según el comando que se ha recibido.
 	\begin{description}
 		\item[Run\_Get] En este paso se relativizará la ruta solicitada a la que esta configurada como raiz del servidor, además si no se ha indicado un fichero se intentará localizar ``index.html''. Si al intentar la apertura del fichero se produce una excepción será capturada y se emitirá al cliente una respuesta ``404 Not Found''. En caso de que la apertura del fichero sea correcta se emitirá antes un mensaje ``200 OK'', las cabeceras de información mínimas, incluyendo el tamaño del contenido a transmitir y finalmente el cuerpo de la petición. A continuación se indicará que el estado siguiente es ``End''.
 	\end{description}
@@ -737,9 +738,9 @@ Una vez que el servidor ha recibido la trama con la petición e instanciado el h
 \begin{description}
 	\item[Request] En este paso se recibe la primera linea de la petición, se informa en el registro del origen de la transmisión y se almacena el comando en los datos del hilo. Se pasa a la etapa Run.
 	\item[Headers] Este paso irá recolectando y parseando las cabeceras de las peticiones, no se pasará al siguiente paso Run hasta que se encuentre con una cabecera en blanco.
-	\item[Run] La funcion de este estado es elegir a cual se pasará según el comando que se ha recibido.
+	\item[Run] La función de este estado es elegir a cual se pasará según el comando que se ha recibido.
 	\begin{description}
-		\item[Run\_Register] Este paso acaba procesando cualquier comando Register, si no hay autentificación la solicita generando antes un codigo ``nonce'' de desafio para que el cliente responda, a continuación emite un ``401 Unauthorized'' con la información del desafio. En caso de que el cliente haya aportado autentificación se llama al metodo ``digest'' para realizar el contraste del campo ``response'' y la respuesta producida por el propio servidor. A continuación se procederá al estado ``End''.
+		\item[Run\_Register] Este paso acaba procesando cualquier comando Register, si no hay autentificación la solicita generando antes un codigo ``nonce'' de desafio para que el cliente responda, a continuación emite un ``401 Unauthorized'' con la información del desafio. En caso de que el cliente haya aportado autentificación se llama al m\'etodo ``digest'' para realizar el contraste del campo ``response'' y la respuesta producida por el propio servidor. A continuación se procederá al estado ``End''.
 		\item[Run\_Subscribe] En este estado se guarda información de usuario en el registro para aviso de eventos. A continuación se pasa al estado ``End''.
 		\item[Run\_Invite] En este estado si tanto el usuario origen como destino estan validados se pasa al estado ``Invite\_Request'', en caso contrario se pasará a ``End''.
 		\begin{description}
@@ -824,7 +825,7 @@ El procedimiento de autentificación en SIP se realiza a trav\'es de un mecanism
 		\end{verbatim}
 		\normalsize
 \end{enumerate}
-Para calcular el response correcto se ha implementado un m\'etodo digest() al que se pueden pasar como argumentos el metodo que lo ha llamado y la contraseña que se debe comprobar, el proceso de ``digestión'' es el siguiente
+Para calcular el response correcto se ha implementado un m\'etodo digest() al que se pueden pasar como argumentos el m\'etodo que lo ha llamado y la contraseña que se debe comprobar, el proceso de ``digestión'' es el siguiente
 \begin{enumerate}
 	\item \begin{math} S1 = MD5(<username>:<realm>:<password>) \end{math}
 	\item \begin{math} S2 = MD5(<metodo>:<URI>:) \end{math}
@@ -868,14 +869,14 @@ El diagrama de diseño de clases del servicio SIP esta en la figura \ref{fig:Dia
 En futuras implementaciones de BLAS se preveen una serie de mejoras planteadas para aumentar la funcionalidad de la plataforma o solventar sus carencias
 
 \subsection{Cifrado}
-Actualmente casi todos los servicios de red se comunican empleando canales seguros. Probablemente imitar cualquier servicio de forma completa requeriría aportar el soporte de distintos metodos criptograficos. Algunos de los algoritmos mas comunes que se pueden localizar en internet son:
+Actualmente casi todos los servicios de red se comunican empleando canales seguros. Probablemente imitar cualquier servicio de forma completa requeriría aportar el soporte de distintos m\'etodos criptograficos. Algunos de los algoritmos mas comunes que se pueden localizar en internet son:
 \begin{enumerate}
 	\item{DES y 3DES: Publicados en 1976 y 1978 respectivamente son los algoritmos más veteranos y aun presentes en muchos sistemas aunque hayan perdido robusted con el paso del tiempo.}
 	\item{IDEA: Publicado en 1991 para sustituir a DES}
 	\item{Blowfish: Publicado en 1993}
 	\item{RC5: Publicado por RSA en 1994}
 \end{enumerate}
-Para facilitar su uso por parte del programador y así mantener uno de los principales valores de la plataforma deben diseñarse metodos para que una vez negociada una contraseña común el flujo de datos pueda mantenerse de forma identica al uso que se realizara sobre send() y receive(). Ya que python permite la sobrecarga de metodos desde la propia clase durante la ejecución implementar una rutina que reemplace los metodos de entrada y salida no revestirá dificultad.
+Para facilitar su uso por parte del programador y así mantener uno de los principales valores de la plataforma deben diseñarse m\'etodos para que una vez negociada una contraseña común el flujo de datos pueda mantenerse de forma identica al uso que se realizara sobre send() y receive(). Ya que python permite la sobrecarga de m\'etodos desde la propia clase durante la ejecución implementar una rutina que reemplace los m\'etodos de entrada y salida no revestirá dificultad.
 
 \subsection{Sistemas de registro opcionales}
 Además del volcado de la información de registros de operación y errores al sistema de ficheros o a la salida estandar, existen otras posibilidades que pueden extender la funcionalidad de la plataforma:
@@ -891,7 +892,7 @@ Además del volcado de la información de registros de operación y errores al s
 	\item{Volcado UDP: se enviarán a una ip y puerto predeterminados la información en texto claro de los eventos del sistema.}
 \end{enumerate}
 
-De esta manera se debería extender la clase Log, creando nuevas subclases que heredarian de Log, sobrecargando los metodos para actuar de forma transparente al programador.
+De esta manera se debería extender la clase Log, creando nuevas subclases que heredarian de Log, sobrecargando los m\'etodos para actuar de forma transparente al programador.
 
 
 \subsection{Establecimiento como servicio del sistema}
@@ -906,7 +907,7 @@ El resultado ideal sería conseguir que no aparezcan expresiones regulares que e
 \section{Rendimiento y pruebas}
 Para profundizar en las capacidades de la plataforma para implementar servicios en cierto nivel de producción deberían realizarse una serie de estudios
 \subsection{Benchmarking}
-Comparando con el rendimiento de otros servicios implementados sobre lenguajes mas ligeros como C debería ofrecer una idea de que necesidad de recursos tiene la plataforma en funcion de la cantidad de clientes y el tipo de exigencia de estos. Conociendo estos requisitos podrán conocerse las posibilidades reales de que el prototipo pueda entrar en algún nivel de producción.
+Comparando con el rendimiento de otros servicios implementados sobre lenguajes mas ligeros como C debería ofrecer una idea de que necesidad de recursos tiene la plataforma en función de la cantidad de clientes y el tipo de exigencia de estos. Conociendo estos requisitos podrán conocerse las posibilidades reales de que el prototipo pueda entrar en algún nivel de producción.
 
 Sería interesante realizar distintos intentos según el nivel de optimización con que se configure la compilación a bytecode del producto.
 
@@ -915,909 +916,9 @@ Sería interesante realizar distintos intentos según el nivel de optimización 
 Para obtener datos fiables sobre la confiabilidad del servicio producido, sobretodo si está expuesto a accesos de terceros, deben realizarse pruebas con intención de desestabilizar el programa o incluso acceder a recursos restringidos a traves de el.
 
 
-\chapter{Anexo}
-\section{Licencia GNU Free Documentation License}
- \begin{center}
-
-       Version 1.2, November 2002
-
-
- Copyright \copyright{} 2000,2001,2002  Free Software Foundation, Inc.
- 
- \bigskip
- 
-     51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-  
- \bigskip
- 
- Everyone is permitted to copy and distribute verbatim copies
- of this license document, but changing it is not allowed.
-\end{center}
-
-\section{Preamble}
-
-The purpose of this License is to make a manual, textbook, or other
-functional and useful document ``free'' in the sense of freedom: to
-assure everyone the effective freedom to copy and redistribute it,
-with or without modifying it, either commercially or noncommercially.
-Secondarily, this License preserves for the author and publisher a way
-to get credit for their work, while not being considered responsible
-for modifications made by others.
-
-This License is a kind of ``copyleft'', which means that derivative
-works of the document must themselves be free in the same sense.  It
-complements the GNU General Public License, which is a copyleft
-license designed for free software.
-
-We have designed this License in order to use it for manuals for free
-software, because free software needs free documentation: a free
-program should come with manuals providing the same freedoms that the
-software does.  But this License is not limited to software manuals;
-it can be used for any textual work, regardless of subject matter or
-whether it is published as a printed book.  We recommend this License
-principally for works whose purpose is instruction or reference.
-
-\section{Applicability and definitions}
-
-This License applies to any manual or other work, in any medium, that
-contains a notice placed by the copyright holder saying it can be
-distributed under the terms of this License.  Such a notice grants a
-world-wide, royalty-free license, unlimited in duration, to use that
-work under the conditions stated herein.  The ``\textbf{Document}'', below,
-refers to any such manual or work.  Any member of the public is a
-licensee, and is addressed as ``\textbf{you}''.  You accept the license if you
-copy, modify or distribute the work in a way requiring permission
-under copyright law.
-
-A ``\textbf{Modified Version}'' of the Document means any work containing the
-Document or a portion of it, either copied verbatim, or with
-modifications and/or translated into another language.
-
-A ``\textbf{Secondary Section}'' is a named appendix or a front-matter section of
-the Document that deals exclusively with the relationship of the
-publishers or authors of the Document to the Document's overall subject
-(or to related matters) and contains nothing that could fall directly
-within that overall subject.  (Thus, if the Document is in part a
-textbook of mathematics, a Secondary Section may not explain any
-mathematics.)  The relationship could be a matter of historical
-connection with the subject or with related matters, or of legal,
-commercial, philosophical, ethical or political position regarding
-them.
-
-The ``\textbf{Invariant Sections}'' are certain Secondary Sections whose titles
-are designated, as being those of Invariant Sections, in the notice
-that says that the Document is released under this License.  If a
-section does not fit the above definition of Secondary then it is not
-allowed to be designated as Invariant.  The Document may contain zero
-Invariant Sections.  If the Document does not identify any Invariant
-Sections then there are none.
-
-The ``\textbf{Cover Texts}'' are certain short passages of text that are listed,
-as Front-Cover Texts or Back-Cover Texts, in the notice that says that
-the Document is released under this License.  A Front-Cover Text may
-be at most 5 words, and a Back-Cover Text may be at most 25 words.
-
-A ``\textbf{Transparent}'' copy of the Document means a machine-readable copy,
-represented in a format whose specification is available to the
-general public, that is suitable for revising the document
-straightforwardly with generic text editors or (for images composed of
-pixels) generic paint programs or (for drawings) some widely available
-drawing editor, and that is suitable for input to text formatters or
-for automatic translation to a variety of formats suitable for input
-to text formatters.  A copy made in an otherwise Transparent file
-format whose markup, or absence of markup, has been arranged to thwart
-or discourage subsequent modification by readers is not Transparent.
-An image format is not Transparent if used for any substantial amount
-of text.  A copy that is not ``Transparent'' is called ``\textbf{Opaque}''.
-
-Examples of suitable formats for Transparent copies include plain
-ASCII without markup, Texinfo input format, LaTeX input format, SGML
-or XML using a publicly available DTD, and standard-conforming simple
-HTML, PostScript or PDF designed for human modification.  Examples of
-transparent image formats include PNG, XCF and JPG.  Opaque formats
-include proprietary formats that can be read and edited only by
-proprietary word processors, SGML or XML for which the DTD and/or
-processing tools are not generally available, and the
-machine-generated HTML, PostScript or PDF produced by some word
-processors for output purposes only.
-
-The ``\textbf{Title Page}'' means, for a printed book, the title page itself,
-plus such following pages as are needed to hold, legibly, the material
-this License requires to appear in the title page.  For works in
-formats which do not have any title page as such, ``Title Page'' means
-the text near the most prominent appearance of the work's title,
-preceding the beginning of the body of the text.
-
-A section ``\textbf{Entitled XYZ}'' means a named subunit of the Document whose
-title either is precisely XYZ or contains XYZ in parentheses following
-text that translates XYZ in another language.  (Here XYZ stands for a
-specific section name mentioned below, such as ``\textbf{Acknowledgements}'',
-``\textbf{Dedications}'', ``\textbf{Endorsements}'', or ``\textbf{History}''.)  
-To ``\textbf{Preserve the Title}''
-of such a section when you modify the Document means that it remains a
-section ``Entitled XYZ'' according to this definition.
-
-The Document may include Warranty Disclaimers next to the notice which
-states that this License applies to the Document.  These Warranty
-Disclaimers are considered to be included by reference in this
-License, but only as regards disclaiming warranties: any other
-implication that these Warranty Disclaimers may have is void and has
-no effect on the meaning of this License.
-
-\section{Verbatim copying}
-
-You may copy and distribute the Document in any medium, either
-commercially or noncommercially, provided that this License, the
-copyright notices, and the license notice saying this License applies
-to the Document are reproduced in all copies, and that you add no other
-conditions whatsoever to those of this License.  You may not use
-technical measures to obstruct or control the reading or further
-copying of the copies you make or distribute.  However, you may accept
-compensation in exchange for copies.  If you distribute a large enough
-number of copies you must also follow the conditions in section~3.
-
-You may also lend copies, under the same conditions stated above, and
-you may publicly display copies.
-
-\section{Copying in quantity}
-
-If you publish printed copies (or copies in media that commonly have
-printed covers) of the Document, numbering more than 100, and the
-Document's license notice requires Cover Texts, you must enclose the
-copies in covers that carry, clearly and legibly, all these Cover
-Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on
-the back cover.  Both covers must also clearly and legibly identify
-you as the publisher of these copies.  The front cover must present
-the full title with all words of the title equally prominent and
-visible.  You may add other material on the covers in addition.
-Copying with changes limited to the covers, as long as they preserve
-the title of the Document and satisfy these conditions, can be treated
-as verbatim copying in other respects.
-
-If the required texts for either cover are too voluminous to fit
-legibly, you should put the first ones listed (as many as fit
-reasonably) on the actual cover, and continue the rest onto adjacent
-pages.
-
-If you publish or distribute Opaque copies of the Document numbering
-more than 100, you must either include a machine-readable Transparent
-copy along with each Opaque copy, or state in or with each Opaque copy
-a computer-network location from which the general network-using
-public has access to download using public-standard network protocols
-a complete Transparent copy of the Document, free of added material.
-If you use the latter option, you must take reasonably prudent steps,
-when you begin distribution of Opaque copies in quantity, to ensure
-that this Transparent copy will remain thus accessible at the stated
-location until at least one year after the last time you distribute an
-Opaque copy (directly or through your agents or retailers) of that
-edition to the public.
-
-It is requested, but not required, that you contact the authors of the
-Document well before redistributing any large number of copies, to give
-them a chance to provide you with an updated version of the Document.
-
-\section{Modifications}
-
-You may copy and distribute a Modified Version of the Document under
-the conditions of sections 2 and 3 above, provided that you release
-the Modified Version under precisely this License, with the Modified
-Version filling the role of the Document, thus licensing distribution
-and modification of the Modified Version to whoever possesses a copy
-of it.  In addition, you must do these things in the Modified Version:
-
-\begin{itemize}
-\item[A.] 
-   Use in the Title Page (and on the covers, if any) a title distinct
-   from that of the Document, and from those of previous versions
-   (which should, if there were any, be listed in the History section
-   of the Document).  You may use the same title as a previous version
-   if the original publisher of that version gives permission.
-   
-\item[B.]
-   List on the Title Page, as authors, one or more persons or entities
-   responsible for authorship of the modifications in the Modified
-   Version, together with at least five of the principal authors of the
-   Document (all of its principal authors, if it has fewer than five),
-   unless they release you from this requirement.
-   
-\item[C.]
-   State on the Title page the name of the publisher of the
-   Modified Version, as the publisher.
-   
-\item[D.]
-   Preserve all the copyright notices of the Document.
-   
-\item[E.]
-   Add an appropriate copyright notice for your modifications
-   adjacent to the other copyright notices.
-   
-\item[F.]
-   Include, immediately after the copyright notices, a license notice
-   giving the public permission to use the Modified Version under the
-   terms of this License, in the form shown in the Addendum below.
-   
-\item[G.]
-   Preserve in that license notice the full lists of Invariant Sections
-   and required Cover Texts given in the Document's license notice.
-   
-\item[H.]
-   Include an unaltered copy of this License.
-   
-\item[I.]
-   Preserve the section Entitled ``History'', Preserve its Title, and add
-   to it an item stating at least the title, year, new authors, and
-   publisher of the Modified Version as given on the Title Page.  If
-   there is no section Entitled ``History'' in the Document, create one
-   stating the title, year, authors, and publisher of the Document as
-   given on its Title Page, then add an item describing the Modified
-   Version as stated in the previous sentence.
-   
-\item[J.]
-   Preserve the network location, if any, given in the Document for
-   public access to a Transparent copy of the Document, and likewise
-   the network locations given in the Document for previous versions
-   it was based on.  These may be placed in the ``History'' section.
-   You may omit a network location for a work that was published at
-   least four years before the Document itself, or if the original
-   publisher of the version it refers to gives permission.
-   
-\item[K.]
-   For any section Entitled ``Acknowledgements'' or ``Dedications'',
-   Preserve the Title of the section, and preserve in the section all
-   the substance and tone of each of the contributor acknowledgements
-   and/or dedications given therein.
-   
-\item[L.]
-   Preserve all the Invariant Sections of the Document,
-   unaltered in their text and in their titles.  Section numbers
-   or the equivalent are not considered part of the section titles.
-   
-\item[M.]
-   Delete any section Entitled ``Endorsements''.  Such a section
-   may not be included in the Modified Version.
-   
-\item[N.]
-   Do not retitle any existing section to be Entitled ``Endorsements''
-   or to conflict in title with any Invariant Section.
-   
-\item[O.]
-   Preserve any Warranty Disclaimers.
-\end{itemize}
-
-If the Modified Version includes new front-matter sections or
-appendices that qualify as Secondary Sections and contain no material
-copied from the Document, you may at your option designate some or all
-of these sections as invariant.  To do this, add their titles to the
-list of Invariant Sections in the Modified Version's license notice.
-These titles must be distinct from any other section titles.
-
-You may add a section Entitled ``Endorsements'', provided it contains
-nothing but endorsements of your Modified Version by various
-parties--for example, statements of peer review or that the text has
-been approved by an organization as the authoritative definition of a
-standard.
-
-You may add a passage of up to five words as a Front-Cover Text, and a
-passage of up to 25 words as a Back-Cover Text, to the end of the list
-of Cover Texts in the Modified Version.  Only one passage of
-Front-Cover Text and one of Back-Cover Text may be added by (or
-through arrangements made by) any one entity.  If the Document already
-includes a cover text for the same cover, previously added by you or
-by arrangement made by the same entity you are acting on behalf of,
-you may not add another; but you may replace the old one, on explicit
-permission from the previous publisher that added the old one.
-
-The author(s) and publisher(s) of the Document do not by this License
-give permission to use their names for publicity for or to assert or
-imply endorsement of any Modified Version.
-
-
-	\section{Combining documents}
-
-
-You may combine the Document with other documents released under this
-License, under the terms defined in section~4 above for modified
-versions, provided that you include in the combination all of the
-Invariant Sections of all of the original documents, unmodified, and
-list them all as Invariant Sections of your combined work in its
-license notice, and that you preserve all their Warranty Disclaimers.
-
-The combined work need only contain one copy of this License, and
-multiple identical Invariant Sections may be replaced with a single
-copy.  If there are multiple Invariant Sections with the same name but
-different contents, make the title of each such section unique by
-adding at the end of it, in parentheses, the name of the original
-author or publisher of that section if known, or else a unique number.
-Make the same adjustment to the section titles in the list of
-Invariant Sections in the license notice of the combined work.
-
-In the combination, you must combine any sections Entitled ``History''
-in the various original documents, forming one section Entitled
-``History''; likewise combine any sections Entitled ``Acknowledgements'',
-and any sections Entitled ``Dedications''.  You must delete all sections
-Entitled ``Endorsements''.
-
-\section{Collections of documents}
-
-You may make a collection consisting of the Document and other documents
-released under this License, and replace the individual copies of this
-License in the various documents with a single copy that is included in
-the collection, provided that you follow the rules of this License for
-verbatim copying of each of the documents in all other respects.
-
-You may extract a single document from such a collection, and distribute
-it individually under this License, provided you insert a copy of this
-License into the extracted document, and follow this License in all
-other respects regarding verbatim copying of that document.
-
-\section{Aggregation with independent works}
-
-A compilation of the Document or its derivatives with other separate
-and independent documents or works, in or on a volume of a storage or
-distribution medium, is called an ``aggregate'' if the copyright
-resulting from the compilation is not used to limit the legal rights
-of the compilation's users beyond what the individual works permit.
-When the Document is included in an aggregate, this License does not
-apply to the other works in the aggregate which are not themselves
-derivative works of the Document.
-
-If the Cover Text requirement of section~3 is applicable to these
-copies of the Document, then if the Document is less than one half of
-the entire aggregate, the Document's Cover Texts may be placed on
-covers that bracket the Document within the aggregate, or the
-electronic equivalent of covers if the Document is in electronic form.
-Otherwise they must appear on printed covers that bracket the whole
-aggregate.
-
-\section{Translation}
-
-Translation is considered a kind of modification, so you may
-distribute translations of the Document under the terms of section~4.
-Replacing Invariant Sections with translations requires special
-permission from their copyright holders, but you may include
-translations of some or all Invariant Sections in addition to the
-original versions of these Invariant Sections.  You may include a
-translation of this License, and all the license notices in the
-Document, and any Warranty Disclaimers, provided that you also include
-the original English version of this License and the original versions
-of those notices and disclaimers.  In case of a disagreement between
-the translation and the original version of this License or a notice
-or disclaimer, the original version will prevail.
-
-If a section in the Document is Entitled ``Acknowledgements'',
-``Dedications'', or ``History'', the requirement (section~4) to Preserve
-its Title (section~1) will typically require changing the actual
-title.
-
-
-\section{Termination}
-
-
-You may not copy, modify, sublicense, or distribute the Document except
-as expressly provided for under this License.  Any other attempt to
-copy, modify, sublicense or distribute the Document is void, and will
-automatically terminate your rights under this License.  However,
-parties who have received copies, or rights, from you under this
-License will not have their licenses terminated so long as such
-parties remain in full compliance.
-
-\section{Future revisions of this license}
-
-The Free Software Foundation may publish new, revised versions
-of the GNU Free Documentation License from time to time.  Such new
-versions will be similar in spirit to the present version, but may
-differ in detail to address new problems or concerns.  See
-http://www.gnu.org/copyleft/.
-
-Each version of the License is given a distinguishing version number.
-If the Document specifies that a particular numbered version of this
-License ``or any later version'' applies to it, you have the option of
-following the terms and conditions either of that specified version or
-of any later version that has been published (not as a draft) by the
-Free Software Foundation.  If the Document does not specify a version
-number of this License, you may choose any version ever published (not
-as a draft) by the Free Software Foundation.
-
-
-\section{Addendum: How to use this License for your documents}
-
-To use this License in a document you have written, include a copy of
-the License in the document and put the following copyright and
-license notices just after the title page:
-
-\bigskip
-\begin{quote}
-    Copyright \copyright{}  YEAR  YOUR NAME.
-    Permission is granted to copy, distribute and/or modify this document
-    under the terms of the GNU Free Documentation License, Version 1.2
-    or any later version published by the Free Software Foundation;
-    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-    A copy of the license is included in the section entitled ``GNU
-    Free Documentation License''.
-\end{quote}
-\bigskip
-    
-If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
-replace the ``with \dots\ Texts.'' line with this:
-
-\bigskip
-\begin{quote}
-    with the Invariant Sections being LIST THEIR TITLES, with the
-    Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
-\end{quote}
-\bigskip
-    
-If you have Invariant Sections without Cover Texts, or some other
-combination of the three, merge those two alternatives to suit the
-situation.
-
-If your document contains nontrivial examples of program code, we
-recommend releasing these examples in parallel under your choice of
-free software license, such as the GNU General Public License,
-to permit their use in free software.
-
-\section{Licencia GNU Public License Versión 3}
-The technologies of
-Software development and deployment have changed dramatically since
-1991 while the GNU General Public License (``the GPL'') has remained
-unmodified, at version level 2.  This is extraordinary longevity for
-any widely-employed legal instrument.  The durability of the GPL is
-even more surprising when one takes into account the differences
-between the free software community at the time of version 2's release
-and the situation prevailing in 2005.
-
-Today, the GPL is employed by tens of thousands of software projects
-around the world and while the Free Software Foundation's body of GPL
-licensed works is vital, it consists of no more than a tiny fraction
-of them.  GPL'd software runs on or is embedded in devices ranging
-from cellphones, PDAs, and home networking appliances to mainframes
-and supercomputing clusters.  Independent software developers around
-the world, as well as every large corporate IT buyer and seller, and a
-surprisingly large number of individuals, interact with the GPL\@.
-Moreover, free software transcends national boundaries.  The GPL's use
-is global.
-
-Richard M. Stallman, who founded the free software movement and who
-was the author of the GNU GPL, released version 2 in 1991 after taking
-legal advice and collecting developer's opinions concerning version 1
-of the license, which had been in use since 1989.  Given that the Free
-Software Foundation directly controlled the licensing of the GNU
-project, which comprised the largest then-existing collection of
-copylefted software assets, no public comment process and no
-significant interim transition period seemed necessary.  The Free
-Software Foundation immediately relicensed the components of the GNU
-Project and in Finland Linus Torvalds adopted GPL Version 2 for his
-operating system kernel, called Linux.
-
-Many provisions of the GPL could benefit from modification to fit
-today's circumstances and to reflect what we have learned from
-experience with version 2.  Given the scale of revision it seems
-proper to approach the work through public discussion in a transparent
-and accessible manner.
-
-\enlargethispage{20pt} The Free Software Foundation plans to decide
-the contents of version 3 of the GPL through the fullest possible
-discussion with the most diverse possible community of drafters and
-users.  A major goal is to identify every issue affecting every user,
-and to resolve those issues.
-
-For these reasons, the process of GPL revision will be a time of
-self-examination.  Consequently, the process of drafting and adopting
-changes must be as close to ``best practices'' as possible, for both
-lawyers and lay people.  Experience has thrown new light on the text
-of the current GPL\@.  The utility of some provisions has altered over
-time, while others need to increase their reach in order to protect
-freedom in the new world of software.  Most of the issues caused by
-this gradual development of the software world can be addressed with
-minor changes in the text of the GPL\@.
-
-People who use software, whether they receive copies on CD, or
-interact with remote installations of the software, have the right to
-share and improve that software.  (Clearly, many, perhaps most, will
-not modify software; but they share it and desire fixes and
-improvements.  This means they and others must have the right.)
-
-While the GPL is the most popular Free Software License, followed by
-the LGPL\@, a significant set of free software is licensed under other
-terms which are not compatible with version 2 of the GPL\@.  Version 3
-of the GPL will provide compatibility with more non-GPL free licenses.
-
-Our primary concern remains, as it has been from the beginning, to
-give users freedom that they can rely on.  As the community around
-free software has grown larger the issues involved in this creation
-and protection of freedom have grown more diverse and complex.
-Therefore, we have consulted, formally and informally, a very broad
-array of participants in the free software community, from industry,
-the academy, and the garage.  Those conversations have occurred in
-many countries and several languages, over almost two decades, as the
-technology of software development and distribution changed around us.
-We recognize that the best protection of freedom is a growing and
-vital community of the free and we hope the spread of knowledge
-inherent in public discussion of version 3 of the GPL drafts will
-continue to support and nurture this community.
-
-When a discussion draft of version 3 of the GPL is released, the pace
-of the revision conversation will change, as a particular proposal
-becomes the centerpiece.  The reversioning of the GPL is a crucial
-moment in the evolution of the free software community; and the
-Foundation intends to meet its responsibilities to the makers,
-distributors, and users of free software.  In doing so, we hope to
-hear all relevant points of view, and to make decisions that fit the
-many circumstances that arise in the use and development of
-GPL-covered software.
-
-\subsection{Objectives} In drafting a new version of the GPL, the Free
-Software Foundation have been guided by a few basic principles.  These
-will inform the processes of discussing and promulgating the license
-as described herein.  These principles and their impact on the
-discussion process are listed below.
-
-\subsubsection{A Global License} As a legal document, the GPL licenses
-copyrighted material for modification and redistribution in every one
-of the world's systems of copyright law.  Ours is an approach that
-most legal drafters would do anything possible to avoid.  Publishers
-in general do not use worldwide copyright licenses: they try to tailor
-their licensing arrangements to local legal requirements for each
-system in which their works are distributed.  Publishers rarely
-license the redistribution of modified or derivative works.  When they
-do, those licenses are tailored to the specific setting.
-
-But free software requires legal arrangements that permit copyrighted
-works to follow arbitrary trajectories, in both geographic and genetic
-terms.  Indeed, modified versions of free software works are
-distributed from hand to hand across borders in a pattern that no
-copyright holder could or should be permitted to trace.
-
-GPL version 2 performed the task of globalization relatively well,
-because its design was elegantly limited to a minimum set of copyright
-requirements.  Every signatory to the Berne Convention---which means
-most countries in the world---must offer those principles in their
-national legislation, in one form or another.  But GPL version 2 was
-constructed only with attention to the details of US law.  To the
-extent possible, without any fundamental changes, version 3 of the GPL
-should reduce the difficulties of internationalization.  Version 3
-should more fully approximate the otherwise unsought ideal of the
-global copyright license.
-
-\subsubsection{Protection of Existing Freedoms} Our cardinal principle is to
-make no change impeding any of the four basic freedoms for software
-users that the free software movement enshrined in GPL version 2: to
-run, study, copy, modify and redistribute software.  (It goes without
-saying that people have the freedom to run a program under the GPL\@.)
-These freedoms are as important in version 3 of the GPL as they were
-in version 2.  Honoring the commitment stated in earlier versions of
-the license, we will preserve these basic rights.
-
-We have judged all changes proposed since the adoption of GPL version
-2 against those yardsticks and we will present, in the rationale
-documents described in section Rationales, reasons tying our
-changes to those fundamental freedoms.  Parties who question changes
-should recognize when writing their comments that these freedoms
-remain the cornerstone of the license.  We will evaluate all proposed
-changes with reference to them.
-
-\subsubsection{Do No Harm} Unintended consequences can imperil freedom.  In
-approaching GPL version 3 we recognize the enormous expansion in the
-use of free software since 1991, as well as the many modes of use and
-distribution that have been invented since.  These make the risks of
-unintended consequences much more severe than when the GPL was last
-modified.
-
-A large part of the value of the public discussion and issue
-development described in this document is the identification of
-unintended consequences worldwide.  This is vital to ensuring that
-version 3 of the GPL is a global license that works as intended in all
-major legal systems.
-
-Our revision process is intended to make an exhaustive analysis of
-each considered change in order to explore as much as possible, in as
-many situations as possible, with as many users and distributors as
-possible.
-
-\subsubsection{Consulting the Community} In short, the essence of the
-drafting process here described is to make it possible for the Free
-Software Foundation to decide the contents of the GPL through the
-fullest possible discussion with the most diverse possible community
-of drafters and users.  Ideally, we would identify every issue
-affecting every user of the license and resolve these issues with a
-full consideration of their risks and benefits.  In order to
-accomplish such a large task, the discussion process involves
-individual community members and Discussion Committees that represent
-different types of users and distributors.
-
-Each proposed change and the resolution of each issue needs the
-fullest description of risks and benefits, as laid out in section
-Feedback.
-
-The Discussion Committees, as described in section
-DiscussionCommittees, will serve as important centralized points
-among the different types of user.  Among other actions, their role
-will be to identify issues from the large body of user experience and
-develop those issues for full presentation and resolution by the Free
-Software Foundation.
-
-
-\subsection{Process} Periodic releases of the current draft will take
-place as the license-drafting process progresses.  Each draft will
-represent the most current proposed changes to the GPL.  This will
-take into account all resolved issues, see issueresolution, as
-well as discussions.  We plan to release at least two drafts for
-public comment.  As with all materials and announcements during the
-discussion process, these drafts will be available from
-\url{GPLv3.fsf.org}.
-
-\subsubsection{Initial Draft Announcement} The first Discussion Draft of
-version 3 of the GPL will be released at the the first International
-Public Conference, January 16-17, 2006, at the Massachusetts Institute
-of Technology, see Appendix schedule. To accompany the first
-discussion draft, we will also release a Rationale Document explaining
-the reasons behind each change in an effort to clarify the nature and
-necessity of such changes.  Similar Rationale documents will accompany
-each subsequent Discussion Draft of the license as it is released, see
-Rationales.
-
-\subsubsection{Publication of Revised Drafts} At least two discussion drafts
-of GPL version 3 will be released for public comment.  Publication of
-the second discussion draft will occur after four or five months of
-discussion, issue identification, and resolution.  A third discussion
-draft may be produced in approximately October 2006, see Appendix
-schedule, after a second or subsequent iterative process of
-comment, issue identification, etc.  One of these will be the ``last
-call'' draft, according to conditions outlined in section
-lastcall.
-
-\subsubsection{Draft Discussion} All consultation with parties outside the
-Free Software Foundation and the Software Freedom Law Center
-concerning each discussion draft will be a matter of publicly
-accessible record available from \url{GPLv3.fsf.org}.  Written
-deliberations from the Discussion Committees will also be available at
-\url{GPLv3.fsf.org}; sound and video recordings of live events and
-deliberation may become available at a later time.  We expect to
-develop this license through public discussion in a transparent and
-accessible manner.  To that end every effort will be made to make
-public all documents pertaining to the process.
-
-The GPL revision comment process is a matter of information sharing.
-Below, in sections DiscussionCommittees and Feedback, we
-lay out ways that the community as a whole will tell version 3
-drafters of issues with the current license.  They will speak of ways
-to increase the positive impact of the license on the world.  The
-Rationale Documents, outlined in section Rationales, and the
-process for Issue Resolution, section issueresolution, are
-designed so that, in turn, the drafters at FSF can directly address
-the community and present the reasoning behind changes.
-
-\subsubsection{Last Call Draft}\label{lastcall} Either the second or third
-discussion draft will be designated the ``last call'' draft.  This
-draft will begin a final period of public comment lasting at least 45
-days, ending no later than January 15th, 2007.  The second discussion
-draft may be designated the last call draft without further process if
-there are no major unresolved issues after full discussion of the
-initial draft.
-
-\subsubsection{Promulgation} No later than March 2007, and preferably on
-January 15, 2007, at the conclusion of the last call process, with all
-issues resolved, the Free Software Foundation will formally adopt
-version 3 of the GNU General Public License.  At that time, the Free
-Software Foundation will relicense under GPL version 3 or later all
-parts of the GNU Project for which the Free Software Foundation is the
-copyright holder. All parties with authority to relicense programs
-whose current license terms are ``GPL version 2 only'' will then be in
-a position to decide whether to relicense their code.  The Free
-Software Foundation hopes that Discussion Committee members will
-encourage the relicensing of such works, which is at the discretion of
-the relevant copyright holders.
-
-\subsubsection{Rationales}\label{Rationales} To make the commentary process
-easier and to keep the license-drafting process open, each successive
-draft of the GPL version 3 will be accompanied by a Rationale
-Document.  This document will explain all planned changes in light of
-the purposes of the license and the freedoms it protects.  It will
-also summarize the public commentary and response relevant to any
-changed portions of the license.  In this, the Rationale Documents
-will complement the opinion papers issued by the Free Software
-Foundation regarding resolution of individual issues as identified by
-the Discussion Committees, see section \ref{issueresolution}.
-Rationale Documents will be available through the website
-\url{GPLv3.fsf.org}.
-
-\subsubsection{Outreach} Transparency does not guarantee widespread
-distribution; we need to work for that.  Much of our effort will
-therefore be invested in publication and outreach.  All information
-submitted by the public through the revision process will be passed on
-to the drafters, whether by direct comment submission, Discussion
-Committee analysis, or transcript of International Conference
-meetings, and all of it will remain available to the public at
-\url{GPLv3.fsf.org}.
-
-Community members who share their experiences with the drafters are
-encouraged to share them with the rest of the community.  People with
-knowledge of the GPL and the free software movement can educate their
-fellow community members, as well as people with no previous knowledge
-of free software.  In an effort to extend the process to the greatest
-possible number of settings, a team of editors from the FSF will help
-develop comprehensive issue guides and introductions.
-
-The process of revising the GPL is an opportunity for the community
-that cares about freedom to educate the rest of the societies they
-live in.  Everyone concerned with the GPL will be asked to examine the
-license in detail and articulate its impact and possible ways for it
-to better protect their and others' freedoms.  For successful drafting
-and spread of version 3 of the GPL, this commentary must not only
-educate the drafters but also the community and public at large.
-
-
-\subsection{Discussion Committees}\label{DiscussionCommittees} Dealing
-with what will probably be extensive public comments is the task of
-the Discussion Committees, which must structure the flow of comments
-into issues that can be productively analyzed and whose proposed
-solutions can be debated.  Their work in discovering, developing, and
-presenting issues is the heart of the version 3 public discussion
-process.
-
-\subsubsection{Composition} Most issues for GPLv3 are global.  Therefore we
-plan to form committees including all categories of relationship to the
-GPL itself, rather than adopting a regional formation.  Thus, elements
-of the larger GPL community around which Discussion Committees will be
-formed will include large and small enterprises, both public and
-private; vendors, commercial and noncommercial redistributors;
-development projects that use the GPL as a license for their programs;
-development projects that use other free software licenses, but are
-invested in the contents of the GPL; and unaffiliated individual
-developers and people who use software.
-
-Coincident with the publication of this document, the Free Software
-Foundation will issue invitations to participate in Discussion
-Committees.  These invitations will form nuclei of people.  We hope
-that our invitations will result in Committees that reflect the full
-breadth of opinion within those sections of the community they
-functionally represent.  But we expect that the Committees themselves
-will choose to invite additional participants---people whose
-commitment to the license is undoubted---to add the weights of their
-opinions to the deliberations.  Such invitations, issued after the
-invitation of the process, shall be by majority vote of each Committee
-as already constituted.
-
-\subsubsection{Process Commitments} The Committees and their chairs should
-actively encourage public participation from the sectors of the public
-they represent.
-
-In addition, Committees are responsible for developing all the
-opinions and analysis concerning issues they identify from the stream
-of commentary.  As each Committee feels that an issue has been fully
-discussed among its members, it will be expected to present to the
-Free Software Foundation its deliberation and analysis of the issue as
-well as a summary of the public comment that informed its position.
-Where technically feasible, both the deliberations of the Discussion
-Committees and the arguments and analysis that they present to the
-Free Software Foundation will be published at \url{GPLv3.fsf.org}.
-
-At the conclusion of the public discussion process, we hope to ask
-members of the Discussion Committees to assist the Free Software
-Foundation in promulgating the new license; that is, to work with the
-knowledge gained from their central position within the discussion and
-revision process to advocate the relicensing of existing GPL programs
-under version 3 of the GPL\@.
-
-\subsubsection{Organizational Structure} Discussion Committees should be
-free to choose their own working structure.  The Free Software
-Foundation will provide a template working structure for each
-committee.
-
-Discussion Committees should operate largely through network-based
-communication, voice and data, synchronously and asynchronously.  They
-will organize themselves through regular meetings and web-based
-interactions, encourage public comment and participation, identify and
-discuss issues, and present those issues and all relevant argument to
-the Free Software Foundation for ultimate resolution.
-
-
-\subsection{Issue Management and Resolution} From the Foundation's point
-of view, the revision process is characterized by the presentation and
-closure of issues revealed in draft discussions.
-
-\subsubsection{Forming Issues}\label{Feedback} The purpose of this public
-discussion process is to encourage information about the GPL and its
-role in the expansion and protection of software freedom.  This
-purpose is empty without public commentary.  In order to make the most
-well-informed changes possible to the GPL, we seek commentary from a
-wide selection of the public.  Comments and suggestions are encouraged
-at \url{http://GPLv3.fsf.org} as well as in person at any of our
-International Conferences, see Appendix schedule.
-
-After someone has made a comment, either directly to
-\url{GPLv3.fsf.org} or in a discussion at an International
-Conference, a number of steps will be taken to associate that comment
-with one or more currently known issues.  While comments are the
-substance of the feedback process, issues are the containers through
-which they will move.
-
-If the comment or suggestion presents a problem not already identified
-as an issue, it will be forwarded to the appropriate Discussion
-Committee where it will join other comments in the identification of a
-new issue.
-
-For each comment to \url{GPLv3.fsf.org}, this process has three
-steps.  First, when making the comment the commentator can specify
-what portion of the license or issue about the license their comment
-addresses.  Once submitted, the comment will be read by an associate
-member of the Free Software Foundation who will direct it to the
-appropriate Discussion Committee either for issue identification, if
-no preexisting issues matches with the comment, or to inform the
-discussion of the particular issue it addresses.
-
-After making a comment at \url{GPLv3.fsf.org}, the person involved
-will be given a comment-identifying number that he or she can use to
-see towards what issue and Discussion Committee the comment was
-directed, as well as other comments on the issue and the documents
-relevant to its discussion (transcripts; Discussion Committee
-analysis, see \ref{DiscussionCommittees}; Draft Rationale documents,
-see \ref{Rationales}; FSF Opinion documents, see
-\ref{issueresolution}, etc.).
-
-\subsubsection{Issue Resolution}\label{issueresolution} Each issue
-identified in the course of public participation can be resolved in
-one of four ways: by modification of the license draft, by alteration
-of descriptive material, by advice concerning the use of the license,
-or an issue may not require any change.  Discussion Committees will
-characterize issues as Major or Minor.  Major issues will be placed on
-the agenda of all other Discussion Committees and, until resolved, may
-be placed on the agenda for successive International meetings.  All
-issues unresolved at the end of each drafting stage will be carried
-over for discussion and resolution during the next discussion stage.
-All issues not resolved before the issuance of the last discussion
-draft will be finally determined by the Free Software Foundation at
-the close of the last call period.  All Major issues resolved by the
-Foundation will be described by a written opinion, publicly available,
-at \url{GPLv3.fsf.org}.
-
-
-\subsection{Other Concerns}
-
-\subsubsection{LGPL} The Free Software Foundation may present drafts of LGPL
-along with drafts of GPL subsequent to the first discussion draft of
-GPLv3.  Such drafts would also be subject to public comment and issue
-resolution.
-
-\subsubsection{Support of the Revision Process} The revision process is
-financially supported by donors to the Free Software Foundation, the
-Free Software Foundation's associate members, and a grant from
-Stichting NLnet.  Logistical, legal, and technical support for this
-process is also provided by the Software Freedom Law Center, acting as
-the Free Software Foundation's outside counsel.  The SFLC is supported
-by a variety of donors including vendors and those who use free
-software.
-
-Aside from resources contributed by the Free Software Foundation and
-the Software Freedom Law Center, this process will be supported, only
-to the extent of logistical provision for International Meetings, by
-industry organizations hosting the events.  Outside logistical support
-is accepted only in order to ensure that participants around the world
-will have the maximum possible level of access to the discussion
-process of version 3 of the GPL\@.  All participants in the discussion
-process can therefore be assured of equal treatment for their
-interests and concerns.
-
-\subsubsection{Public Statements} During this process the Free Software
-Foundation will make public statements concerning the process,
-deadlines, issues, comments, and drafts.  Such public statements will
-be made through announcements at \url{GPLv3.fsf.org}, and by
-messages to mailing lists to which parties can subscribe.  The Free
-Software Foundation and SFLC will not hold confidential communications
-with others concerning version 3 of the GPL\@.  Public commentary on
-these announcements, as with all comments relating to the GPL version
-3 discussion process, should be routed through the GPL comment system
-described in section \ref{Feedback}.  Interested members of the Press
-should see \ref{PressContact} below.
-
-\subsubsection{Press Contact}\label{PressContact} Press contacts may occur
-and statements may be issued to the press through the Free Software
-Foundation and the Software Freedom Law Center.  All such statements
-will be published at \url{GPLv3.fsf.org} or referenced there.
-Press interested in covering this process should follow the contact
-information available at the website or write to
-\url{press@GPLv3.fsf.org}.
-
+\appendix
+\include{fdl}
+\include{gpl}
 \begin{thebibliography}{99}
 \bibitem{LibroCommandLine} Neal Stephenson: In the Beginning was the Command Line
 	Editorial Harper Perennial, 1999.
