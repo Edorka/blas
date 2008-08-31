@@ -33,13 +33,13 @@
 \pagenumbering{Roman}
 %cuerpo del documento
 \chapter*{Resumen}
-BLAS es una plataforma pensada para orientar los esfuerzos dedicados a programar un servicio de internet, originalmente pensado para protocolos de tipo de texto sobre TCP/IP se ha extendido su funcionalidad a UDP/IP y en un futuro se proveera un soporte más fiable para protocolos binarios.
+BLAS es una plataforma pensada para orientar los esfuerzos dedicados a programar un servicio de Internet. Originalmente pensado para protocolos de tipo de texto sobre TCP/IP, se ha extendido su funcionalidad a UDP/IP y en un futuro se proveerá un soporte más fiable para protocolos binarios.
 
-Con el objetivo de mejorar el proceso de diseño e implementación se aconseja organizar el proceso de atención de las peticiones en una serie discreta de estados lo más simples posible, estos estados se materializan en m\'etodos con nombres concretos que van dirigiendo la ejecución de uno a otro. Este modo de trabajo estructura y facilita de forma considerable el trabajo sobre protocolos con un formato concreto.
+Con el objetivo de mejorar el proceso de diseño e implementación esta plataforma propone organizar el proceso de atención de las peticiones en una serie discreta de estados, lo más simples posible, estos estados se materializan en m\'etodos con identificadores unívocos que van dirigiendo la ejecución de uno a otro. Este modo de diseño estructura y facilita de forma considerable el trabajo sobre protocolos con un formato determinado.
 
 El desarrollo de servicios con este sistema provee de una estructura y permite acelerar el proceso de obtención de un prototipo estable.
 
-La elección de Python como lenguaje permite una gran flexibilidad en la programación y sobretodo claridad en el código resultante. Precismante mantener la claridad en la implementación es una de las principales premisas a la hora de orientar la programación del servicio.
+La elección de Python como lenguaje ha permitido una gran flexibilidad en la programación y sobretodo claridad en el código resultante. Precisamente mantener la claridad en la implementación es una de las principales premisas a la hora de orientar la programación de los servicios.
 
 Se ha optado por la licencia GPL para proteger el proyecto y garantizar su disponibilidad futura, en especial a la comunidad de estudiantes y facilitar la participación a aquellos interesados en la platafoma y en el software libre.
 
@@ -68,7 +68,7 @@ Actualmente casi la totalidad de las instalaciones inform\'aticas son redes, y u
 	\label{fig:SistemasDistribuidos}
 \end{figure}
 \section{Historia de los servicios informáticos}
-Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba normalmente limitada a una unidad por cada entidad (instituciones educativas e instalaciones militares). Estas máquinas requerían de un entorno ambiental muy concreto y el acceso instalaciones donde se albergaban estaba severamente restringido. Por estas mismas limitaciones y para maximizar la disponibilidad se ideó un sistema limitado de terminales remotas, los teletipos, cuya función era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (lineas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informaticos.
+Despu\'es del desarrollo de la primera generación de computadoras el número de estas empezo a aumentar, aunque su disponibilidad estaba normalmente limitada a una unidad por cada entidad (instituciones educativas e instalaciones militares). Estas máquinas requerían de un entorno ambiental muy concreto y el acceso a las instalaciones donde se albergaban estaba severamente restringido. Por estas mismas limitaciones y para maximizar la disponibilidad se ideó un sistema limitado de terminales remotas, los teletipos, cuya función era comunicar con el ordenador central pudiendo utilizar enlaces dedicados o conmutados (líneas telefónicas), permitir la inserción de programas y recuperar el resultado una vez el sistema hubiera finalizado. Estos sistemas de comunicación y control remotos merecen la consideración de servicios informáticos.
 
 Con el tiempo la versatilidad de los sistemas fue ampliandose, los ordenadores dejaron de emplearse como meras ejecutoras de algoritmos y empezaron a ofrecer distintos tipos de servicios:
 \begin{enumerate}
@@ -76,19 +76,19 @@ Con el tiempo la versatilidad de los sistemas fue ampliandose, los ordenadores d
 	\item Transferencias de ficheros
 	\item Correo electronico
 \end{enumerate}
-Es precisamente en esta \'epoca cuando empiezan implantarse sistemas de comunicacion por conmutacion convencionales y los servicios empiezan a emplear estos nuevos medios de enlace. La oferta de servicios deja de estar limitada a las grandes entidades y empiezan a surgir ``BBSes'' (Bulletin Board System) albergadas en ordenadores privados. Durante más de 25 años han sido un medio de comunicación y entretenimiento, en opinión de muchos sigue siendo los mejores ambientes comunitarios. 
+Es precisamente en esta \'epoca cuando empiezan implantarse sistemas de comunicación por conmutación convencionales y los servicios empiezan a ser utilizador desde estos nuevos medios de enlace. La oferta de servicios deja de estar limitada a las grandes entidades y empiezan a surgir ``BBSes'' (Bulletin Board System) albergadas en ordenadores privados. Durante más de 25 años han sido un medio de comunicación y entretenimiento, en opinión de muchos, siguen siendo los mejores ambientes comunitarios. 
 
-La capacidad monousuario de los sistemas de la epoca presento la necesidad de empezar a dejar de utilizar enlaces de lineas conmutadas para añadir un nuevo nivel de paquetes conmutados para eliminar esta limitación.
+La capacidad monousuario de los sistemas de la \'epoca presentó la necesidad de empezar a dejar de utilizar enlaces de lineas conmutadas para añadir un nuevo nivel de paquetes conmutados para eliminar esta limitación.
 
-Con el tiempo y con el inexorable cumplimiento de la ley de moore, los sistemas fueron ampliando geometricamente su capacidad, tambien lo hacia su disponibilidad en el mercado haciendose cada vez asequibles para el público en general, acompañado por una reducción drástica del volumen y consumo energ\'etico.  
+Con el tiempo y con el inexorable cumplimiento de la ley de Moore, los sistemas fueron ampliando geom\'etricamente su capacidad, tambien lo hacía su disponibilidad en el mercado haci\'endose cada vez asequibles para el público en general, acompañado por una reducción drástica del volumen y consumo energ\'etico.  
 
-La popularización de internet llevó a que practicamente cualquier ordenador dom\'estico estuviera dotado de algún dispositivo de comunicación metropolitana y una pila IP, permitiendo así acceder a los servicios ofrecidos en internet a trav\'es del respetivo ISP. 
+La popularización de Internet llevó a que practicamente cualquier ordenador dom\'estico estuviera dotado de algún dispositivo de comunicación metropolitana y una pila IP, permitiendo así acceder a los servicios ofrecidos en Internet a trav\'es del respetivo ISP. 
 
-En poco tiempo dispositivos portatiles imitaban la tendencia junto a otros microdispositos. Es muy común ver que aparatos convencionales, desde electrodomesticos a vehiculos lleven incorporados sistemas de comunicación que automáticamente son capaces de desempeñar tareas como emitir a la central la posición del vehículo y todo tipo de medidas cuatificables sobre su estado. 
+En poco tiempo dispositivos portátiles imitaban la tendencia junto a otros microdispositivos. Es muy común ver que aparatos convencionales, desde electrodomesticos a vehículos lleven incorporados sistemas de comunicación que automáticamente son capaces de desempeñar tareas como emitir a la central la posición del vehículo y todo tipo de medidas cuantificables sobre su estado. 
 
 \section{Motivación}
 
-En los último años cursando Ingeniería Informática y en proyectos profesionales se ha presentado en numerosas ocasiones la necesidad de escribir servicios orientados a internet. La necesidad de encontrar un sistema estruturado y rapido de elaboración de prototipos es lo que ha inspirado la creación de esta plataforma.
+En los último años cursando Ingeniería Informática y en proyectos profesionales se ha presentado en numerosas ocasiones la necesidad de escribir servicios orientados a Internet. La necesidad de encontrar un sistema estruturado y rapido de elaboración de prototipos es lo que ha inspirado la creación de esta plataforma.
 
 Es en este entorno donde se desarrollan las arquitecturas de la mayor\'ia de los sistemas. Distribuidas y en una gran proporci\'on siguiendo el modelo Cliente-Servidor casi todas las nuevas aplicaciones o sistemas basan gran parte de su funcionalidad en la conectividad mediante redes. 
 
@@ -241,7 +241,7 @@ Es dificil generalizar sobre protocolos ya que estos varian ampliamente en propo
 
 En concreto el protocolo de Internet (IP) se utiliza en los extremos de la comunicación para mantener un flujo de datos a traves de una red de paquetes coonmutados.
 
-Precismente debido a la naturaleza de estas redes los datos son divididos en cantidades coherentes a las limitaciones del medio (por ejemplo 1500 bytes para redes ethernet), estos fragmentos de información se les denominan paquetes o datagramas. Además el protocolo no requiere que las rutas que deben seguir estos paquetes sean establecidas de antemano, es el propio protocolo el que encontrará la ruta idonea.
+Precísamente debido a la naturaleza de estas redes los datos son divididos en cantidades coherentes a las limitaciones del medio (por ejemplo 1500 bytes para redes ethernet), estos fragmentos de información se les denominan paquetes o datagramas. Además el protocolo no requiere que las rutas que deben seguir estos paquetes sean establecidas de antemano, es el propio protocolo el que encontrará la ruta idonea.
 
 Con el protocolo IP se provee un sistema para la transmision de datagramas no fiable (best effort), este m\'etodo de transmisión no garantiza resultados pero intentará utilizar la ruta más efectica. Debe aclararse que IP no posee mecanismos para garantizar que la transmisión ha llegado a destino, aunque si dispone de mecanismos para la detección de errores en los datos que contenga el paquete. Debido a la naturaleza dinámica de las rutas y a la hetereogeneidad de los dispositivos es probable que los datagramas en que ha sido dividido el flujo de datos lleguen fuera de orden e incluso que llegue repetido, es tarea de los protocolos de transporte detectar estos sucesos.
 
