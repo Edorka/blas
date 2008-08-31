@@ -27,10 +27,36 @@
 \begin{document}
 
 %\maketitle
+
 \include{portada}
 \cleardoublepage
+
 \include{copyright}
 \pagenumbering{Roman}
+
+% Dedication
+
+\cleardoublepage
+
+\vspace*{6cm}
+	\begin{flushright}
+		\begin{em}
+			A mi familia, por su apoyo.
+       		\end{em}
+	\end{flushright}
+\cleardoublepage
+
+\chapter*{Agradecimientos}
+
+Quiero agradecer en primer lugar a Agustín la confianza que ha depositado en mi y en mi proyecto, así como a Gregorio que ha accedido a ser mi tutor. Los dos han dedicado cantidades ingentes de paciencia para que este proyecto tuviera el objetivo que había planteado y que verdaderamente me ilusionaba.
+
+Tambi\'en mis compañeros han demostrado gran inter\'es en el proyecto y no han dejado de proporcionarme ánimo y consejos, y en especial a Alberto, Jesus e Iván.
+
+A mis padres y a mi hermano que siempre han mostrado su disposición para ayudarme en lo que pudieran, incluyendo la tortuosa búsqueda de erratas en el texto.
+
+Y a María que no ha dejado de ofrecerse para revisar este documento.
+\cleardoublepage
+
 %cuerpo del documento
 \chapter*{Resumen}
 BLAS es una plataforma pensada para orientar los esfuerzos dedicados a programar un servicio de Internet. Originalmente pensado para protocolos de tipo de texto sobre TCP/IP, se ha extendido su funcionalidad a UDP/IP y en un futuro se proveerá un soporte más fiable para protocolos binarios.
@@ -88,29 +114,30 @@ En poco tiempo dispositivos portátiles imitaban la tendencia junto a otros micr
 
 \section{Motivación}
 
-En los último años cursando Ingeniería Informática y en proyectos profesionales se ha presentado en numerosas ocasiones la necesidad de escribir servicios orientados a Internet. La necesidad de encontrar un sistema estruturado y rapido de elaboración de prototipos es lo que ha inspirado la creación de esta plataforma.
+En los último años cursando Ingeniería Informática y en proyectos profesionales se ha presentado en numerosas ocasiones la necesidad de escribir servicios orientados a Internet. La necesidad de encontrar un sistema estructurado y ágil para la elaboración de prototipos es lo que ha inspirado la creación de esta plataforma.
 
-Es en este entorno donde se desarrollan las arquitecturas de la mayor\'ia de los sistemas. Distribuidas y en una gran proporci\'on siguiendo el modelo Cliente-Servidor casi todas las nuevas aplicaciones o sistemas basan gran parte de su funcionalidad en la conectividad mediante redes. 
+Es en este entorno donde se desarrollan las arquitecturas de la mayor\'ia de los sistemas. Distribuidas, y en una gran proporci\'on siguiendo el modelo Cliente-Servidor, casi todas las nuevas aplicaciones o sistemas basan gran parte de su funcionalidad en la conectividad mediante redes. 
 
 Sin embargo realizar aunque sea un prototipo operativo de un servicio de red requiere de una importante inversion en tiempo y no se obtienen resultados tangibles hasta que se ha implementado una buena parte del código.
-Tambi\'en muy com\'un ver que muchos prototipos sean descartados (total o parcialmente) y deban re-implementarse ya que, aunque su rendimiento sea aceptable, la seguridad que ofrecen no lo es, con lo que el proceso de crear el servicio duplica su coste cuando el sistema llega a la etapa de producci\'on.
 
-No obstante la escritura de un servicio de Red puede reducirse considerablemente si se implementan tan solo las caracteristicas particulares de su protocolo. Basicamente cualquier protocolo puede entenderse como un automata m\'as o menos complejo, siguiendo este modo de dise\~{o} puede simplificarse de manera considerable el trabajo del programador.
+Tambi\'en es muy com\'un ver que muchos prototipos sean descartados (total o parcialmente) y deban re-implementarse ya que, aunque su rendimiento sea aceptable, la seguridad que ofrecen no lo es, con lo que el proceso de crear el servicio duplica su coste cuando el sistema llega a la etapa de producci\'on.
+
+No obstante la escritura de un servicio de Red puede reducirse considerablemente si se implementan tan solo las caracteristicas particulares de su protocolo. Basicamente cualquier protocolo puede entenderse como un autómata m\'as o menos complejo, siguiendo este modo de diseño puede simplificarse de manera considerable el trabajo tanto del programador como del analista.
 
 La intención principal de esta plataforma es evitar la reimplementación innecesaria de funcionalidades que son comunes a todo tipo de servicio de red interactivo, además de proponer una metodología concreta en la implementación.
 \section{Disponibilidad del proyecto}
-Este proyecto se ha traspasado desde una de sus mas primitivas versiones al repositorio que google dispone para desarrolladores. La elección de \url{http://code.google.com/} como repositorio se ha debido sobre todo al electo de herramientas y servicios que Google está dedicando a los desarrolladores de software y sobre todo a los proyectos de programación colaborativos.
+Este proyecto se ha traspasado desde una de sus más primitivas versiones al repositorio que google dispone para desarrolladores. La elección de \url{http://code.google.com/} como repositorio se ha debido sobre todo al elenco de herramientas y servicios que Google está dedicando a los desarrolladores de software y sobre todo a los proyectos de programación colaborativos.
 
-Todo el código y la documentación referente a este proyecto podrá encontrarse en \url{http://code.google.com/p/blas/}. La participación de terceros quedará abierta en cuanto se evalue el proyecto, en mi opinión ese será el verdadero comienzo de la plataforma, cuando se pruebe su uso y las aportaciones de otros desarrolladores amplien sus funcionalidades.
+Todo el código y la documentación referente a este proyecto podrá encontrarse en \url{http://code.google.com/p/blas/}. La participación de terceros quedará abierta en cuanto se evalue el proyecto, en mi opinión ese será el verdadero comienzo del desarrollo de la plataforma, cuando se pruebe su uso y las aportaciones de otros desarrolladores amplien sus funcionalidades.
 \section{Licencias}
-Este proyecto dispone de 2 licencias: una para el propio software que garantice a futuros la disponibilidad de este para toda la comunidad de software libre, otra para este documento, de tal forma que su contenido pueda aprovecharse en otros esfuerzos de documentación colaborativa como \url{http://es.wikipedia.org}.
+Este proyecto dispone de dos licencias: una para el propio software que garantice a futuros la disponibilidad de este para toda la comunidad de software libre, otra para este documento, de tal forma que su contenido pueda aprovecharse en otros esfuerzos de documentación colaborativa como \url{http://es.wikipedia.org}.
 
-Ambos documentos pueden encontrarse en la sección de anexos.
+Ambas licencias pueden encontrarse en sus respectivos ap\'endices.
 \chapter{Objetivos}
 
 Esta plataforma se ha ideado para facilitar el diseño y la implementación a los colectivos que por diversos motivos se ven ante la necesidad de programar un servicio de red en poco tiempo. 
 
-Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios TCP y UDP, que inevitablemente consumen mucho tiempo y que normalmente los programadores se encuentran realizando funciones de implementación muy similares de un proyecto a otro pero sin permitir una reutilización eficiente del código.
+Existen multitud de funcionalidades ligadas a los programas que ofrecen servicios sobre TCP y UDP que inevitablemente consumen mucho tiempo para su implementación y que normalmente los programadores se encuentran realizando funciones de implementación muy similares de un proyecto a otro pero sin permitir una reutilización eficiente del código.
 
 Básicamente estas tareas se reducen a:
 \begin{enumerate}
@@ -120,14 +147,14 @@ Básicamente estas tareas se reducen a:
 	\item Parseado de los parametros de arraque.
 \end{enumerate}
 
-El objetivo principal de esta librería es facilitar las tareas de diseño e implementación de este tipo de software. Acelerando la aparición de prototipos que permitan iniciar lo antes posible la depuración tanto del servicio como de los clientes.
+El objetivo principal de esta librería es facilitar las tareas de diseño e implementación de este tipo de software, acelerando la aparición de prototipos que permitan iniciar lo antes posible la depuración tanto del servicio como de los clientes.
 
-Es posible que existan dudas sobre si actualmente existe la necesidad de la realizacion de este tipo de software. Hoy día se pueden encontrar cientos de implementaciones de protocolos sobre multitud de tecnologías diferentes existe todavía la necesidad de realizar implementaciones de servicios de protocolos antiguos o nuevos.
+Es posible que existan dudas sobre si hoy día la comunidad de desarrolladores tiene la necesidad de la realizacion de este tipo de software. En la actualidad se pueden encontrar cientos de implementaciones de protocolos sobre multitud de tecnologías diferentes, pero todavía siguen apareciendo proyectos que requieren de la implementación de servicios de protocolos antiguos o nuevos.
 
 \section{Docencia}
-Existen numerosos proyectos academicos que requieren la implementaci\'on de:
+Existen numerosos proyectos acad\'emicos que requieren la implementaci\'on de:
 \begin{enumerate}
-	\item Protocolos nuevos,
+	\item Protocolos nuevos.
 	\item Protocolos ya existentes.
 	\item Modificaciones sobre protocolos antiguos. 
 \end{enumerate}
@@ -135,14 +162,14 @@ Existen numerosos proyectos academicos que requieren la implementaci\'on de:
 y que pueden ver facilitada su realización utilizando esta plataforma.
 
 \section{Microdispositivos}
-La mayor\'ia de los dispositivos dotados de un sistema operativo m\'inimo disponen de una modesta pila IP ya que, practicamente todos estos dispositivos, se dise\~{n}an incluyendo algún tipo de hardware de interconexi\'on mediante enlaces de radio o cableado . Sin embargo por razones de coste economico y rendimiento energetico se ven afectados por una leve capacidad de memoria y/o potencia de c\'alculo que hacen que la opcion de conectarlos a un servicio convencional (HTTP y REST por ejemplo) resulte muy engorrosa (y caro) en su programaci\'on, e incluso a veces impracticable.
+La mayor\'ia de los dispositivos dotados de un sistema operativo m\'inimo disponen de una modesta pila IP ya que, prácticamente todos estos dispositivos, se dise\~{n}an incluyendo algún tipo de hardware de interconexi\'on mediante enlaces de radio o cableado. Sin embargo por razones de coste económico y rendimiento energ\'etico se ven afectados por una leve capacidad de memoria y/o potencia de c\'alculo que hacen que la opción de comunicarlos mediante un servicio convencional (HTTP y REST por ejemplo) resulte muy engorrosa (y caro) en su programaci\'on, e incluso a veces impracticable.
 
 Es por este motivo que se suelen dise\~{n}ar protocolos normalmente muy escuetos, especificamente adaptados a la funcionalidad del dispositivo y a sus limitaciones de proceso.
 
 \section{Seguridad Inform\'atica}
-En un entorno en que los ataques mediante gusanos son casi rutinarios se emplea mucho tiempo y esfuerzo en crear servicios que se comporten como los originales que emplee el gusano para penetrar en el sistema y as\'i poder estudiar que acciones realiza una vez dentro.
+En un entorno en que los ataques mediante gusanos son casi rutinarios, se emplea mucho tiempo y esfuerzo en crear servicios que se comporten como los originales que emplee el gusano para penetrar en el sistema y as\'i poder estudiar qué acciones realiza una vez dentro.
 
-La capacidad de programar servicios simulados agilmente puede ser un complemento perfecto a otras herramientas de estudio de la seguridad como son las 'Honey-Nets', dotando a las m\'aquinas virtuales de un comportamiento mucho m\'as flexible.
+La capacidad de programar servicios simulados ágilmente puede ser un complemento perfecto a otras herramientas de estudio de la seguridad como son las 'Honey-Nets', dotando a las m\'aquinas virtuales de un comportamiento mucho m\'as flexible.
 
 
 
@@ -151,11 +178,11 @@ La capacidad de programar servicios simulados agilmente puede ser un complemento
 \section{Lenguaje: Python}
 \subsection{Elecci\'on del Lenguaje} 
 Se ha elegido Python como lenguaje de programaci\'on para esta plataforma por las siguientes razones:
-\begin{enumerate}
-	\item Velocidad de aprendizaje: cualquier persona que conozca un lenguaje orientado a objetos puede aprenderlo en muy poco tiempo.
-	\item Reflexividad e introspección: Las clases en pytohn tienen conocimiento de sus propios m\'etodos y atributos.
-	\item Interpretado: Al ejecutarse bajo un interprete no har\'an falta compilar distintos ejecutables seg\'un la plataforma.
-\end{enumerate}
+\begin{description}
+	\item[Velocidad de aprendizaje] cualquier persona que conozca un lenguaje orientado a objetos puede aprenderlo en muy poco tiempo.
+	\item[Reflexividad e introspección] Las clases en python tienen conocimiento de sus propios m\'etodos y atributos.
+	\item[Interpretado] Al ejecutarse bajo un interprete no har\'an falta compilar distintos ejecutables seg\'un la plataforma.
+\end{description}
 
 Con el empleo de Python se puede conseguir con pocas lineas la implementaci\'on de un protocolo completo. Al tratarse de un lenguaje en que la identaci\'on es obligatoria y la sintaxis muy clara normalmente su codigo fuente esta bien estructurado y resulta facil de leer incluso para quienes apenas conozcan Python.
 
