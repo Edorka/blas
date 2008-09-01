@@ -124,9 +124,11 @@ No obstante la escritura de un servicio de Red puede reducirse considerablemente
 
 La intención principal de esta plataforma es evitar la reimplementación innecesaria de funcionalidades que son comunes a todo tipo de servicio de red interactivo, además de proponer una metodología concreta en la implementación.
 \section{Disponibilidad del proyecto}
-Este proyecto se ha traspasado desde una de sus más primitivas versiónes al repositorio que google dispone para desarrolladores. La elección de \url{http://code.google.com/} como repositorio se ha debido sobre todo al elenco de herramientas y servicios que Google está dedicando a los desarrolladores de software y sobre todo a los proyectos de programación colaborativos.
+Este proyecto se ha traspasado desde una de sus más primitivas versiónes al repositorio que Google dispone para desarrolladores. La elección de \url{http://code.google.com/} como repositorio se ha debido sobre todo al elenco de herramientas y servicios que Google está dedicando a los desarrolladores de software y sobre todo a los proyectos de programación colaborativos.
 
 Todo el código y la documentación referente a este proyecto podrá encontrarse en \url{http://code.google.com/p/blas/}. La participación de terceros quedará abierta en cuanto se evalue el proyecto, en mi opinión ese será el verdadero comienzo del desarrollo de la plataforma, cuando se pruebe su uso y las aportaciones de otros desarrolladores amplien sus funcionalidades.
+
+La documentación puede encontrarse también en formato LaTex, un procesador de textos muy adecuado para documentación cientifica y técnica \url{http://www.latex-project.org/}. Además los diagramas que ilustran este documentos se encuentran disponibles en su formato nativo, editable por Dia \url{http://www.gnome.org/projects/dia/}.
 \section{Licencias}
 Este proyecto dispone de dos licencias: una para el propio software que garantice a futuros la disponibilidad de este para toda la comunidad de software libre, otra para este documento, de tal forma que su contenido pueda aprovecharse en otros esfuerzos de documentación colaborativa como \url{http://es.wikipedia.org}.
 
@@ -767,6 +769,7 @@ Puede encontrarse el diagrama de clases de diseño en \ref{fig:DiagramaClasesDis
 			\caption{Diagrama de Clases de Diseño: Servicio SIP}
 			  \label{fig:DiagramaClasesDisennoSIP}
 \end{figure}
+El diagrama de diseño de clases del servicio SIP esta en la figura \ref{fig:DiagramaClasesDisennoSIP}
 \subsubsection{Bifurcación y flujo de estados} 
 Una vez que el servidor ha recibido la trama con la petición e instanciado el hilo de atención correspondiente, se inicia el siguiente proceso:
 \begin{description}
@@ -884,10 +887,11 @@ Al ser multiplataforma el interprete y con él, el entorno, sabiendo que las reg
 \section{Conclusiones}
 A lo largo de la realización del proyecto se han presentado varias dificultades, que se detallan a continuacion:
 \begin{enumerate}
-	\item Problemas en la depuración de expresiones regulares: para corregir un fallo durante la entrada de datos, aunque esta ya se hubiera localizado en la expresión regular, su corrección resultaba bastante engorrosa. El proceso para comprobarla consistia en abrir un interprete Python aparte, importar los modulos correspondientes e imitar el mismo procedimiento que realiza el programa, lo que supone escribir 10 líneas de código que irremediablemente se perderán. Para evitar esto sería interesante escribir algúna clase de utilidad.
+	\item Problemas en la depuración de expresiones regulares: para corregir un fallo durante la entrada de datos, aunque esta ya se hubiera localizado en la expresión regular, su corrección resultaba bastante engorrosa. El proceso para comprobarla consistia en abrir un interprete Python aparte, importar los modulos correspondientes e imitar el mismo procedimiento que realiza el programa, lo que supone escribir 10 líneas de código que irremediablemente se perderán. Para evitar esto sería interesante escribir algúna clase de utilidad que facilite tanto la elaboración de patrones como su comprobación.
 	\item Problemas con los clientes, ya que muchos de estos no se acomodan correctamente a las especificaciónes del protocolo, salvo en los casos en que se ha podido llegar a una solución elegante realizando pequeñas variaciones. En otros casos aceptar modificaciones sobre los protocolos normalmente ha implicado producir bastante código extra para subsanarlo.
 	\item Las especificaciónes RFC son en muchos casos dificiles de entender. Para la implementación de los protoclos se ha hecho necesario obtener capturas de operaciones de dichos protocolos para comprender el procedimiento.
 	\item Aún a pesar de utilizar un importante número de trazas a lo largo de la programación del servicio muchos errores solo pueden localizarse analizando el tráfico. Por ello disponer de programas como Wireshark \url{http://www.wireshark.org/} puede resultar de gran utilidad.
+	\item Sería interesante adoptar una nomenclatura para los estados que derivan de otros estados sin alargar innecesariamente la longitud de las llamadas.
 \end{enumerate}
 Sin embargo en este proyecto si se han superado obstaculos en un tiempo menor de los esperado:
 \begin{enumerate}
@@ -895,7 +899,6 @@ Sin embargo en este proyecto si se han superado obstaculos en un tiempo menor de
 	\item Los módulos que incorpora Python para casi cualquier necesidad imaginable reduce el tiempo de implementación, sin embargo debe tenerse en cuenta que estos módulos deben estar presentes tambi\'en en los entornos donde vaya a ejecutarse el servicio.
 	\item Las estructuras de datos primitivas de Python como listas y diccionarios han resultado muy utiles a la hora de almacenar la información de las cabeceras, al igual que las rutinas para tratamiento de cadenas.
 \end{enumerate}
-El diagrama de diseño de clases del servicio SIP esta en la figura \ref{fig:DiagramaClasesDisennoSIP}
 
 \section{Mejoras}
 
