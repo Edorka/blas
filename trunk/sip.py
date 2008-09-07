@@ -14,22 +14,39 @@ class SIPServer(Server):
 	def __init__(self,args=""):
 		self.id = "PySIPServer v."+VERSION
 		self.ip = "" #valores por defecto
-		self.port = 5060 #valores por defecto
 		self.loglevel = 1
-		Server.__init__(self,args)
+		Server.__init__(self)
 		self.family = core.UDP
+		self.config["verbosity"] = 1
+		self.config["port"] = 5060 #valores por defecto
+		self.config["configfile"] = "sip.cfg" 
+		self.password = {}
+		self.password['user1']='password'
+		self.password['user2']='password'
+		self.password['user3']='password'
+		self.configure(args)
+
+	def config_domain(self,value):
+		"""d:<domain name> sets domain name."""
+		if value:
+			self.config["domain"] = value
+		else:
+			print self.usage()
+
+
 
 class SIPHandler(UDPHandler):
  	def __init__(self,data,origin,parent=None,verbosity=1,logs={}):
 		UDPHandler.__init__(self,data,origin)
-		self.log = logs
 		self.parent = parent
+		self.log=parent.log
 		self.secuence  = ['request','headers','run',"run_register","run_invite","run_subscribe",'end']
-		self.report("connected")
+		self.next = "request"
+		self.log("connected")
 
 	def step_request(self):
 		"""receiving command"""
-		self.report("connected:"+str(self.incoming))
+		self.log("connected:"+str(self.incoming))
 		pattern = "(?P<command>(REGISTER|SUBSCRIBE|INVITE)) "
 		pattern +="(?P<user>(\S*)) "
 		pattern +="(?P<protocol>((\S)*))"
@@ -40,7 +57,7 @@ class SIPHandler(UDPHandler):
 			self.next_step("end")
 		else:
 			self.request["params"]= {}
-			self.next_step()
+			self.next_step('headers')
 
 	def step_headers(self):
 		"""receiving param"""
@@ -52,12 +69,15 @@ class SIPHandler(UDPHandler):
 		if type(param) is not dict:
 			self.next_step("end")
 		elif not param["name"]:
-			self.next_step()
+			self.next_step('run')
 		else:
 			self.request["params"][param["name"]]= param["value"]
 
 	def step_run(self):
 		"""state switch by command"""
+		command = self.request["command"]
+		params = self.request["params"]
+		self.log("parametros recibidos para metodo "+command+":\n"+ self.str_params(params),4)
 		if self.request["command"] == "REGISTER": 
 			self.next_step("run_register")
 		elif self.request["command"] == "SUBSCRIBE": #,"subscribe"]:
@@ -71,25 +91,33 @@ class SIPHandler(UDPHandler):
 		"""realizando invitacion"""
 		print self.request
 
+	def str_params(self,params=None):
+		if not params: params=self.request["params"]
+		s = ""
+		for param,value in params.items():
+			s+= param+": "+value+"\n"
+		return s
+
 	def step_run_register(self):
 		"""efectuando el registo del usuario"""
 		#print self.request
 		params = self.request["params"]
+		domain = self.parent.config["domain"]
 		if self.digest("REGISTER") == True:
 			msg = "SIP/2.0 200 OK\n"
-			print params["Authorization"]
+			#self.log("cadena de autorizacion:"+str_param(params["Authorization"]),4)
 		else:
-			self.report("fallo en la autentificacion, solicitando.")
+			self.log("fallo en la autentificacion, solicitando.",0)
 			msg = "SIP/2.0 401 Unathorized\n"
 			nonce = md5.new(time.ctime()).digest().encode('hex')
 			params["nonce"] = nonce
-			msg += 'WWW-Authenticate: Digest realm="192.168.1.100", nonce="'+nonce+'", qop="auth"\n'
-		print params
+			msg += 'WWW-Authenticate: Digest realm="'+domain+'", nonce="'+nonce+'", qop="auth"\n'
+		#self.log(str(params),4)
 		#print self.digest()
 		params["To"]= params["From"]
 		fields = ['CSeq','Via','From','Call-ID','To','Contact','Server','Content-Length']
 		msg += self.compose_headers(params,fields)
-		print msg
+		self.log("respondiendo:\n"+msg,4)
 		self.send(msg) 
 		self.next_step("end")
 
@@ -143,8 +171,7 @@ class SIPHandler(UDPHandler):
 		#print "DIGEST:",data["response"],"==",sum.digest().encode('hex')
 		return data["response"]==sum.digest().encode('hex')
 
-	def step_end(self):
-		"""ends session"""
+
 
 if __name__ == '__main__':
 	LOGLEVEL = 1

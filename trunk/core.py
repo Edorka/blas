@@ -31,6 +31,11 @@ def under(name,content):
 	port = ")"
 	return pre+content+post
 
+class Callable:
+	    def __init__(self, anycallable):
+		            self.__call__ = anycallable
+
+
 class Log:
 	def __init__(self,minlevel=0):
 		self.minlevel = minlevel
@@ -41,7 +46,8 @@ class Log:
 	def put(self,msg,level=1):
 		if  level > self.minlevel: return
 		s = time.ctime()+":"
-		s += msg#.encode('string_escape')
+		if "\n" in msg: s+=msg.replace("\n","\n\t")
+		else: s += msg#.encode('string_escape')
 		print s
 
 	def __call__(self,msg,level=1):
@@ -63,6 +69,7 @@ class FileLog(Log):
 		if not level > self.minlevel: return
 		s = time.ctime()+":"
 		s += msg.encode('string_escape')
+		if "\n" in msg: msg.replace("\n","\t\n")
                 if self.file:
 			self.file.write(s+"\n")
 	                self.file.flush()
@@ -124,7 +131,7 @@ class Server:
 					param = param_of[prefix]	
 					self.run_config(param,value,config_methods)
 					prev_params.append(param)		
-					print prev_params
+					#print prev_params
 				else: 
 					print "unknown parameter: ",prefix
 					print self.usage()
@@ -232,13 +239,16 @@ class Server:
 	
 	def mainloop(self,handler=None,limit=1000):
 		port = self.config["port"]
+		ip = ""
 		self.clients = []
 		r = "listening on port "+str(port)
 		#if self.ip: r += " for incoming connections from "+self.ip
 		#r += "\n"
 		self.log(r,0)
-		#if not self.family: self.family = TCP
-		if self.family is TCP:
+		#if not self.family: se9lf.family = TCP
+		#print type(handler).__name__ #.mro() #.__class__.__name___
+		#self.socket = s = handler.new_socket(ip,port)
+		if handler.family is TCP:
 			s = socket.socket();
 			s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			s.bind((self.ip,port))
@@ -250,7 +260,7 @@ class Server:
 		running = True
 #		try:
 		while running:
-			if self.family is TCP: 
+			if handler.family is TCP: 
 				(c, address) = s.accept()
 				h = handler(c,self)
 			else:
@@ -282,11 +292,10 @@ class Handler(Thread):
 	#	else:
 	#		print msg		
 
-	def error(self,msg,level=2):
-		if self.log.has_key('error'):
-			self.log["error"].put(msg,level)
-		else:
-			print "ERROR:"+msg		
+	def new_socket(ip=None, port=None):
+		return None
+
+	new_socket = Callable(new_socket)
 
 	def __init__(self):
 		self.done = []
@@ -340,13 +349,23 @@ class Handler(Thread):
 	
 
 class TCPHandler(Handler):
-
+	family = TCP
+	
 	def __init__(self,socket):
 		self.socket = socket
 		self.socket.settimeout(60)
 		incoming = socket.getpeername()
 		self.id = str(incoming[0])+":"+str(incoming[1])
 		Handler.__init__(self)
+
+	def new_socket(ip,port,limit=1000):
+		s = socket.socket();
+		s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		s.bind((ip,port))
+		s.listen( limit )
+		return s
+	
+	new_socket = Callable(new_socket)
 
 	def send(self,data):
 		s = self.socket
@@ -398,12 +417,20 @@ class TCPHandler(Handler):
 
 
 class UDPHandler(Handler):
+	family = UDP
 
 	def __init__(self,data,origin):
 		self.data = data
 		self.incoming = origin
 		self.id = str(origin[0])+":"+str(origin[1])
 		Handler.__init__(self)
+
+	def new_socket(ip,port):
+		s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM);
+		s.bind((ip,port))
+		return s
+	
+	new_socket = Callable(new_socket)
 
 	def send(self,data,ip=None,port=None):
 		destiny = (self.incoming[0],self.incoming[1])

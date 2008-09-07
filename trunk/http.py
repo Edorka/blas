@@ -8,8 +8,6 @@ import core
 import time 
 
 VERSION = "0.1"
-ROOT = "./www"
-OPTION = {}
 
 class HTTPServer(Server):
 	def __init__(self,args=""):
@@ -19,6 +17,7 @@ class HTTPServer(Server):
 		self.config["verbosity"] = 1
 		self.config["port"] = 8000 #valores por defecto
 		self.config["configfile"] = "http.cfg" 
+		self.config["rootdir"] = "doc/memoria"
 		self.configure(args)	
 
 	def config_rootdir(self,value):
@@ -106,7 +105,6 @@ class HTTPHandler(TCPHandler):
 
 
 if __name__ == '__main__':
-	LOGLEVEL = 1
 	print "init."
 	server = HTTPServer(sys.argv)
 	server.mainloop(HTTPHandler,limit=100) #) #,23000,"",1 )
