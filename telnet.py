@@ -9,20 +9,25 @@ OPTION = {}
 
 class TelnetServer(Server):
 	def __init__(self,args=""):
+		Server.__init__(self)
 		self.id = "PyTelnet v."+VERSION
-		self.ip = "" #valores por defecto
-		self.port = 23000 #valores por defecto
-		self.loglevel = 1
-		Server.__init__(self,args)
-		
+		self.config["configfile"] = "telnet.log"
+		self.config["port"] = 23000 #valores por defecto
+		self.config["verbosity"] = 1
+		self.ip = "" 
+		self.configure(args)	
+#	def close(self):
+#		self.log("TelnetServer ending.")
+ #		Server.close(self)
 
 class TelnetHandler(TCPHandler):
  	def __init__(self,socket,parent=None,verbosity=1,logs={}):
-		Handler.__init__(self,socket)
-		self.log = logs
+		TCPHandler.__init__(self,socket)
+		self.log = parent.log
 		self.parent = parent
+		self.next = 'login'
 		self.secuence  = ['login','check_login','command','end']
-		self.report("connected")
+		self.log("connected")
 
 	def step_login(self):
 		"""trying to log in"""
@@ -32,7 +37,7 @@ class TelnetHandler(TCPHandler):
 		self.send("password:")
 		password = self.receive( "(?P<passwd>(([a-zA-Z0-9])*))")
 		self.login = (login,password)
-		self.next_step()
+		self.next_step('check_login')
 
 	def step_check_login(self):
 		"""checking user identity"""
@@ -43,8 +48,8 @@ class TelnetHandler(TCPHandler):
 		if pass_input:
 			passwd = pass_input['passwd']
 		self.user = (user,passwd)
-		self.report(str(self.user),3)
-		self.next_step()
+		self.log(str(self.user),3)
+		self.next_step('command')
 
 	def step_greeting(self):
 		"""sending host info"""
@@ -55,14 +60,12 @@ class TelnetHandler(TCPHandler):
 		"""submits command"""
 		self.send(" >:")
 		command = self.receive( r"(?P<command>(.*))(\r)")
-		if command['command'] == "exit": self.next_step()
+		if command['command'] == "exit": 
+			#self.socket.close()
+			self.next_step('end')
 		else: self.send(" TODO:RUN SHELL \n")	
 
-	def step_end(self):
-		"""ends session"""
-
 if __name__ == '__main__':
-	LOGLEVEL = 1
 	print "init."
 	server = TelnetServer(sys.argv)
 	server.mainloop(TelnetHandler,limit=100) #) #,23000,"",1 )
