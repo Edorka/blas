@@ -32,28 +32,36 @@ def under(name,content):
 	return pre+content+post
 
 class Log:
-	def __init__(self,filename=None,minlevel=0):
+	def __init__(self,minlevel=0):
 		self.minlevel = minlevel
+
+	def set(self,minlevel):
+		self.minlevel = minlevel
+		
+	def put(self,msg,level=1):
+		if  level > self.minlevel: return
+		s = time.ctime()+":"
+		s += msg#.encode('string_escape')
+		print s
+
+	def __call__(self,msg,level=1):
+		self.put(msg,level)
+
+class FileLog(Log):
+	def __init__(self,filename=None,minlevel=0):
+		Log.__init__(self,minlevel)
 		self.file = None
 		if filename:
-			if type(filename) == file:
-				self.file = filename 
-			else: 
-				try:
-					self.file = open(filename,'a')
-				except IOError:
-					msg =  "Warning: unable to open filename:"
-					msg += filename + "."
-					print msg
-					self.file = None
+			try:
+				self.file = open(filename,'a')
+			except IOError:
+				msg =  "Warning: unable to open filename:"
+				msg += filename + "."
+				print msg
 
-	def put(self,msg,level=2):
-		#print ">"+str((msg,level))
-		if level < self.minlevel: return
-		#if self.id : p = str(self.id)+":"
-		#else: p = self.ip
+	def put(self,msg,level=1):
+		if not level > self.minlevel: return
 		s = time.ctime()+":"
-		#s += p+":"
 		s += msg.encode('string_escape')
                 if self.file:
 			self.file.write(s+"\n")
@@ -67,87 +75,149 @@ class Error(Exception):
 	def __str__(self):
 		return "Error: "+str(self.msg)
 
-class Out(Log):
-	None	
-
-
-def parse_args(args):
+def parse_params(args):
 	r = {}
 	value = []; param = None
 	while args:
 		arg = args.pop(0)
 		if arg.startswith("-"):
+			if param: r[ param ] = " ".join(r[ param ])
 			param = arg.replace("-","")
 			r[ param ] = []
 			value = r[ param ]
 		else:
-			value +=[ arg ]
+			value += [arg] 
+	if param: r[ param ] = " ".join(r[ param ])
 	return r
-	
+
+def parse_config(data):
+	r = {}
+	for line in data:
+		if "=" in line:
+			if line.endswith("\n"): line = line[:-1]
+			param,value = line.split("=")
+			r[param] = value
+	return r
+
 def get_arg(args, param):
 	if not args.has_key(param): return None
 	return " ".join( args[param] )
 
 class Server:
-	def __init__(self,args):
-		#print "based on GAS"
-		self.log = {}
+
+	def __init__(self,args=""):
+		self.log = Log() #self.config["verbosity"] ) #temporal log
 		self.config = {}
+
+	def configure(self,args):
+		#self.config["configfile"] = "telnet.cfg"
+		#self.config["verbosity"] = 1
 		self.family = TCP
+		config_methods = self.get_config_methods()
+		prev_params = []
 		if args:
-			parsed = parse_args(args)
-			self.args = self.load_args(parsed)
-
-	def report(self,msg,level=2):
-		c = str(self.id)+":"
-		msg = c + msg
-		if self.log.has_key('output'):
-			self.log["output"].put(msg,level)
+			params = parse_params(args)
+			#test if there is config
+			param_of = self.get_prefixes()
+			for prefix,value in params.items():
+				if param_of.has_key(prefix):
+					param = param_of[prefix]	
+					self.run_config(param,value,config_methods)
+					prev_params.append(param)		
+					print prev_params
+				else: 
+					print "unknown parameter: ",prefix
+					print self.usage()
+					exit(-1)
+		filename = self.config["configfile"] 
+		try:
+			fd = open(filename)
+		except Exception,e:
+			self.log("no config file found."+self.config["configfile"])
 		else:
-			print msg		
+			fileparams = parse_config(fd.readlines())
+			for param,value in fileparams.items():
+				if not param in prev_params:
+					self.run_config(param,value,config_methods)
+			#self.args = self.load_args(parsed)
+		
+	#@def report(self,msg,level=2):
+	#	c = str(self.id)+":"
+	#	self.log.put(msg,level)
+		#msg = c + msg
+		#if self.log.has_key('output'):
+		#	self.log["output"].put(msg,level)
+		#else:
+		#	print msg		
 
-	def error(self,msg,level=2):
-		if self.log.has_key('error'):
-			self.log["error"].put(msg,level)
+
+	def run_config(self,param,value,config_methods):
+		#print "trying:",param,value
+		if config_methods.has_key(param):
+			config_methods[param](value)
 		else:
-			print "ERROR:"+msg	
+			msg = "Fail to load parameter:"+param+"\n"
+			msg += self.usage()
+			self.log.put(msg)	
+			exit
 
-	def load_config(self):
-		params = {}
+	def get_config_methods(self):
+		param_func = {}
 		for m in dir(self):
 			if m.startswith("config_"):
 				param = m.replace("config_","")
 				function = eval("self."+m)
 				doc = function.__doc__
 				id = doc.split(":")[0]
-				params[id] = param
-				methods[param] = function			
-			
+				param_func[param] = function
+		return param_func
 
-	def load_args(self,arg):
-		output_file = get_arg(arg,"l")	
-		self.log["output"] = Log(output_file) 
-		error_file = get_arg(arg,"e")
-		self.log["error"]= Log(error_file)
-		port_arg = get_arg(arg,"p")
-		if port_arg: self.port = int(port_arg) 
-		loglevel_arg = get_arg(arg,"v")
-		if loglevel_arg: self.loglevel = int(loglevel_arg)
+	def get_prefixes(self):
+		r = {}
+		for m in dir(self):
+			if m.startswith("config_"):
+				param = m.replace("config_","")
+				function = eval("self."+m)
+				doc = function.__doc__
+				id = doc.split(":")[0]
+				r[id] = param
+		return r
 
 	def config_configfile(self,value):
-		"""c:specifies config file to load"""
+		"""c:<file> specifies config file to load"""
 		if value:
-			self.configfile = value
+			self.config["configfile"] = value
 		else:
-			self.usage()
+			print self.usage()
+
+	def config_logfile(self,value):
+		"""l:<file> specifies file where to log, stdout for console."""
+		if value:
+			if value == 'stdout':
+				self.log = Log(self.config["verbosity"])
+				self.log("logging to console")
+			else:
+				self.log("saving log to file: "+value)
+				self.log = FileLog(value,self.config["verbosity"])
+		else:
+			print self.usage()
 	
 	def config_listenport(self,value):
-		"""p:<file> specifies TCP port to listen"""
+		"""p:[1-65535] specifies TCP port to listen"""
 		if value:
 			self.config["port"] = int(value)
 		else:
-			self.usage()
+			print self.usage()
 
+	def config_verbosity(self,value):
+		"""v:[0-4] specifies verbosity level"""
+		if value:
+			self.config["verbosity"] = int(value)
+			self.log.set(self.config["verbosity"])
+		else:
+			print self.usage()
+
+	
 	def usage(self):
 		msg = ""
 		for m in dir(self):
@@ -157,47 +227,60 @@ class Server:
 				doc = function.__doc__
 				param  = "-"+doc.split(":")[0]
 				line = doc.split(":")[1]
-				msg += param + ":" + usage + "/n" 
+				msg += param + ":" + line + "\n" 
 		return msg
-#		return """\
-#-l <file> : specifies standard log output\n
-#-e <file> : specifies error log output\n
-#-p <port> : TCP port to listen\n
-#-v <1-10> : verbosity\n
-#"""
+	
 	def mainloop(self,handler=None,limit=1000):
-		r = "listening on port "+str(self.port)
-		if self.ip: r += " for incoming connections from "+self.ip
-		r += "\n"
-		self.report(r,3)
+		port = self.config["port"]
+		self.clients = []
+		r = "listening on port "+str(port)
+		#if self.ip: r += " for incoming connections from "+self.ip
+		#r += "\n"
+		self.log(r,0)
 		#if not self.family: self.family = TCP
 		if self.family is TCP:
 			s = socket.socket();
 			s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-			s.bind((self.ip,self.port))
+			s.bind((self.ip,port))
 			s.listen( limit )
 		else:
 			s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM);
-			s.bind((self.ip,self.port))
-		while 1 :
+			s.bind((self.ip,port))
+		self.socket = s
+		running = True
+#		try:
+		while running:
 			if self.family is TCP: 
 				(c, address) = s.accept()
-				h = handler(c,address,self)
+				h = handler(c,self)
 			else:
 				data,addr = s.recvfrom(1500)
 				h = handler(data,addr,self)
+			self.clients.append(h)
 			h.log = self.log
 			h.start()
+		self.close()
+#		except(KeyboardInterrupt, SystemExit):
+#			self.close()
+
+	def close(self,msg="closing server"):
+		self.log(msg)
+		self.socket.close()
+		if self.clients:
+			self.log("recovering client threads")
+			for c in self.clients : 
+				if c.isAlive(): c.join(2) #close()
+
 
 class Handler(Thread):
 
-	def report(self,msg,level=2):
-		c = str(self.id)+":"
-		msg = c + msg
-		if self.log.has_key('output'):
-			self.log["output"].put(msg,level)
-		else:
-			print msg		
+	#def report(self,msg,level=2):
+	#	c = str(self.id)+":"
+	#	msg = c + msg
+	#	if self.log.has_key('output'):
+	#		self.log["output"].put(msg,level)
+	#	else:
+	#		print msg		
 
 	def error(self,msg,level=2):
 		if self.log.has_key('error'):
@@ -207,44 +290,53 @@ class Handler(Thread):
 
 	def __init__(self):
 		self.done = []
+		self.next = None ; self.current = None
 		Thread.__init__(self)
 
 	def run(self):
-		self.current=self.secuence.pop(0)
-		while self.secuence:
+		if not self.next:
+			self.next = self.secuence.pop(0)
+		#self.current=self.secuence.pop(0)
+#		try:
+		while self.next:
+			self.current=self.next
+			self.log_step()
 			exec("self.step_"+self.current+"()")
-			if self.current == 'end': break
+			if self.current == "end" : break		
+#		except(KeyboardInterrupt, SystemExit):
+#			self.close()
 
 	def receive_line(self,pattern):
 		return self.receive(pattern+"(?\r)")
 
 	def log_step(self,state=None):
 		if not state: state = self.current
-		s = eval("self.step_"+state)
-		if s.__doc__:
-			self.report("current state:"+s.__doc__,12)
+		if not self.current: self.log("nothing left.")
 		else:
-			self.report("current state:"+state,12)
+			s = eval("self.step_"+state)
+			if s.__doc__:
+				self.log("current state:"+s.__doc__,2)
+			else:
+				self.log("current state:"+state,2)
 
 	def next_step(self,state=None):
 		if state:
-			position = self.secuence.index(state)
-			self.current = state
-			self.done += self.secuence[:position]
-			self.secuence = self.secuence[position+1:]
+			self.next = state
+			if state in self.secuence:
+				position = self.secuence.index(state)
+				self.done += self.secuence[:position]
+				self.secuence = self.secuence[position+1:]
 		else:
 			self.done += [self.current]
-			self.current = self.secuence.pop(0)
-		self.log_step()
+			if self.secuence:
+				self.next = self.secuence.pop(0)
+			else: self.next=None
 
 	def back_step(self,name):
 		self.secuence = [self.current] + self.secuence
 		self.current = name
 		self.log_step()
 
-	def step_end(self):
-		self.report("end of process.")
-		self.socket.close()
 	
 
 class TCPHandler(Handler):
@@ -264,6 +356,15 @@ class TCPHandler(Handler):
 		except socket.error, msg:
 			self.error(10,msg+"sending:"+data+".")
 
+	def step_end(self):
+		"""ending and closing connection."""
+		self.socket.close()
+
+	def address(self):
+		reg = self.socket.getpeername()#dir(self.socket))
+		m = reg[0]+":"+str(reg[1])
+		return m
+	
 	def receive(self,pattern=".*"):
 		s = self.socket
 		s.settimeout(15000)
@@ -295,6 +396,7 @@ class TCPHandler(Handler):
 		return send
 
 
+
 class UDPHandler(Handler):
 
 	def __init__(self,data,origin):
@@ -316,6 +418,11 @@ class UDPHandler(Handler):
 		except socket.error, msg:
 			self.error(10,msg+"sending:"+data+".")
 
+	def address(self):
+		reg =(self.incoming[0],self.incoming[1])
+		m = reg[0]+":"+str(reg[1])
+		return m
+	
 	def receive(self,pattern=".*"):
 		c = ""; input = ""; send = None
 		resultado = {}
@@ -338,4 +445,4 @@ class UDPHandler(Handler):
 		return send
 
 	def step_end(self):
-		self.report("end of process.")
+		self.log("end of process.")

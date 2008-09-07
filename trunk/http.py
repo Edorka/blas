@@ -15,18 +15,32 @@ class HTTPServer(Server):
 	def __init__(self,args=""):
 		self.id = "PyHTTPServer v."+VERSION
 		self.ip = "" #valores por defecto
-		self.port = 8000 #valores por defecto
-		self.loglevel = 1
-		Server.__init__(self,args)
-		
+		Server.__init__(self)
+		self.config["verbosity"] = 1
+		self.config["port"] = 8000 #valores por defecto
+		self.config["configfile"] = "http.cfg" 
+		self.configure(args)	
+
+	def config_rootdir(self,value):
+		"""r:<dir> sets document root directory"""
+		if value:
+			try: open(value)
+			except IOError, e:
+				if e.errno == 21:
+					self.config["rootdir"] = value
+			else:
+				self.log(value+" is not a directory.",0)
+		else:
+			print self.usage()
 
 class HTTPHandler(TCPHandler):
  	def __init__(self,socket,parent=None,verbosity=1,logs={}):
-		Handler.__init__(self,socket)
-		self.log = logs
+		TCPHandler.__init__(self,socket)
 		self.parent = parent
+		self.log = self.parent.log
+		self.next = 'request'
 		self.secuence  = ['request','headers','run',"run_get",'end']
-		self.report("connected")
+		self.log("connected")
 
 	def step_request(self):
 		"""receiving command"""
@@ -37,7 +51,7 @@ class HTTPHandler(TCPHandler):
 		pattern +="(\r\n)?"
 		self.request = self.receive(pattern)
 		self.request["params"]= {}
-		self.next_step()
+		self.next_step('headers')
 
 	def step_headers(self):
 		"""receiving param"""
@@ -49,7 +63,7 @@ class HTTPHandler(TCPHandler):
 		if type(param) is not dict:
 			self.next_step("end")
 		elif not param["name"]:
-			self.next_step()
+			self.next_step('run')
 		else:
 			self.request["params"][param["name"]]= param["value"]
 
@@ -68,7 +82,10 @@ class HTTPHandler(TCPHandler):
 		return l
 
 	def step_run_get(self):
-		filename = ROOT +  self.request["file"]
+		address = self.address() 
+		self.log("received GET from "+address,0)
+		root = self.parent.config["rootdir"]
+		filename = root +  self.request["file"]
 		if filename[-1] == "/":
 			filename = filename + "index.html"
 		try:
@@ -87,9 +104,6 @@ class HTTPHandler(TCPHandler):
 				self.socket.send(data)
 			self.next_step("end")
 
-
-	def step_end(self):
-		"""ends session"""
 
 if __name__ == '__main__':
 	LOGLEVEL = 1
