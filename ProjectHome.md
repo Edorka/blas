@@ -1,0 +1,1 @@
+Platform for easy development of application services over IP/TCP and IP/UDP.
